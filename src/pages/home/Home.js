@@ -13,6 +13,7 @@ const Home = () => {
     const [loadingOrders, setLoadingOrders] = useState(true);
     const [loadingNotifications, setLoadingNotifications] = useState(true);
     const [notificationsPage, setNotificationsPage] = useState(null);
+    const [prueba, setPrueba] = useState([]);
 
     useEffect(() => {
         const fetchDataOrders = async () => {
