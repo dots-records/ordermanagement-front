@@ -1,0 +1,27 @@
+.box-container {
+    border: 1px solid rgba(0, 0, 0, 0.10); /* Color del borde con opacidad */
+    border-radius: 8px; /* Bordes redondeados */
+    padding: 16px; /* Padding interno */
+}
+
+.dialog-container {
+    padding: 16px; /* Padding interno */
+    width: 600px;
+    height:700px;
+}
+
+.box-title {
+    text-align: left; /* Alineación del texto */
+    font-family: 'InterBold'; /* Familia de la fuente */
+    font-size: 19px; /* Tamaño de la fuente */
+}
+
+.dialog-last-messages {
+    border: 1px solid rgba(0, 0, 0, 0.10); /* Color del borde con opacidad */
+    border-radius: 8px; /* Bordes redondeados */
+    padding: 16px; /* Padding interno */
+    height:280px;
+    width: 400px;
+    margin-top: 8px;
+    margin-left: 8px;
+}
