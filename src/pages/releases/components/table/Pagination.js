@@ -4,28 +4,28 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { getReleasesAndSearch } from '../../functions/Functions';
 
-const Pagination = ({ releasePage, loading, setLoading, setReleasePage, searchTerm }) => {
+const Pagination = ({ releasesPage, loading, setLoading, setReleasesPage, searchTerm }) => {
 
     // Función para actualizar la página y obtener los pedidos
     const handlePageChange = async (newPage) => {
         setLoading(true);
         console.log(newPage);
         const response = await getReleasesAndSearch(newPage, searchTerm);
-        setReleasePage(response);
+        setReleasesPage(response);
         setLoading(false);
     };
 
-    if (loading || releasePage == null) return null;
+    if (loading || releasesPage == null) return null;
 
     // Calcular los valores para la paginación
-    const currentPage = releasePage?.totalPages === 0 ? 0 : releasePage?.number + 1;
-    const totalPages = releasePage?.totalPages || 0;
+    const currentPage = releasesPage?.totalPages === 0 ? 0 : releasesPage?.number + 1;
+    const totalPages = releasesPage?.totalPages || 0;
 
     return (
         <Box className="pagination" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', p: "3px" }}>
             <IconButton
-                onClick={() => handlePageChange(releasePage?.number - 1)}
-                disabled={releasePage?.number === 0 || releasePage?.totalPages === 0}
+                onClick={() => handlePageChange(releasesPage?.number - 1)}
+                disabled={releasesPage?.number === 0 || releasesPage?.totalPages === 0}
                 aria-label="Anterior"
             >
                 <ArrowBackIcon />
@@ -42,8 +42,8 @@ const Pagination = ({ releasePage, loading, setLoading, setReleasePage, searchTe
             </Typography>
 
             <IconButton
-                onClick={() => handlePageChange(releasePage?.number + 1)}
-                disabled={releasePage?.number === releasePage?.totalPages - 1 || releasePage?.totalPages === 0}
+                onClick={() => handlePageChange(releasesPage?.number + 1)}
+                disabled={releasesPage?.number === releasesPage?.totalPages - 1 || releasesPage?.totalPages === 0}
                 aria-label="Siguiente"
             >
                 <ArrowForwardIcon />

@@ -1,11 +1,12 @@
-import { getReleases } from "../../../services/releaseService";
+import { getReleases, searchReleases } from "../../../services/releaseService";
 
 export const getReleasesAndSearch = async ( numberPage, searchTerm) => {
+
         if(searchTerm == null || searchTerm === "") {
             const response = await getReleases(numberPage);
             return response;
         } else{
-            const response = "Not done"
+            const response = await searchReleases(numberPage,searchTerm )
             return response;
         } 
 }

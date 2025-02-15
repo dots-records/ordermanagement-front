@@ -67,7 +67,7 @@ const TableOrders = ({tableSelected, loading, setOrdersPage, numberPage, orders,
                                 color: 'rgba(0,0,0,0.65)' 
                             }}
                         >
-                            Name
+                            Items
                         </TableCell>
                         <TableCell 
                             sx={{ 

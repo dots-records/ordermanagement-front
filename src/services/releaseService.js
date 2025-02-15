@@ -9,3 +9,18 @@ export const getReleases = async (page) => {
         throw err;
     }
 };
+
+export const searchReleases = async ( page, search) => {
+    try {
+       const response = await api.post(`/dots/searchReleases/page=${page}&size=50`, { search: search }, {
+        headers: {
+            'Content-Type': 'application/json' // Asegúrate de enviar como JSON
+        }
+        
+    });
+    
+       return response.data;
+    } catch (error) {
+       console.error('Error:', error);
+    }
+ };
