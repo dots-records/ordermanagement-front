@@ -3,6 +3,7 @@ import { useState } from "react";
 import Pagination from "./table/Pagination";
 import TableReleases from "./table/TableReleases";
 import TableSearcher from "./table/TableSearcher";
+import TableAdd from "./table/TableAdd";
 
 const BoxReleases = ({ loading, setLoading, releasesPage, setReleasesPage }) => {
     const [searchTerm, setSearchTerm] = useState();
@@ -38,6 +39,11 @@ const BoxReleases = ({ loading, setLoading, releasesPage, setReleasesPage }) => 
             <TableReleases 
                 releases={releasesPage?.content} 
                 loading={loading}
+            />
+
+            <TableAdd 
+                setLoading={setLoading} 
+                setReleasesPage={setReleasesPage} 
             />
 
             <Pagination 

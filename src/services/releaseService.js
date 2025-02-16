@@ -24,3 +24,12 @@ export const searchReleases = async ( page, search) => {
        console.error('Error:', error);
     }
  };
+
+ export const putReleaseFromDiscogs = async (id) => {
+    try {
+        await api.post(`dots/putReleaseFromDiscogs/${id}`);
+    } catch (err) {
+        console.error(err);
+        throw err;
+    }
+};

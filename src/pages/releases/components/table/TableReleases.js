@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'; 
 import { Link } from 'react-router-dom';
 import { 
     Table, 
@@ -50,7 +50,7 @@ const TableReleases = ({ loading, releases }) => {
                             sx={{ 
                                 fontFamily: 'InterSemiBold', 
                                 color: 'rgba(0,0,0,0.65)', 
-                                width: '60px' 
+                                width: '50px' 
                             }}
                         >
                             Photo
@@ -59,10 +59,19 @@ const TableReleases = ({ loading, releases }) => {
                             sx={{ 
                                 fontFamily: 'InterSemiBold', 
                                 color: 'rgba(0,0,0,0.65)', 
-                                width: '10px' 
+                                width: '50px' 
                             }}
                         >
                             Title & Artists
+                        </TableCell>
+                        <TableCell 
+                            sx={{ 
+                                fontFamily: 'InterSemiBold', 
+                                color: 'rgba(0,0,0,0.65)', 
+                                width: '10px' 
+                            }}
+                        >
+                            Description
                         </TableCell>
                     </TableRow>
                 </TableHead>
@@ -119,11 +128,11 @@ const TableReleases = ({ loading, releases }) => {
                                     },
                                 }}
                             >
-                                <TableCell sx={{ maxWidth: '10px' }}>
+                                <TableCell sx={{ width: '50px' }}>
                                     <img 
                                         src={release.thumb} 
                                         alt={release.title} 
-                                        style={{ width: '50px', height: '50px', objectFit: 'cover', borderRadius: '4px' }}
+                                        style={{ width: '45px', height: '45px', objectFit: 'cover', borderRadius: '3px' }}
                                     />
                                 </TableCell>
                                 <TableCell>
@@ -153,6 +162,35 @@ const TableReleases = ({ loading, releases }) => {
                                     >
                                         {release.artists.map(artist => artist.name).join(', ')}
                                     </Typography>
+                                </TableCell>
+                                <TableCell> 
+                                <Typography 
+                                        sx={{ 
+                                            fontFamily: 'InterBold',
+                                            fontSize: '16px',
+                                            color: 'rgba(0,0,0,0.70)', 
+                                            overflow: 'hidden',
+                                            textOverflow: 'ellipsis',
+                                            whiteSpace: 'normal',
+                                            wordBreak: 'break-word',
+                                        }}
+                                    >
+                                        {release.formats.map(format => format.name).join(', ')}
+                                    </Typography>
+
+                                    <Typography 
+    sx={{ 
+        fontFamily: 'InterSemiBold',
+        fontSize: '12px',
+        color: 'rgba(0,0,0,0.5)', 
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        whiteSpace: 'normal',
+        wordBreak: 'break-word',
+    }}
+>
+    {release.formats.map(format => format.descriptions.join(', ')).join(' | ')}
+</Typography>
                                 </TableCell>
                             </TableRow>
                         ))
