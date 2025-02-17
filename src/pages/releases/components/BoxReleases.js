@@ -4,10 +4,11 @@ import Pagination from "./table/Pagination";
 import TableReleases from "./table/TableReleases";
 import TableSearcher from "./table/TableSearcher";
 import TableAdd from "./table/TableAdd";
+import TableSelector from "./table/TableSelector";
 
 const BoxReleases = ({ loading, setLoading, releasesPage, setReleasesPage }) => {
     const [searchTerm, setSearchTerm] = useState();
-
+    const [tableSelected, setTableSelected] = useState('Active Releases');
     return (
         <Box
             sx={{
@@ -19,22 +20,11 @@ const BoxReleases = ({ loading, setLoading, releasesPage, setReleasesPage }) => 
                 position: "relative"
             }}
         >
-            <Box
-                sx={{
-                    textAlign: "left",
-                    display: "flex",
-                    ml: 0.3,
-                    width: 200,
-                    height: 33,
-                }}
-            >
-                <Typography sx={{ mb: 2, ml: 0, fontFamily: "InterBold", fontSize: 22 }}>
-                    Releases
-                </Typography>
-            </Box>
-
+            <TableSelector setLoading={setLoading} setTableSelected={setTableSelected} 
+            setReleasesPage={setReleasesPage} tableSelected={tableSelected} searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>
+ 
             <TableSearcher setReleasesPage={setReleasesPage} setLoading = {setLoading} 
-                  setSearchTerm={setSearchTerm} />
+                  setSearchTerm={setSearchTerm} tableSelected={tableSelected} />
 
             <TableReleases 
                 releases={releasesPage?.content} 
@@ -44,6 +34,7 @@ const BoxReleases = ({ loading, setLoading, releasesPage, setReleasesPage }) => 
             <TableAdd 
                 setLoading={setLoading} 
                 setReleasesPage={setReleasesPage} 
+                tableSelected={tableSelected}
             />
 
             <Pagination 
@@ -51,6 +42,7 @@ const BoxReleases = ({ loading, setLoading, releasesPage, setReleasesPage }) => 
                 releasesPage={releasesPage} 
                 searchTerm={searchTerm} 
                 setReleasesPage={setReleasesPage} 
+                tableSelected={tableSelected}
             />
         </Box>
     );

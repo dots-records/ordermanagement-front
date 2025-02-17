@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Box, IconButton } from '@mui/material';
-import { getReleasesAndSearch } from '../../functions/Functions';
+import { getSelectedTableReleases } from '../../functions/Functions';
 
-const TableSearcher = ({ setReleasesPage, setLoading, setSearchTerm }) => {
+const TableSearcher = ({ setReleasesPage, setLoading, tableSelected,  setSearchTerm }) => {
     const [localSearchTerm, setLocalSearchTerm] = useState();
 
     // Función para manejar la búsqueda
@@ -12,7 +12,7 @@ const TableSearcher = ({ setReleasesPage, setLoading, setSearchTerm }) => {
         setSearchTerm(localSearchTerm);
         const backup = localSearchTerm;
         setLocalSearchTerm('');
-        const response = await getReleasesAndSearch(0, backup);
+        const response = await getSelectedTableReleases(tableSelected, 0, backup);
         console.log(response);
         setReleasesPage(response);
         setLoading(false);

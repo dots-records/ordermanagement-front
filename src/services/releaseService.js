@@ -1,8 +1,8 @@
 import api from '../api/axiosConfig';
 
-export const getReleases = async (page) => {
+export const getAllReleases = async (page) => {
     try {
-        const response = await api.get(`dots/getReleases/page=${page}&size=50`);
+        const response = await api.get(`dots/getAllReleases/page=${page}&size=50`);
         return response.data;
     } catch (err) {
         console.error(err);
@@ -10,9 +10,59 @@ export const getReleases = async (page) => {
     }
 };
 
-export const searchReleases = async ( page, search) => {
+export const getArchivedReleases = async (page) => {
     try {
-       const response = await api.post(`/dots/searchReleases/page=${page}&size=50`, { search: search }, {
+        const response = await api.get(`dots/getArchivedReleases/page=${page}&size=50`);
+        return response.data;
+    } catch (err) {
+        console.error(err);
+        throw err;
+    }
+};
+
+export const getUnarchivedReleases = async (page) => {
+    try {
+        const response = await api.get(`dots/getUnarchivedReleases/page=${page}&size=50`);
+        return response.data;
+    } catch (err) {
+        console.error(err);
+        throw err;
+    }
+};
+
+export const searchAllReleases = async ( page, search) => {
+    try {
+       const response = await api.post(`/dots/searchAllReleases/page=${page}&size=50`, { search: search }, {
+        headers: {
+            'Content-Type': 'application/json' // Asegúrate de enviar como JSON
+        }
+        
+    });
+    
+       return response.data;
+    } catch (error) {
+       console.error('Error:', error);
+    }
+ };
+
+ export const searchArchivedReleases = async ( page, search) => {
+    try {
+       const response = await api.post(`/dots/searchArchivedReleases/page=${page}&size=50`, { search: search }, {
+        headers: {
+            'Content-Type': 'application/json' // Asegúrate de enviar como JSON
+        }
+        
+    });
+    
+       return response.data;
+    } catch (error) {
+       console.error('Error:', error);
+    }
+ };
+
+ export const searchUnarchivedReleases = async ( page, search) => {
+    try {
+       const response = await api.post(`/dots/searchUnarchivedReleases/page=${page}&size=50`, { search: search }, {
         headers: {
             'Content-Type': 'application/json' // Asegúrate de enviar como JSON
         }

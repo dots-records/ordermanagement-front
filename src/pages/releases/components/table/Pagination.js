@@ -4,13 +4,13 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { getReleasesAndSearch } from '../../functions/Functions';
 
-const Pagination = ({ releasesPage, loading, setLoading, setReleasesPage, searchTerm }) => {
+const Pagination = ({tableSelected, releasesPage, loading, setLoading, setReleasesPage, searchTerm }) => {
 
     // Función para actualizar la página y obtener los pedidos
     const handlePageChange = async (newPage) => {
         setLoading(true);
         console.log(newPage);
-        const response = await getReleasesAndSearch(newPage, searchTerm);
+        const response = await getSelectedTableReleases(tableSelected, newPage, searchTerm);
         setReleasesPage(response);
         setLoading(false);
     };

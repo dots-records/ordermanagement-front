@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Typography, Box, Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField } from '@mui/material';
 import { putReleaseFromDiscogs } from '../../../../services/releaseService';
-import { getReleasesAndSearch } from '../../functions/Functions';
+import { getSelectedTableReleases } from '../../functions/Functions';
 
-const TableAdd = ({ setReleasesPage, setLoading } ) => {
+
+const TableAdd = ({ setReleasesPage, setLoading, tableSelected } ) => {
     const [open, setOpen] = useState(false);
     const [inputValue, setInputValue] = useState('');
 
@@ -19,7 +20,7 @@ const TableAdd = ({ setReleasesPage, setLoading } ) => {
         setOpen(false);
         setLoading(true)
         await putReleaseFromDiscogs(inputValue)
-        const response = await getReleasesAndSearch(0, "")
+        const response = await getSelectedTableReleases(tableSelected, 0, "");
         setReleasesPage(response)
         setInputValue("")
         setLoading(false)
