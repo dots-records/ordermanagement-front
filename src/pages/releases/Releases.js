@@ -5,7 +5,7 @@ import DotsDrawer from '../../globalComponents/drawer/DotsDrawer';
 import DotsAppBar from '../../globalComponents/app_bar/DotsAppBar';
 import { appBarHeight } from '../../config/constants';
 import BoxReleases from './components/BoxReleases'
-import { getReleasesAndSearch } from './functions/Functions';
+import { getSelectedTableReleases } from './functions/Functions';
 
 const Releases = () => {
     const [loading, setLoading] = useState(true);
@@ -14,7 +14,7 @@ const Releases = () => {
     useEffect(() => {
                 const fetchData = async () => {
                     setLoading(true)
-                    const response = await getReleasesAndSearch(0, "")
+                    const response = await getSelectedTableReleases('Active Releases', 0, "")
                     setReleasesPage(response)
                     setLoading(false)
                 };
