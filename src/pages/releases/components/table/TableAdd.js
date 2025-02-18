@@ -4,7 +4,7 @@ import { putReleaseFromDiscogs } from '../../../../services/releaseService';
 import { getSelectedTableReleases } from '../../functions/Functions';
 
 
-const TableAdd = ({ setReleasesPage, setLoading, tableSelected } ) => {
+const TableAdd = ({ setReleasesPage, setLoading, tableSelected} ) => {
     const [open, setOpen] = useState(false);
     const [inputValue, setInputValue] = useState('');
 
@@ -35,7 +35,7 @@ const TableAdd = ({ setReleasesPage, setLoading, tableSelected } ) => {
                 sx={{
                     position: 'absolute',
                     top: 24,
-                    right: 330,
+                    right:330 ,
                     fontFamily: 'InterSemiBold',
                     fontSize: '13px',
                     backgroundColor: 'rgba(0, 0, 0, 0.03)',

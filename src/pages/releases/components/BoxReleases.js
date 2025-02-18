@@ -5,10 +5,12 @@ import TableReleases from "./table/TableReleases";
 import TableSearcher from "./table/TableSearcher";
 import TableAdd from "./table/TableAdd";
 import TableSelector from "./table/TableSelector";
+import TableReleaseSelection from "./table/TableReleaseSelection";
 
 const BoxReleases = ({ loading, setLoading, releasesPage, setReleasesPage }) => {
     const [searchTerm, setSearchTerm] = useState();
     const [tableSelected, setTableSelected] = useState('Active Releases');
+    const [releasesSelected, setReleasesSelected] = useState([]);
     return (
         <Box
             sx={{
@@ -29,12 +31,21 @@ const BoxReleases = ({ loading, setLoading, releasesPage, setReleasesPage }) => 
             <TableReleases 
                 releases={releasesPage?.content} 
                 loading={loading}
+                releasesSelected ={releasesSelected}
+                setReleasesSelected ={setReleasesSelected}
             />
 
             <TableAdd 
                 setLoading={setLoading} 
                 setReleasesPage={setReleasesPage} 
                 tableSelected={tableSelected}
+                
+            />
+
+            <TableReleaseSelection 
+                releasesSelected={releasesSelected} 
+                setReleasesSelected={setReleasesSelected} 
+                
             />
 
             <Pagination 
