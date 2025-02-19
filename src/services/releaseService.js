@@ -83,3 +83,37 @@ export const searchAllReleases = async ( page, search) => {
         throw err;
     }
 };
+
+export const deleteReleases = async (releasesSelected) => {
+    try {
+        await api.post(`dots/deleteReleases`, releasesSelected, {
+            headers: { 'Content-Type': 'application/json' }
+        });
+    } catch (err) {
+        console.error(err);
+        throw err;
+    }
+};
+
+export const archiveReleases = async (releasesSelected) => {
+    try {
+        await api.post(`dots/archiveReleases`, releasesSelected, {
+            headers: { 'Content-Type': 'application/json' }
+        });
+    } catch (err) {
+        console.error(err);
+        throw err;
+    }
+};
+
+export const unarchiveReleases = async (releasesSelected) => {
+    try {
+        await api.post(`dots/unarchiveReleases`, releasesSelected, {
+            headers: { 'Content-Type': 'application/json' }
+        });
+    } catch (err) {
+        console.error(err);
+        throw err;
+    }
+};
+

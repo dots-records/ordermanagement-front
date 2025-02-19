@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { IconButton, Box, Typography } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import { getReleasesAndSearch } from '../../functions/Functions';
+import { getSelectedTableReleases } from '../../functions/Functions';
 
 const Pagination = ({tableSelected, releasesPage, loading, setLoading, setReleasesPage, searchTerm }) => {
 

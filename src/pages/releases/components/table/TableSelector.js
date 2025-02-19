@@ -3,7 +3,7 @@ import { Typography, Box, Menu, MenuItem } from '@mui/material';
 import { ArrowDropDown } from '@mui/icons-material';
 import { getSelectedTableReleases } from '../../functions/Functions';
 
-const TableSelector = ({ setLoading, setTableSelected, tableSelected, setReleasesPage, searchTerm, setSearchTerm}) => {
+const TableSelector = ({ setLoading, setTableSelected, tableSelected, setReleasesPage, searchTerm, setSearchTerm, setReleasesSelected}) => {
     const [anchorSel, setAnchorSel] = useState(null);
   
     const handleClickSel = (event) => {
@@ -13,6 +13,7 @@ const TableSelector = ({ setLoading, setTableSelected, tableSelected, setRelease
     const handleCloseSel = async (selection) => {
       setTableSelected(selection);
       setSearchTerm()
+      setReleasesSelected([]);
       setAnchorSel(null); // Cierra el menú
       setLoading(true);
       const response = await getSelectedTableReleases(selection, 0, "");

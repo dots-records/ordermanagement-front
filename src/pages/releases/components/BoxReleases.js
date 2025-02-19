@@ -23,7 +23,8 @@ const BoxReleases = ({ loading, setLoading, releasesPage, setReleasesPage }) => 
             }}
         >
             <TableSelector setLoading={setLoading} setTableSelected={setTableSelected} 
-            setReleasesPage={setReleasesPage} tableSelected={tableSelected} searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>
+            setReleasesPage={setReleasesPage} tableSelected={tableSelected} searchTerm={searchTerm} setSearchTerm={setSearchTerm}
+            setReleasesSelected ={setReleasesSelected}/>
  
             <TableSearcher setReleasesPage={setReleasesPage} setLoading = {setLoading} 
                   setSearchTerm={setSearchTerm} tableSelected={tableSelected} />
@@ -40,11 +41,15 @@ const BoxReleases = ({ loading, setLoading, releasesPage, setReleasesPage }) => 
                 setReleasesPage={setReleasesPage} 
                 tableSelected={tableSelected}
                 
+                
             />
 
             <TableReleaseSelection 
                 releasesSelected={releasesSelected} 
                 setReleasesSelected={setReleasesSelected} 
+                setReleasesPage={setReleasesPage}
+                tableSelected={tableSelected}
+                setLoading={setLoading}
                 
             />
 
