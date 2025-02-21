@@ -1,5 +1,14 @@
 import api from '../api/axiosConfig';
 
+export const getRelease = async (releaseId) => {
+    try {
+        const response = await api.get(`dots/getRelease/${releaseId}`);
+        return response.data;
+    } catch (error) {
+      console.error('Error:', error);
+    } 
+};
+
 export const getAllReleases = async (page) => {
     try {
         const response = await api.get(`dots/getAllReleases/page=${page}&size=50`);

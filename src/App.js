@@ -7,6 +7,7 @@ import Home from './pages/home/Home';
 import Orders from './pages/orders/Orders';
 import Order from './pages/order_page/Order';
 import Releases from './pages/releases/Releases';
+import Release from './pages/release_page/Release';
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
           <Route path="orders" element={<Orders />} />
           <Route path="orders/:orderId" element={<Order />} />
           <Route path="releases" element={<Releases />} />
+          <Route path="releases/:releaseId" element={<Release />} />
         </Route>
       </Routes>
     </div>
