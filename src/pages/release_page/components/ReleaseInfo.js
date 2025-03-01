@@ -31,6 +31,13 @@ const ReleaseInfo = ({ release, loading }) => {
             >
                 {release?.title}
             </Typography>
+            <Typography sx={{ textAlign: 'left', fontFamily: 'InterSemiBold', fontSize: '12px', color: 'rgba(0,0,0,0.5)' }}>
+                {release.artists.map(artist => artist.name).join(', ')}
+            </Typography>
+            <Typography sx={{ textAlign: 'left', fontFamily: 'InterBold', fontSize: '16px', color: 'rgba(0,0,0,0.70)' }}>{release.formats.map(format => format.name).join(', ')}</Typography>
+            <Typography sx={{ textAlign: 'left', fontFamily: 'InterSemiBold', fontSize: '12px', color: 'rgba(0,0,0,0.5)' }}>
+                {release.formats.map(format => format.descriptions.join(', ')).join(' | ')}
+            </Typography>
 
             {images.length > 0 && (
                 <>

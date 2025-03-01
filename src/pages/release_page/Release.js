@@ -4,23 +4,26 @@ import {Box } from '@mui/material';
 import { appBarHeight } from '../../config/constants';
 import {useState, useEffect} from 'react';
 import { useParams } from 'react-router-dom';
-import { getRelease } from '../../services/releaseService';
+import { getRelease, getListings} from '../../services/releaseService';
 import ReleaseInfo from './components/ReleaseInfo';
+import ReleaseListings from './components/ReleaseListings';
 
 
 const Release = () => {
 
     const { releaseId } = useParams();
     const [release, setRelease] = useState();
+    const [listings, setListings] = useState();
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchData = async () => {
                 try {
                     console.log(releaseId)
-                    const data = await getRelease(releaseId);
-                    
-                    setRelease(data);
+                    const dataReleases = await getRelease(releaseId);
+                    setRelease(dataReleases);
+                    const dataListings = await getListings(releaseId);
+                    setListings(dataListings);
                     setLoading(false)
                 } catch(err) {
                     console.log(err);
@@ -41,9 +44,8 @@ const Release = () => {
                       boxShadow: 'none',
                   }}
               >
-                 <ReleaseInfo release = {release} loading={loading}>
-
-                 </ReleaseInfo>
+                 <ReleaseInfo release = {release} loading={loading} />
+                 <ReleaseListings listings = {listings} loading={loading} />
               </Box>
           </Box>
         
