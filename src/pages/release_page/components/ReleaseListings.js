@@ -3,6 +3,7 @@ import Typography from '@mui/material/Typography';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
+import ListingAdd from './ListingAdd';
 
 const ReleaseListings = ({ listings, loading }) => {
     if (loading) {
@@ -10,7 +11,10 @@ const ReleaseListings = ({ listings, loading }) => {
     }
 
     return (
-        <Box className="box-container" sx={{ p: 2 }}>
+        <Box className="box-container" sx={{ width: "400px"}}>
+              <Box sx={{ display: 'flex', justifyContent: 'flex-end', border: "1px solid black" }}>
+        <ListingAdd />
+    </Box>
             <Typography
                 sx={{
                     textAlign: 'left',
@@ -19,7 +23,7 @@ const ReleaseListings = ({ listings, loading }) => {
                     mb: 2,
                 }}
             >
-                Listado de Releases
+                Anuncios
             </Typography>
             <List>
                 {listings.map((listing, index) => (
