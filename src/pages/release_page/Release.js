@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom';
 import { getRelease, getListings } from '../../services/releaseService';
 import ReleaseInfo from './components/ReleaseInfo';
 import ReleaseListings from './components/ReleaseListings';
+import ReleaseProviders from './components/ReleaseProviders';
 
 const Release = () => {
     const { releaseId } = useParams();
@@ -42,9 +43,10 @@ const Release = () => {
                     boxShadow: 'none',
                 }}
             >
-                <Box sx={{ display: 'flex', flexDirection: 'row', gap: 2 }}>
+                <Box sx={{ display: 'flex', flexDirection: 'row', gap: 2 , alignItems: 'flex-start'}}>
                     <ReleaseInfo release={release} loading={loading} />
                     <ReleaseListings listings={listings} loading={loading} />
+                    <ReleaseProviders />
                 </Box>
             </Box>
         </Box>

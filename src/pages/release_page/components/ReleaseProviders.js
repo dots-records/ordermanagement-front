@@ -4,8 +4,9 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import ListingAdd from './ListingAdd';
+import ProviderAdd from './ProviderAdd';
 
-const ReleaseListings = ({ listings, loading }) => {
+const ReleaseProviders = ({ listings, loading }) => {
     if (loading) {
         return <Typography>Cargando...</Typography>;
     }
@@ -20,30 +21,16 @@ const ReleaseListings = ({ listings, loading }) => {
                         fontSize: 19,
                     }}
                 >
-                    Listings
+                    Providers
                 </Typography>
                 <Box sx={{ ml: "auto" }}>  
-                    <ListingAdd />
+                    <ProviderAdd />
                 </Box>
             </Box>
         
-            <List sx={{border: "1px solid black"}}>
-                {listings.map((listing, index) => (
-                    <ListItem 
-                        key={index} 
-                        sx={{ borderBottom: '1px solid #ddd', cursor: 'pointer', border: "1px solid black" }} 
-                        onClick={() => window.open(listing.url, '_blank')}
-                    >
-                        <ListItemText
-                            primary={`ID: ${listing.releaseId} - Tipo: ${listing.type}`}
-                            secondary={listing.url}
-                            sx={{border: "1px solid black"}}
-                        />
-                    </ListItem>
-                ))}
-            </List>
+            
         </Box>
     );
 };
 
-export default ReleaseListings;
+export default ReleaseProviders;

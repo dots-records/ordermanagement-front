@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Typography, Box, Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 
-const ListingAdd = () => {
+const ProviderAdd = () => {
     const [open, setOpen] = useState(false);
     const [inputValue, setInputValue] = useState('');
 
@@ -49,4 +49,4 @@ const ListingAdd = () => {
     );
 };
 
-export default ListingAdd;
+export default ProviderAdd;
