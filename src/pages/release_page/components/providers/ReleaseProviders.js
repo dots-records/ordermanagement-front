@@ -3,17 +3,15 @@ import Typography from '@mui/material/Typography';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
-import ListingAdd from './ListingAdd';
 import ProviderAdd from './ProviderAdd';
+import ProviderTable from './ProviderTable';
 
-const ReleaseProviders = ({ listings, loading }) => {
-    if (loading) {
-        return <Typography>Cargando...</Typography>;
-    }
+const ReleaseProviders = ({ providers, loading }) => {
+    
 
     return (
-        <Box className="box-container" sx={{ width: "400px"}}>
-            <Box sx={{ display: 'flex',mb:2, border: "1px solid black"}}>
+        <Box className="box-container" sx={{ width: '400px' }}>
+            <Box sx={{ display: 'flex', mb: 2, border: '1px solid black' }}>
                 <Typography
                     sx={{
                         textAlign: 'left',
@@ -23,12 +21,12 @@ const ReleaseProviders = ({ listings, loading }) => {
                 >
                     Providers
                 </Typography>
-                <Box sx={{ ml: "auto" }}>  
+                <Box sx={{ ml: 'auto' }}>
                     <ProviderAdd />
                 </Box>
             </Box>
-        
-            
+
+            <ProviderTable providers={providers} loading={loading}  />
         </Box>
     );
 };

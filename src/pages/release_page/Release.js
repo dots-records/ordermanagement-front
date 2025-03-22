@@ -4,15 +4,18 @@ import { Box } from '@mui/material';
 import { appBarHeight } from '../../config/constants';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { getRelease, getListings } from '../../services/releaseService';
-import ReleaseInfo from './components/ReleaseInfo';
-import ReleaseListings from './components/ReleaseListings';
-import ReleaseProviders from './components/ReleaseProviders';
+import { getRelease } from '../../services/releaseService';
+import { getListings } from '../../services/listingService';
+import { getProviders } from '../../services/providerService';
+import ReleaseInfo from './components/information/ReleaseInfo';
+import ReleaseListings from './components/listings/ReleaseListings';
+import ReleaseProviders from './components/providers/ReleaseProviders';
 
 const Release = () => {
     const { releaseId } = useParams();
     const [release, setRelease] = useState();
     const [listings, setListings] = useState();
+    const [providers, setProviders] = useState();
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -23,6 +26,8 @@ const Release = () => {
                 setRelease(dataReleases);
                 const dataListings = await getListings(releaseId);
                 setListings(dataListings);
+                const dataProviders = await getProviders(releaseId);
+                setProviders(dataProviders);
                 setLoading(false);
             } catch (err) {
                 console.log(err);
@@ -46,7 +51,7 @@ const Release = () => {
                 <Box sx={{ display: 'flex', flexDirection: 'row', gap: 2 , alignItems: 'flex-start'}}>
                     <ReleaseInfo release={release} loading={loading} />
                     <ReleaseListings listings={listings} loading={loading} />
-                    <ReleaseProviders />
+                    <ReleaseProviders providers={providers} loading={loading} />
                 </Box>
             </Box>
         </Box>
