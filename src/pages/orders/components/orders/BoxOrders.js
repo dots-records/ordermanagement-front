@@ -6,7 +6,7 @@ import TableFilter from './table/TableFilter';
 import TableSearcher from './table/TableSearcher';
 import Pagination from './table/Pagination';
 
-const BoxOrders = ({ loading, setLoading, ordersPage, setOrdersPage}) => {
+const BoxOrders = ({ loading, setLoading, ordersPage, setOrdersPage, timeAgo}) => {
     const [filter, setFilter] = useState('All');
     const [tableSelected, setTableSelected] = useState('Active Orders');
     const [searchTerm, setSearchTerm] = useState();
@@ -22,6 +22,22 @@ const BoxOrders = ({ loading, setLoading, ordersPage, setOrdersPage}) => {
             position: 'relative' // Agrega position relative al contenedor de la tabla
             }}
         >
+            {!loading && timeAgo && (
+                <Box
+                    sx={{
+                        textDecoration: 'none',
+                        position: 'absolute', // Posición absoluta
+                        top: 48, // Ajusta la distancia desde el borde superior
+                        left: 18, // Ajusta la distancia desde el borde derecho
+                        fontFamily: 'InterRegular',
+                        fontSize: '12px',
+                        color: 'rgba(0,0,0,0.5)', // Color del texto normal
+                    }}
+                >
+                    Discogs Update: {timeAgo}
+                </Box>
+            )}
+
             <TableSelector setLoading={setLoading} setTableSelected={setTableSelected} 
             setOrdersPage={setOrdersPage} tableSelected={tableSelected} searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>
             <TableFilter filter = {filter} setFilter = {setFilter}/>

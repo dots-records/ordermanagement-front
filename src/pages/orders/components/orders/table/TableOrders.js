@@ -23,8 +23,8 @@ const TableOrders = ({tableSelected, loading, setOrdersPage, numberPage, orders,
                 sx={{ 
                     display: 'flex', 
                     width: 1176, 
-                    mt: 2, 
-                    height: 470,
+                    mt: 2.5, 
+                    height: 500,
                     justifyContent: 'center',
                     alignItems: 'center',  
                 }}
@@ -41,8 +41,8 @@ const TableOrders = ({tableSelected, loading, setOrdersPage, numberPage, orders,
             sx={{ 
                 width: 1176,
                 mx: 'auto', 
-                height: 470,
-                mt: 2, 
+                height: 500,
+                mt: 2.5, 
                 overflowY: 'auto',
                 '&::-webkit-scrollbar': {
                     width: '2px',
@@ -59,7 +59,7 @@ const TableOrders = ({tableSelected, loading, setOrdersPage, numberPage, orders,
                                 width: '10px' 
                             }}
                         >
-                            Number
+                            Id
                         </TableCell>
                         <TableCell 
                             sx={{ 
@@ -198,7 +198,7 @@ const TableOrders = ({tableSelected, loading, setOrdersPage, numberPage, orders,
                           display: 'inline-block',
                         }}
                       >
-                        {order.number}
+                        {order.id}
                       </Box>
                     </Badge>
                   )}
@@ -217,7 +217,7 @@ const TableOrders = ({tableSelected, loading, setOrdersPage, numberPage, orders,
                         display: 'inline-block',
                       }}
                     >
-                      {order.number}
+                      {order.id}
                     </Box>
                   )}
                 </TableCell>

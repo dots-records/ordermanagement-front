@@ -1,4 +1,6 @@
-import { getUnarchivedOrders, getArchivedOrders, getAllOrders, searchUnarchivedOrders, searchArchivedOrders, searchAllOrders } from "../../../services/orderService";
+import { getUnarchivedOrders, getArchivedOrders, 
+    getAllOrders, searchUnarchivedOrders, 
+    searchArchivedOrders, searchAllOrders, getOrdersInformation} from "../../../services/orderService";
 
 
 
@@ -34,4 +36,9 @@ export const getSelectedTableOrders = async (selectedTable, numberPage, searchTe
         }
         
     }
+}
+
+export const getLastUpdateDiscogs = async () => {
+    const response = await getOrdersInformation();
+    return response;      
 }

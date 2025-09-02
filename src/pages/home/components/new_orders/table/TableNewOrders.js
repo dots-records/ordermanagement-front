@@ -208,7 +208,7 @@ const TableNewOrders = ({ newOrders, loading, setNewOrders }) => {
                           display: 'inline-block',
                         }}
                       >
-                        {order.number}
+                        {order.id}
                       </Box>
                     </Badge>
                   )}
@@ -227,7 +227,7 @@ const TableNewOrders = ({ newOrders, loading, setNewOrders }) => {
                         display: 'inline-block',
                       }}
                     >
-                      {order.number}
+                      {order.id}
                     </Box>
                   )}
                 </TableCell>

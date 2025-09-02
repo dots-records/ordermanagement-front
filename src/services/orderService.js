@@ -144,3 +144,12 @@ export const sendMessage = async (orderId, message) => {
        console.error('Error:', error);
     }
  };
+
+ export const getOrdersInformation = async () => {
+    try {
+        const response = await api.get(`dots/getOrdersInformation`);
+        return response.data;
+    } catch (error) {
+       console.error('Error:', error);
+    }
+ };
