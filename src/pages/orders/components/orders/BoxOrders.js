@@ -31,7 +31,7 @@ const BoxOrders = ({ loading, setLoading, ordersPage, setOrdersPage, timeAgo}) =
                         left: 18, // Ajusta la distancia desde el borde derecho
                         fontFamily: 'InterRegular',
                         fontSize: '12px',
-                        color: 'rgba(0,0,0,0.5)', // Color del texto normal
+                        color: 'rgba(0,0,0,0.6)', // Color del texto normal
                     }}
                 >
                     Discogs Update: {timeAgo}

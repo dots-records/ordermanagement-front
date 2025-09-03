@@ -51,7 +51,8 @@ const Release = () => {
                 <Box sx={{ display: 'flex', flexDirection: 'row', gap: 2 , alignItems: 'flex-start'}}>
                     <ReleaseInfo release={release} loading={loading} />
                     <ReleaseListings listings={listings} loading={loading} />
-                    <ReleaseProviders providers={providers} loading={loading} />
+                    <ReleaseProviders providers={providers} loading={loading} releaseId={releaseId}
+                     setProviders={setProviders} setLoading={setLoading}/>
                 </Box>
             </Box>
         </Box>

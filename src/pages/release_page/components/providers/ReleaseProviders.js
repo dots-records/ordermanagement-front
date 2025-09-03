@@ -6,12 +6,12 @@ import ListItemText from '@mui/material/ListItemText';
 import ProviderAdd from './ProviderAdd';
 import ProviderTable from './ProviderTable';
 
-const ReleaseProviders = ({ providers, loading }) => {
+const ReleaseProviders = ({ providers, loading, releaseId, setProviders, setLoading }) => {
     
 
     return (
         <Box className="box-container" sx={{ width: '400px' }}>
-            <Box sx={{ display: 'flex', mb: 2, border: '1px solid black' }}>
+            <Box sx={{ display: 'flex', mb: 2}}>
                 <Typography
                     sx={{
                         textAlign: 'left',
@@ -22,11 +22,12 @@ const ReleaseProviders = ({ providers, loading }) => {
                     Providers
                 </Typography>
                 <Box sx={{ ml: 'auto' }}>
-                    <ProviderAdd />
+                    <ProviderAdd releaseId={releaseId} 
+                    setProviders={setProviders} setLoading={setLoading}/>
                 </Box>
             </Box>
 
-            <ProviderTable providers={providers} loading={loading}  />
+            <ProviderTable providers={providers} loading={loading}   />
         </Box>
     );
 };
