@@ -28,13 +28,13 @@ const Pagination = ({tableSelected, releasesPage, loading, setLoading, setReleas
                 disabled={releasesPage?.number === 0 || releasesPage?.totalPages === 0}
                 aria-label="Anterior"
             >
-                <ArrowBackIcon />
+                <ArrowBackIcon sx={{ fontSize: 18 }}/>
             </IconButton>
 
             <Typography
                 sx={{
                     fontFamily: 'InterRegular',
-                    fontSize: '15px',
+                    fontSize: 14,
                     color: 'rgba(0, 0, 0, 0.7)'
                 }}
             >
@@ -46,7 +46,7 @@ const Pagination = ({tableSelected, releasesPage, loading, setLoading, setReleas
                 disabled={releasesPage?.number === releasesPage?.totalPages - 1 || releasesPage?.totalPages === 0}
                 aria-label="Siguiente"
             >
-                <ArrowForwardIcon />
+                <ArrowForwardIcon sx={{ fontSize: 18 }}/>
             </IconButton>
         </Box>
     );

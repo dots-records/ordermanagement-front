@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import {Typography, Box, Menu, MenuItem, Button} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import {Money, AccessTime, LocalShipping, DoNotDisturb, Receipt, Autorenew} from '@mui/icons-material'
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+
 
 import { setActiveOrders, setInactiveOrders, setAllOrders } from '../../../functions/Functions';
 
@@ -120,6 +122,13 @@ const TableFilter = ({filter, setFilter}) => {
                     <Autorenew sx={{ fontSize: 20, color: 'rgba(0,0,0,0.6)' }} />
                     <Typography sx={{ fontSize: 12, fontFamily: 'InterSemiBold', ml: 1 }}>
                         Payment Pending
+                    </Typography>
+                </MenuItem>
+
+                <MenuItem onClick={() => handleClose('Other')}>
+                    <MoreHorizIcon sx={{ fontSize: 20, color: 'rgba(0,0,0,0.6)' }} />
+                    <Typography sx={{ fontSize: 12, fontFamily: 'InterSemiBold', ml: 1 }}>
+                        Other
                     </Typography>
                 </MenuItem>
             </Menu>

@@ -12,7 +12,7 @@ const ReleaseListings = ({ listings, loading }) => {
 
     return (
         <Box className="box-container" sx={{ width: "400px"}}>
-            <Box sx={{ display: 'flex',mb:2, border: "1px solid black"}}>
+            <Box sx={{ display: 'flex',mb:2}}>
                 <Typography
                     sx={{
                         textAlign: 'left',
@@ -27,17 +27,17 @@ const ReleaseListings = ({ listings, loading }) => {
                 </Box>
             </Box>
         
-            <List sx={{border: "1px solid black"}}>
+            <List >
                 {listings.map((listing, index) => (
                     <ListItem 
                         key={index} 
-                        sx={{ borderBottom: '1px solid #ddd', cursor: 'pointer', border: "1px solid black" }} 
+                        sx={{ borderBottom: '1px solid #ddd', cursor: 'pointer'}} 
                         onClick={() => window.open(listing.url, '_blank')}
                     >
                         <ListItemText
                             primary={`ID: ${listing.releaseId} - Tipo: ${listing.type}`}
                             secondary={listing.url}
-                            sx={{border: "1px solid black"}}
+                            
                         />
                     </ListItem>
                 ))}

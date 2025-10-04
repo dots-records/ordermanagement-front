@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'; 
 import { Typography, Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField, MenuItem } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import { createProviderStock, createProviderOnline, getProviders } from "../../../../services/providerService.js"
@@ -20,7 +20,7 @@ const ProviderAdd = ({ releaseId, setProviders, setLoading }) => {
     const [price, setPrice] = useState('');
     const [units, setUnits] = useState('');
     const [link, setLink] = useState('');
-    const [condition, setCondition] = useState('M'); // Default Mint
+    const [condition, setCondition] = useState('M');
 
     const handleOpen = () => setOpen(true);
 
@@ -56,74 +56,87 @@ const ProviderAdd = ({ releaseId, setProviders, setLoading }) => {
         return true;
     };
 
+    // Estilo minimalista para todos los TextField
+    const minimalTextField = {
+        variant: "standard",
+        InputProps: {
+            style: { color: 'black', fontFamily: 'InterRegular' },
+        },
+        InputLabelProps: {
+            style: { color: 'rgba(0,0,0,0.7)', fontFamily: 'InterRegular' },
+        },
+        fullWidth: true,
+        margin: "dense",
+        sx: {
+            '& .MuiInput-underline:before': { borderBottomColor: 'black' },
+            '& .MuiInput-underline:after': { borderBottomColor: 'black' },
+            '& .MuiInput-underline:hover:not(.Mui-disabled):before': { borderBottomColor: 'black' },
+            mb: 1
+        }
+    };
+
     return (
         <>
             <AddIcon 
                 onClick={handleOpen} 
                 sx={{
                     fontSize: 22,
-                    color: 'rgba(0,0,0,0.6)',
+                    color: 'black',
                     cursor: 'pointer',
-                    '&:hover': { color: 'rgba(0, 0, 0, 1)' },
+                    '&:hover': { color: 'gray' },
                 }} 
             />
 
-            <Dialog open={open} onClose={handleClose}>
+            <Dialog 
+                open={open} 
+                onClose={handleClose} 
+                PaperProps={{ sx: { backgroundColor: 'white', color: 'black', borderRadius: 2, p: 2 } }}
+            >
                 <DialogTitle>
-                    <Typography sx={{ textAlign: 'left', fontFamily: 'InterRegular', fontSize: 19 }}>
+                    <Typography sx={{ textAlign: 'left', fontFamily: "InterSemiBold", fontSize: 22 }}>
                         Add Provider
                     </Typography>
                 </DialogTitle>
-                <DialogContent>
+                <DialogContent sx={{ pt: 1 }}>
                     <TextField
                         select
-                        label="Order Type"
-                        fullWidth
+                        label="Provider Type"
                         value={orderType}
                         onChange={(e) => setOrderType(e.target.value)}
-                        margin="dense"
-                        InputProps={{ style: { fontFamily: 'InterRegular' } }}
+                        {...minimalTextField}
                         required
                     >
-                        <MenuItem value="Stock" sx={{ fontFamily: 'InterRegular' }}>Stock</MenuItem>
-                        <MenuItem value="Online" sx={{ fontFamily: 'InterRegular' }}>Online</MenuItem>
+                        <MenuItem value="Stock">Stock</MenuItem>
+                        <MenuItem value="Online">Online</MenuItem>
                     </TextField>
 
                     <TextField
-                        margin="dense"
                         label="Price"
-                        fullWidth
-                        variant="outlined"
                         value={price}
                         onChange={(e) => setPrice(e.target.value)}
-                        InputProps={{ style: { fontFamily: 'InterRegular' } }}
+                        {...minimalTextField}
                         required
                     />
 
                     {orderType === 'Stock' ? (
                         <>
                             <TextField
-                                margin="dense"
                                 label="Units"
-                                fullWidth
-                                variant="outlined"
                                 value={units}
                                 onChange={(e) => setUnits(e.target.value)}
-                                InputProps={{ style: { fontFamily: 'InterRegular' } }}
+                                {...minimalTextField}
                                 required
                             />
                             <TextField
                                 select
-                                margin="dense"
                                 label="Condition"
-                                fullWidth
                                 value={condition}
                                 onChange={(e) => setCondition(e.target.value)}
-                                InputProps={{ style: { fontFamily: 'InterRegular' } }}
+                                {...minimalTextField}
                                 required
                             >
                                 {conditionOptions.map((option) => (
-                                    <MenuItem key={option.value} value={option.value} sx={{ fontFamily: 'InterRegular' }}>
+                                    <MenuItem key={option.value} value={option.value}>
                                         {option.label}
                                     </MenuItem>
                                 ))}
@@ -131,27 +144,19 @@ const ProviderAdd = ({ releaseId, setProviders, setLoading }) => {
                         </>
                     ) : (
                         <TextField
-                            margin="dense"
                             label="Link"
-                            fullWidth
-                            variant="outlined"
                             value={link}
                             onChange={(e) => setLink(e.target.value)}
-                            InputProps={{ style: { fontFamily: 'InterRegular' } }}
+                            {...minimalTextField}
                             required
                         />
                     )}
                 </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleClose} color="secondary" sx={{ fontFamily: 'InterSemiBold' }}>
+                <DialogActions sx={{ px: 0, pt: 1 }}>
+                    <Button onClick={handleClose} sx={{ color: 'black', fontFamily: 'InterSemiBold' }}>
                         Cancel
                     </Button>
-                    <Button 
-                        onClick={handleSave} 
-                        color="primary" 
-                        sx={{ fontFamily: 'InterSemiBold' }}
-                        disabled={!isFormValid()}
-                    >
+                    <Button onClick={handleSave} sx={{ color: 'black', fontFamily: 'InterSemiBold' }} disabled={!isFormValid()}>
                         Save
                     </Button>
                 </DialogActions>

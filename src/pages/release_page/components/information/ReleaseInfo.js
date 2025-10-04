@@ -49,8 +49,7 @@ const ReleaseInfo = ({ release, loading }) => {
                         mt: 2, 
                         display: "flex", 
                         flexDirection: "column", 
-                        alignItems: "center",
-                        border: "1px solid black"
+                        alignItems: "center"
                     }}
                 >
                     <Box 

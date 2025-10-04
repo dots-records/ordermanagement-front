@@ -46,7 +46,7 @@ const InProgressBar = ({ orderId, setOrdersPage, tableSelected, numberPage, sear
             zIndex: 1,
           }}
         >
-          <CircularProgress size={33}/>
+          <CircularProgress size={26}/>
         </Box>
       )}
 
