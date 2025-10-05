@@ -12,6 +12,7 @@ import {
     Typography,
     Badge
 } from '@mui/material';
+import { ArrowDropDown } from '@mui/icons-material';
 
 import { getBoxColor, getBar } from './functions/Functions';
 
@@ -62,6 +63,7 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                         </TableCell>
                         <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.65)', width: '170px' }}>
                             Created
+                            <ArrowDropDown sx={{ fontSize: 18, ml: 0.3,  color: 'rgba(0,0,0,0.65)' }} />
                         </TableCell>
                         <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.65)', width: '80px' }}>
                             Select
@@ -148,7 +150,9 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                                                     fontSize: 12,
                                                     color: 'rgba(0,0,0,0.85)',
                                                     backgroundColor: `${getBoxColor(order.status, order.archived)}0.15)`,
-                                                    border: `1px solid ${getBoxColor(order.status, order.archived)}0.7)`,
+                                                    border: `1px solid ${getBoxColor(order.status, order.archived)}0.75)`,
+                                                    textShadow: order.changed ? '0px 0px 4px rgba(33,150,243,0.15)' : '0px 0px 4px rgba(0,0,0,0.10)',
+                                                
                                                     borderRadius: 2,
                                                     textAlign: 'center',
                                                     py: 0.5,
@@ -177,7 +181,9 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                                                 fontSize: 12,
                                                 color: 'rgba(0,0,0,0.85)',
                                                 backgroundColor: `${getBoxColor(order.status, order.archived)}0.15)`,
-                                                border: `1px solid ${getBoxColor(order.status, order.archived)}0.7)`,
+                                                border: `1px solid ${getBoxColor(order.status, order.archived)}0.75)`,
+                                                textShadow: order.changed ? '0px 0px 4px rgba(33,150,243,0.15)' : '0px 0px 4px rgba(0,0,0,0.10)',
+                                                
                                                 borderRadius: 2,
                                                 textAlign: 'center',
                                                 py: 0.5,
@@ -200,29 +206,56 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                                     )}
                                 </TableCell>
 
-                                <TableCell sx={{ maxWidth: '200px' }}>
-                                    <Typography 
-                                        sx={{ 
-                                            fontFamily: 'InterBold',
-                                            fontSize: 14.5,
-                                            color: 'rgba(0,0,0,0.70)', 
-                                            overflow: 'hidden',
-                                            textOverflow: 'ellipsis',
-                                            whiteSpace: 'normal',
-                                            wordBreak: 'break-word',
-                                        }}
-                                    >
-                                        {order.items.map(item => item.name).join(', ')}
-                                    </Typography>
-                                    <Typography 
-                                        sx={{ 
+                                <TableCell sx={{ maxWidth: '200px', position: 'relative' }}>
+                                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                        {order.changed && (
+                                            <Box
+                                                sx={{
+                                                    width: 8,
+                                                    height: 8,
+                                                    borderRadius: '50%',
+                                                    mt: 0.07,
+                                                    background: 'linear-gradient(135deg, #42a5f5, #1e88e5)',
+                                                    boxShadow: '0 0 6px rgba(33,150,243,0.6)',
+                                                    animation: 'pulse 1.8s infinite ease-in-out',
+                                                    '@keyframes pulse': {
+                                                        '0%': { transform: 'scale(0.8)', opacity: 1 },
+                                                        '50%': { transform: 'scale(1)', opacity: 0.5 },
+                                                        '100%': { transform: 'scale(0.8)', opacity: 1 },
+                                                    },
+                                                }}
+                                            />
+                                        )}
+
+                                        <Typography
+                                            sx={{
+                                                fontFamily: 'InterBold',
+                                                fontSize: 14.5,
+                                                color: order.changed ? '#2f65b7ff' : 'rgba(0,0,0,0.75)',
+                                                textShadow: order.changed ? '0px 0px 4px rgba(33,150,243,0.15)' : '0px 0px 4px rgba(0,0,0,0.10)',
+                                                borderRadius: 1,
+                                                transition: 'all 0.25s ease-in-out',
+                                                overflow: 'hidden',
+                                                textOverflow: 'ellipsis',
+                                                whiteSpace: 'normal',
+                                                wordBreak: 'break-word',
+                                            }}
+                                        >
+                                            {order.items.map(item => item.name).join(', ')}
+                                        </Typography>
+                                    </Box>
+
+                                    <Typography
+                                        sx={{
                                             fontFamily: 'InterSemiBold',
                                             fontSize: 12,
-                                            color: 'rgba(0,0,0,0.5)', 
+                                            color: order.changed ? 'rgba(13, 71, 161, 0.7)' : 'rgba(0,0,0,0.5)',
+                                            transition: 'color 0.3s ease-in-out',
                                             overflow: 'hidden',
                                             textOverflow: 'ellipsis',
                                             whiteSpace: 'normal',
                                             wordBreak: 'break-word',
+                                            mt: 0.2,
                                         }}
                                     >
                                         {order.items.map(item => item.artists.map(artist => artist.name)).join(', ')}

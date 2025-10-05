@@ -15,7 +15,7 @@ const BoxNewOrders = ({newOrders, loading, setNewOrders}) => {
                         fontSize: 19, // Tamaño de la fuente
                     }}
                 >
-                    New Orders
+                    Changes
                 </Typography>
                 <TableNewOrders
                 setNewOrders={setNewOrders}

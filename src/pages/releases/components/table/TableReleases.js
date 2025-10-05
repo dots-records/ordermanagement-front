@@ -111,13 +111,14 @@ const TableReleases = ({ loading, releases, releasesSelected, setReleasesSelecte
                                         />
                                     </TableCell>
                                     <TableCell>
-                                        <Typography sx={{ fontFamily: 'InterBold', fontSize: 14.5 , color: 'rgba(0,0,0,0.70)' }}>{release.title}</Typography>
-                                        <Typography sx={{ fontFamily: 'InterSemiBold', fontSize: 12, color: 'rgba(0,0,0,0.5)' }}>
+                                        <Typography sx={{ fontFamily: 'InterBold', fontSize: 14.5 , color: 'rgba(0,0,0,0.70)', textShadow:  '0px 0px 4px rgba(0,0,0,0.10)'}}>{release.title}</Typography>
+                                        <Typography sx={{ fontFamily: 'InterSemiBold', fontSize: 12, color: 'rgba(0,0,0,0.5)',
+                                                 }}>
                                             {release.artists.map(artist => artist.name).join(', ')}
                                         </Typography>
                                     </TableCell>
                                     <TableCell>
-                                        <Typography sx={{ fontFamily: 'InterBold', fontSize: 14.5, color: 'rgba(0,0,0,0.70)' }}>{release.formats.map(format => format.name).join(', ')}</Typography>
+                                        <Typography sx={{ fontFamily: 'InterBold', fontSize: 14.5, color: 'rgba(0,0,0,0.70)',  textShadow:  '0px 0px 4px rgba(0,0,0,0.10)' }}>{release.formats.map(format => format.name).join(', ')}</Typography>
                                         <Typography sx={{ fontFamily: 'InterSemiBold', fontSize: 12, color: 'rgba(0,0,0,0.5)' }}>
                                             {release.formats.map(format => format.descriptions.join(', ')).join(' | ')}
                                         </Typography>

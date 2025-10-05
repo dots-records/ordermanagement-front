@@ -35,7 +35,7 @@ const Pagination = ({ tableSelected, ordersPage, loading, setLoading, setOrdersP
                 sx={{
                     fontFamily: 'InterRegular',
                     fontSize: 14,
-                    color: 'rgba(0, 0, 0, 0.7)'
+                    color: 'rgba(0, 0, 0, 0.8)'
                 }}
             >
                 {`${currentPage} de ${totalPages}`}
