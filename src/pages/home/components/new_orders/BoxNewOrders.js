@@ -17,11 +17,7 @@ const BoxNewOrders = ({newOrders, loading, setNewOrders}) => {
                 >
                     Changes
                 </Typography>
-                <TableNewOrders
-                setNewOrders={setNewOrders}
-                    newOrders={newOrders}
-                    loading={loading}
-                />
+                
             </Box>
     );
 };

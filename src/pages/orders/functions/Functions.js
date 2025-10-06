@@ -1,6 +1,7 @@
 import { getUnarchivedOrders, getArchivedOrders, 
     getAllOrders, searchUnarchivedOrders, 
-    searchArchivedOrders, searchAllOrders, getOrdersInformation} from "../../../services/orderService";
+    searchArchivedOrders, searchAllOrders, getOrders, 
+    getOrdersInformation, getOrdersByArchived} from "../../../services/orderService";
 
 
 
@@ -8,7 +9,7 @@ export const getSelectedTableOrders = async (selectedTable, numberPage, searchTe
     console.log('getSelectedTableOrders('+selectedTable+')')
     if(selectedTable == 'Active Orders') {
         if(searchTerm == null || searchTerm === "") {
-            const response = await getUnarchivedOrders(numberPage);
+            const response = await getOrdersByArchived(numberPage, false);
             return response;
         } else{
             const response = await searchUnarchivedOrders(numberPage, searchTerm);
@@ -18,7 +19,7 @@ export const getSelectedTableOrders = async (selectedTable, numberPage, searchTe
     } else if(selectedTable == 'Inactive Orders'){
 
         if(searchTerm == null || searchTerm === "" ) {
-            const response = await getArchivedOrders(numberPage);
+            const response = await getOrdersByArchived(numberPage, true);
             return response;
         } else{
             const response = await searchArchivedOrders(numberPage, searchTerm);
@@ -28,7 +29,7 @@ export const getSelectedTableOrders = async (selectedTable, numberPage, searchTe
         
 
         if(searchTerm == null || searchTerm === "" ) {
-            const response = await getAllOrders(numberPage);
+            const response = await getOrders(numberPage);
             return response;
         } else{
             const response = await searchAllOrders(numberPage, searchTerm);

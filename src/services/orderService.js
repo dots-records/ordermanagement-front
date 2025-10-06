@@ -1,5 +1,14 @@
 import api from '../api/axiosConfig';
 
+export const getOrder = async (orderId) => {
+    try {
+        const response = await api.get(`dots/orders/${orderId}`);
+        return response.data;
+    } catch (error) {
+      console.error('Error:', error);
+    } 
+};
+
 export const getUnarchivedNewOrders = async () => {
     try {
         const response = await api.get('dots/getUnarchivedNewOrders');
@@ -11,9 +20,19 @@ export const getUnarchivedNewOrders = async () => {
 };
 
 
-export const getUnarchivedOrders = async (page) => {
+export const getOrders = async (page) => {
     try {
-        const response = await api.get(`dots/getUnarchivedOrders/page=${page}&size=50`);
+        const response = await api.get(`dots/orders?page=${page}&size=50&archived=false`);
+        return response.data;
+    } catch (err) {
+        console.error('Error al obtener pedidos:', err);
+        throw err;
+    }
+};
+
+export const getOrdersByArchived = async (page, archived) => {
+    try {
+        const response = await api.get(`dots/orders?page=${page}&size=50&archived=${archived}`);
         return response.data;
     } catch (err) {
         console.error('Error al obtener pedidos:', err);
@@ -22,34 +41,10 @@ export const getUnarchivedOrders = async (page) => {
 };
 
 
-export const getArchivedOrders = async (page) => {
-    try {
-        const response = await api.get(`dots/getArchivedOrders/page=${page}&size=50`);
-        return response.data;
-    } catch (err) {
-        console.error(err);
-        throw err;
-    }
-};
 
-export const getAllOrders = async (page) => {
-    try {
-        const response = await api.get(`dots/getAllOrders/page=${page}&size=50`);
-        return response.data;
-    } catch (err) {
-        console.error(err);
-        throw err;
-    }
-};
 
-export const getOrder = async (orderId) => {
-    try {
-        const response = await api.get(`dots/getOrder/${orderId}`);
-        return response.data;
-    } catch (error) {
-      console.error('Error:', error);
-    } 
-};
+
+
 
 export const resetNewMessages = async (orderId) => {
     try {
