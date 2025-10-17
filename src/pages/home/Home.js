@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import DotsAppBar from "../../globalComponents/app_bar/DotsAppBar";
 import DotsDrawer from "../../globalComponents/drawer/DotsDrawer";
-import { getUnarchivedNewOrders } from '../../services/orderService';
 import { getNotifications } from '../../services/notificationService';
 import { appBarHeight } from '../../config/constants';
 import BoxNewOrders from "./components/new_orders/BoxNewOrders";

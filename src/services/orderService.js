@@ -9,37 +9,22 @@ export const getOrder = async (orderId) => {
     } 
 };
 
-export const getUnarchivedNewOrders = async () => {
+export const getOrders = async (page = 1, size = 50, archived = null, search = null) => {
     try {
-        const response = await api.get('dots/getUnarchivedNewOrders');
-        return response.data;
+        let url = `dots/orders?page=${page}&size=${size}`;
+        if (archived !== null) {
+            url += `&archived=${archived}`;
+        }
+        if (search !== null) {
+            url += `&search=${search}`;
+        }
+        const response = await api.get(url);
+        return response.data; 
     } catch (err) {
-        console.error(err);
+        console.error('Error al obtener pedidos:', err.response?.data || err.message);
         throw err;
     }
 };
-
-
-export const getOrders = async (page) => {
-    try {
-        const response = await api.get(`dots/orders?page=${page}&size=50&archived=false`);
-        return response.data;
-    } catch (err) {
-        console.error('Error al obtener pedidos:', err);
-        throw err;
-    }
-};
-
-export const getOrdersByArchived = async (page, archived) => {
-    try {
-        const response = await api.get(`dots/orders?page=${page}&size=50&archived=${archived}`);
-        return response.data;
-    } catch (err) {
-        console.error('Error al obtener pedidos:', err);
-        throw err;
-    }
-};
-
 
 
 
@@ -68,7 +53,7 @@ export const updateMessages = async (orderId) => {
 
 export const updateStatusInProgress = async (orderId) => {
     try {
-       await api.post(`dots/updateStatusOrder/${orderId}/In Progress`);
+       await api.put(`dots/putOrderStatus/${orderId}/In Progress`);
     } catch (error) {
       console.error('Error:', error);
     } 
@@ -76,7 +61,7 @@ export const updateStatusInProgress = async (orderId) => {
 
 export const updateStatusShipping = async (orderId) => {
     try {
-       await api.post(`dots/updateStatusOrder/${orderId}/Shipped`); 
+       await api.put(`dots/putOrderStatus/${orderId}/Shipped`); 
     } catch (error) {
       console.error('Error:', error);
     } 
@@ -95,50 +80,7 @@ export const sendMessage = async (orderId, message) => {
     }
  };
 
- export const searchUnarchivedOrders = async ( page, search) => {
-    try {
-       const response = await api.post(`/dots/searchUnarchivedOrders/page=${page}&size=50`, { search: search }, {
-        headers: {
-            'Content-Type': 'application/json' // Asegúrate de enviar como JSON
-        }
-        
-    });
-    
-       return response.data;
-    } catch (error) {
-       console.error('Error:', error);
-    }
- };
-
- export const searchArchivedOrders = async ( page, search) => {
-    try {
-       const response = await api.post(`/dots/searchArchivedOrders/page=${page}&size=50`, { search: search }, {
-        headers: {
-            'Content-Type': 'application/json' // Asegúrate de enviar como JSON
-        }
-        
-    });
-    
-       return response.data;
-    } catch (error) {
-       console.error('Error:', error);
-    }
- };
-
- export const searchAllOrders = async ( page, search) => {
-    try {
-       const response = await api.post(`/dots/searchAllOrders/page=${page}&size=50`, { search: search }, {
-        headers: {
-            'Content-Type': 'application/json' // Asegúrate de enviar como JSON
-        }
-        
-    });
-    
-       return response.data;
-    } catch (error) {
-       console.error('Error:', error);
-    }
- };
+ 
 
  export const getOrdersInformation = async () => {
     try {

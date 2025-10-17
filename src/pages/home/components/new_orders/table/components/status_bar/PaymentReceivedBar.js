@@ -4,7 +4,7 @@ import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import { Box, CircularProgress } from '@mui/material';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { updateStatusInProgress, updateStatusShipping, getUnarchivedNewOrders } from '../../../../../../../services/orderService';
+import { updateStatusInProgress, updateStatusShipping} from '../../../../../../../services/orderService';
 
 const PaymentReceivedBar = ({ orderId, setNewOrders }) => {
   const [hoverShipping, setHoverShipping] = useState(false);

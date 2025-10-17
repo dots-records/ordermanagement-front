@@ -11,7 +11,6 @@ import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import {
   resetNewMessages,
   updateMessages,
-  getUnarchivedNewOrders,
   getOrder
 } from "../../../../../../../services/orderService";
 import OrderMessages from "./components/messages/OrderMessages";
