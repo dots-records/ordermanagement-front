@@ -53,7 +53,7 @@ export const updateMessages = async (orderId) => {
 
 export const updateStatusInProgress = async (orderId) => {
     try {
-       await api.put(`dots/putOrderStatus/${orderId}/In Progress`);
+       await api.put(`dots/updateStatusOrder/${orderId}/In Progress`);
     } catch (error) {
       console.error('Error:', error);
     } 
@@ -61,7 +61,7 @@ export const updateStatusInProgress = async (orderId) => {
 
 export const updateStatusShipping = async (orderId) => {
     try {
-       await api.put(`dots/putOrderStatus/${orderId}/Shipped`); 
+       await api.put(`dots/updateStatusOrder/${orderId}/Shipped`); 
     } catch (error) {
       console.error('Error:', error);
     } 

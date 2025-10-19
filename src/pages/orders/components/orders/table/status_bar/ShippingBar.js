@@ -13,7 +13,7 @@ const ShippingBar = () => {
         justifyContent: 'center'
       }}
       >
-          <MoneyIcon/>
+          <MoneyIcon sx={{  fontSize: 22 }}/>
           <Box sx={{
             width: 22, // Ancho de la línea
             height: '2.5px', // Grosor de la línea
@@ -21,7 +21,7 @@ const ShippingBar = () => {
             mx: -0.28
           }} 
           />
-          <AccessTimeIcon/>
+          <AccessTimeIcon sx={{  fontSize: 22 }}/>
           <Box sx={{
             width: 22, // Ancho de la línea
             height: '2.5px', // Grosor de la línea
@@ -29,7 +29,7 @@ const ShippingBar = () => {
             mx: -0.28
           }} 
           />
-          <LocalShippingIcon sx={{ marginLeft: 0.088 }} />
+          <LocalShippingIcon sx={{ marginLeft: 0.088, fontSize: 22 }} />
       </Box>
     );
   }

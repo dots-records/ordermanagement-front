@@ -60,10 +60,13 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                         <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.65)' }}>
                             Items
                         </TableCell>
-                        <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.65)', width: '170px' }}>
+                        <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.65)', width: '200px' }}>
+                            Info.
+                        </TableCell>
+                        <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.65)', width: '200px' }}>
                             Status
                         </TableCell>
-                        <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.65)', width: '170px' }}>
+                        <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.65)', width: '180px' }}>
                             Created
                             <ArrowDropDown sx={{ fontSize: 18, ml: 0.3,  color: 'rgba(0,0,0,0.65)' }} />
                         </TableCell>
@@ -127,8 +130,8 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                                             ? 'rgba(33,150,243,0.05)'
                                             : 'rgba(0, 0, 0, 0.05)',
                                         '& .number-box': {
-                                            color: order.changed ? '#1976d2' : 'rgba(0,0,0,1)',
-                                            borderColor: order.changed ? '#1976d2' : 'rgba(0,0,0,0.25)',
+                                            color: order.changed ? '#03386eff' : 'rgba(0,0,0,1)',
+                                            borderColor:  'rgba(0,0,0,0.25)',
                                         },
                                     },
                                 }}
@@ -168,7 +171,7 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                                                     fontSize: 12,
                                                     color: order.changed ? 'rgba(47, 101, 183, 1)': 'rgba(0,0,0,0.85)',
                                                     backgroundColor: order.changed ? 'rgba(33,150,243,0.10)': `${getBoxColor(order.status, order.archived)}0.15)`,
-                                                    border: order.changed ? '1px solid rgba(33,150,243,0.75)': `1px solid ${getBoxColor(order.status, order.archived)}0.75)`,
+                                                    border: order.changed ? '1px solid rgba(33,150,243,0.5)': `1px solid ${getBoxColor(order.status, order.archived)}0.75)`,
                                                     textShadow: order.changed ? '0px 0px 4px rgba(33,150,243,0.15)' : '0px 0px 4px rgba(0,0,0,0.10)',
                                                 
                                                     borderRadius: 2,
@@ -182,7 +185,7 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                                                     transition: 'all 0.2s ease-in-out',
                                                     cursor: 'pointer',
                                                     '&:hover': {
-                                                        backgroundColor: `${getBoxColor(order.status, order.archived)}0.25)`,
+                                                        backgroundColor: order.changed ? 'rgba(33,150,243,0.20)' : `${getBoxColor(order.status, order.archived)}0.25)`,
                                                         boxShadow: '0 2px 6px rgba(0,0,0,0.15)',
                                                         transform: 'translateY(-1px)',
                                                     },
@@ -199,7 +202,7 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                                                 fontSize: 12,
                                                color: order.changed ? 'rgba(47, 101, 183, 1)': 'rgba(0,0,0,0.85)',
                                                     backgroundColor: order.changed ? 'rgba(33,150,243,0.10)': `${getBoxColor(order.status, order.archived)}0.15)`,
-                                                    border: order.changed ? '1px solid rgba(33,150,243,0.75)': `1px solid ${getBoxColor(order.status, order.archived)}0.75)`,
+                                                    border: order.changed ? '1px solid rgba(33,150,243,0.5)': `1px solid ${getBoxColor(order.status, order.archived)}0.75)`,
                                                     textShadow: order.changed ? '0px 0px 4px rgba(33,150,243,0.15)' : '0px 0px 4px rgba(0,0,0,0.10)',
                                                 borderRadius: 2,
                                                 textAlign: 'center',
@@ -212,7 +215,7 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                                                 transition: 'all 0.2s ease-in-out',
                                                 cursor: 'pointer',
                                                 '&:hover': {
-                                                    backgroundColor: `${getBoxColor(order.status, order.archived)}0.25)`,
+                                                    backgroundColor: order.changed ? 'rgba(33,150,243,0.20)' :`${getBoxColor(order.status, order.archived)}0.25)`,
                                                     boxShadow: '0 2px 6px rgba(0,0,0,0.15)',
                                                     transform: 'translateY(-1px)',
                                                 },
@@ -279,6 +282,26 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                                     </Typography>
                                 </TableCell>
                                     
+                                 <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.75)', fontSize: 13 }}>
+                                   <Typography
+                                        sx={{
+                                            fontFamily: 'InterRegular',
+                                            fontSize: 12,
+                                            color: order.changed ? 'rgba(13, 71, 161, 0.7)' : 'rgba(0,0,0,0.5)',
+                                            transition: 'color 0.3s ease-in-out',
+                                            overflow: 'hidden',
+                                            textOverflow: 'ellipsis',
+                                            whiteSpace: 'normal',
+                                            wordBreak: 'break-word',
+                                            mt: 0.2,
+                                        }}
+                                    >
+                                        {order.items.map(item => item.artists.map(artist => artist.name)).join(', ')}
+                                    </Typography>
+                                </TableCell>
+
+                               
+
                                 <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.75)' }}>
                                     <Box sx={{ display: 'flex', justifyContent: 'flex-start' }}>
                                         {getBar(order.status, order.id, tableSelected, setOrdersPage, numberPage, searchTerm)}

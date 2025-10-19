@@ -72,10 +72,10 @@ const PaymentReceivedBar = ({  orderId, setOrdersPage, tableSelected, numberPage
                 zIndex: 1,
               }}
             >
-              <CircularProgress size={33} />
+              <CircularProgress size={20} />
             </Box>
           )}
-          <MoneyIcon />
+          <MoneyIcon sx={{ fontSize: 22}} />
           <Box
             sx={{
               width: 22,
@@ -96,9 +96,10 @@ const PaymentReceivedBar = ({  orderId, setOrdersPage, tableSelected, numberPage
             }}
           >
             <AccessTimeIcon
-              sx={{ color: getProgressIconColor(hoverProgress, hoverShipping) }}
+              sx={{ color: getProgressIconColor(hoverProgress, hoverShipping)
+                ,fontSize: 22
+               }}
             />
-    
           </Box>
           <Box
             sx={{
@@ -123,6 +124,7 @@ const PaymentReceivedBar = ({  orderId, setOrdersPage, tableSelected, numberPage
               sx={{
                 color: hoverShipping ? 'rgba(0, 0, 0, 1)' : 'rgba(0, 0, 0, 0.35)',
                 marginLeft: 0.088,
+                fontSize: 22
               }}
             />
             

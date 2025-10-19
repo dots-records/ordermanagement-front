@@ -46,11 +46,11 @@ const InProgressBar = ({ orderId, setOrdersPage, tableSelected, numberPage, sear
             zIndex: 1,
           }}
         >
-          <CircularProgress size={26}/>
+          <CircularProgress size={20}/>
         </Box>
       )}
 
-      <MoneyIcon />
+      <MoneyIcon sx={{ fontSize: 22}} />
 
       <Box
         sx={{
@@ -61,7 +61,7 @@ const InProgressBar = ({ orderId, setOrdersPage, tableSelected, numberPage, sear
         }}
       />
 
-      <AccessTimeIcon />
+      <AccessTimeIcon sx={{ fontSize: 22}} />
 
       <Box
         sx={{
@@ -89,7 +89,9 @@ const InProgressBar = ({ orderId, setOrdersPage, tableSelected, numberPage, sear
           sx={{
             color: hover ? 'rgba(0, 0, 0, 1)' : 'rgba(0, 0, 0, 0.35)',
             marginLeft: 0.088,
+            fontSize: 22
           }}
+          
         />
       </Box>
     </Box>
