@@ -45,54 +45,54 @@ export const getBar = (status, orderId, tableSelected, setOrdersPage, numberPage
             return <ShippingBar />;
         case 'Cancelled (Per Buyer\'s Request)':
             return (
-                <Box sx={{ ...boxSx, mr: 3.9 }}>
-                    <DoNotDisturbIcon fontSize="small" />
-                    <Typography sx={{ fontFamily: 'InterSemiBold', fontSize: 12, textAlign: 'center' }}>
+                <Box sx={{ ...boxSx}}>
+                    <DoNotDisturbIcon fontSize="small"/>
+                    <Typography sx={{ fontFamily: 'InterSemiBold', fontSize: 12, textAlign: 'center', mt: 0.5 }}>
                         Cancelled (Per Buyer's Request)
                     </Typography>
                 </Box>
             );
         case 'Cancelled (Non-Paying Buyer)':
             return (
-                <Box sx={{ ...boxSx, mr: 3.9 }}>
+                <Box sx={{ ...boxSx }}>
                     <DoNotDisturbIcon fontSize="small" />
-                    <Typography sx={{ fontFamily: 'InterSemiBold', fontSize: 12, textAlign: 'center' }}>
+                    <Typography sx={{ fontFamily: 'InterSemiBold', fontSize: 12, textAlign: 'center', mt: 0.5  }}>
                         Cancelled (Non-Paying Buyer)
                     </Typography>
                 </Box>
             );
         case 'Cancelled (Item Unavailable)':
             return (
-                <Box sx={{ ...boxSx, mr: 3.9 }}>
+                <Box sx={{ ...boxSx }}>
                     <DoNotDisturbIcon fontSize="small" />
-                    <Typography sx={{ fontFamily: 'InterSemiBold', fontSize: 12, textAlign: 'center' }}>
+                    <Typography sx={{ fontFamily: 'InterSemiBold', fontSize: 12, textAlign: 'center', mt: 0.5  }}>
                         Cancelled (Item Unavailable)
                     </Typography>
                 </Box>
             );
         case 'Invoice Sent':
             return (
-                <Box sx={{ ...boxSx, ml: 1.9 }}>
+                <Box sx={{ ...boxSx }}>
                     <ReceiptIcon fontSize="small" />
-                    <Typography sx={{ fontFamily: 'InterSemiBold', fontSize: 12, textAlign: 'center' }}>
+                    <Typography sx={{ fontFamily: 'InterSemiBold', fontSize: 12, textAlign: 'center', mt: 0.5 }}>
                         Invoice Sent
                     </Typography>
                 </Box>
             );
         case 'Payment Pending':
             return (
-                <Box sx={{ ...boxSx, mr: 4 }}>
+                <Box sx={{ ...boxSx }}>
                     <AutorenewIcon fontSize="small" />
-                    <Typography sx={{ fontFamily: 'InterSemiBold', fontSize: 12, textAlign: 'center' }}>
+                    <Typography sx={{ fontFamily: 'InterSemiBold', fontSize: 12, textAlign: 'center', mt: 0.5 }}>
                         Payment Pending
                     </Typography>
                 </Box>
             );
         case 'Other':
             return (
-                <Box sx={{ ...boxSx, ml: 4.5 }}>
+                <Box sx={{ ...boxSx }}>
                     <MoreHorizIcon fontSize="small" />
-                    <Typography sx={{ fontFamily: 'InterSemiBold', fontSize: 12, textAlign: 'center' }}>
+                    <Typography sx={{ fontFamily: 'InterSemiBold', fontSize: 12, textAlign: 'center', mt: 0.5  }}>
                         Other
                     </Typography>
                 </Box>

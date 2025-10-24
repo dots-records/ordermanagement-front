@@ -57,20 +57,20 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                         >
                             Id
                         </TableCell>
-                        <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.65)' }}>
+                        <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.65)'  }}>
                             Items
                         </TableCell>
                         <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.65)', width: '200px' }}>
                             Info.
                         </TableCell>
-                        <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.65)', width: '200px' }}>
+                        <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.65)', width: '180px' }}>
                             Status
                         </TableCell>
-                        <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.65)', width: '180px' }}>
+                        <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.65)', width: '140px' }}>
                             Created
                             <ArrowDropDown sx={{ fontSize: 18, ml: 0.3,  color: 'rgba(0,0,0,0.65)' }} />
                         </TableCell>
-                        <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.65)', width: '80px' }}>
+                        <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.65)', width: '40px' }}>
                             Link
                         </TableCell>
                         
@@ -226,7 +226,7 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                                     )}
                                 </TableCell>
 
-                                <TableCell sx={{ maxWidth: '200px', position: 'relative' }}>
+                                <TableCell sx={{ maxWidth: '200px', position: 'relative'}}>
                                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                                         {order.changed && (
                                             <Box
@@ -258,7 +258,7 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                                                 overflow: 'hidden',
                                                 textOverflow: 'ellipsis',
                                                 whiteSpace: 'normal',
-                                                wordBreak: 'break-word',
+                                                wordBreak: 'break-word', 
                                             }}
                                         >
                                             {order.items.map(item => item.name).join(', ')}
@@ -275,7 +275,7 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                                             textOverflow: 'ellipsis',
                                             whiteSpace: 'normal',
                                             wordBreak: 'break-word',
-                                            mt: 0.2,
+                                            mt: 0.2
                                         }}
                                     >
                                         {order.items.map(item => item.artists.map(artist => artist.name)).join(', ')}
@@ -293,7 +293,7 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                                             textOverflow: 'ellipsis',
                                             whiteSpace: 'normal',
                                             wordBreak: 'break-word',
-                                            mt: 0.2,
+                                            mt: 0.2
                                         }}
                                     >
                                         {order.items.map(item => item.artists.map(artist => artist.name)).join(', ')}
@@ -303,13 +303,14 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                                
 
                                 <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.75)' }}>
-                                    <Box sx={{ display: 'flex', justifyContent: 'flex-start' }}>
                                         {getBar(order.status, order.id, tableSelected, setOrdersPage, numberPage, searchTerm)}
-                                    </Box>
                                 </TableCell>
 
-                                <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.75)', fontSize: 13 }}>
-                                    {order.created}
+                                <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.75)', fontSize: 13}}>
+                                    
+                                    <Box sx ={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                                        {order.created}
+                                    </Box>
                                 </TableCell>
 
                                 <TableCell sx={{ textAlign: 'center' }}>
@@ -335,6 +336,7 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                                                 color: 'rgba(0,0,0,0.65)',      // color del icono gris oscuro
                                                 backgroundColor: 'white',
                                                 transition: 'all 0.2s ease-in-out',
+                                                
                                                 '&:hover': {
                                                     backgroundColor: 'rgba(0,0,0,0.05)', // hover sutil
                                                     borderColor: 'rgba(0,0,0,0.3)',

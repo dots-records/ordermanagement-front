@@ -27,6 +27,20 @@ export const getOrders = async (page = 1, size = 50, archived = null, search = n
 };
 
 
+export const patchOrderStatus = async (orderId, newStatus) => {
+    try {
+        await api.patch(`dots/orders/${orderId}/status`, { status: newStatus }, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        console.log(`Order ${orderId} updated to status: ${newStatus}`);
+    } catch (error) {
+        console.error('Error updating order status:', error.response?.data || error.message);
+        throw error;
+    }
+};
+
 
 
 

@@ -4,7 +4,7 @@ import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import { Box, Typography, CircularProgress } from '@mui/material';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { updateStatusShipping} from '../../../../../../services/orderService';
+import { patchOrderStatus} from '../../../../../../services/orderService';
 import { getSelectedTableOrders } from '../../../../functions/Functions';
 
 const InProgressBar = ({ orderId, setOrdersPage, tableSelected, numberPage, searchTerm}) => {
@@ -14,7 +14,8 @@ const InProgressBar = ({ orderId, setOrdersPage, tableSelected, numberPage, sear
   const handleShippingClick = async () => {
     setLoading(true);
     try {
-        await updateStatusShipping(orderId);
+        console.log(orderId)
+        await patchOrderStatus(orderId, 'Shipped');
         const response = await getSelectedTableOrders(tableSelected, numberPage,searchTerm);
         setOrdersPage(response);
     } catch (error) {

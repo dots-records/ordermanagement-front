@@ -4,7 +4,7 @@ import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import { Box, CircularProgress } from '@mui/material';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { updateStatusInProgress, updateStatusShipping} from '../../../../../../services/orderService';
+import { patchOrderStatus } from '../../../../../../services/orderService';
 import { getSelectedTableOrders } from '../../../../functions/Functions';
 
 const PaymentReceivedBar = ({  orderId, setOrdersPage, tableSelected, numberPage, searchTerm}) => {
@@ -25,7 +25,7 @@ const PaymentReceivedBar = ({  orderId, setOrdersPage, tableSelected, numberPage
     const shippingClick = async () => {
         setLoading(true);
         try {
-            await updateStatusShipping(orderId);
+            await patchOrderStatus(orderId, 'Shipped');
             const response = await getSelectedTableOrders(tableSelected, numberPage, searchTerm);
             setOrdersPage(response);
         } catch (error) {
@@ -39,7 +39,7 @@ const PaymentReceivedBar = ({  orderId, setOrdersPage, tableSelected, numberPage
     const inProgressClick = async () => {
         setLoading(true);
         try {
-            await updateStatusInProgress(orderId);
+            await patchOrderStatus(orderId, 'In Progress');
             const response = await getSelectedTableOrders(tableSelected, numberPage, searchTerm);
         setOrdersPage(response);
         } catch (error) {
