@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 import {Box } from '@mui/material';
 import {useState, useEffect} from 'react';
 import OrderMessages from './components/messages/OrderMessages';
-import { getOrder, resetNewMessages, updateMessages } from '../../services/orderService';
+import { getOrder, resetNewMessages, updateMessages,patchOrderChanged } from '../../services/orderService';
 import DotsDrawer from '../../globalComponents/drawer/DotsDrawer';
 import DotsAppBar from '../../globalComponents/app_bar/DotsAppBar';
 import { appBarHeight } from '../../config/constants';
@@ -21,6 +21,10 @@ const Order = () => {
                     try {
                         await updateMessages(orderId)
                         const data = await getOrder(orderId);
+                        
+                        if (data.changed) {
+                            await patchOrderChanged(orderId, false)
+                        }    
                         setOrder(data);
                         setLoading(false)
                         resetNewMessages(orderId)

@@ -41,6 +41,20 @@ export const patchOrderStatus = async (orderId, newStatus) => {
     }
 };
 
+export const patchOrderChanged = async (orderId, newChanged) => {
+    try {
+        await api.patch(`dots/orders/${orderId}/changed`, { changed: newChanged }, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        console.log(`Order ${orderId} updated to changed: ${newChanged}`);
+    } catch (error) {
+        console.error('Error updating order changed:', error.response?.data || error.message);
+        throw error;
+    }
+};
+
 
 
 
@@ -65,21 +79,7 @@ export const updateMessages = async (orderId) => {
     }
 };
 
-export const updateStatusInProgress = async (orderId) => {
-    try {
-       await api.put(`dots/updateStatusOrder/${orderId}/In Progress`);
-    } catch (error) {
-      console.error('Error:', error);
-    } 
-  };
 
-export const updateStatusShipping = async (orderId) => {
-    try {
-       await api.put(`dots/updateStatusOrder/${orderId}/Shipped`); 
-    } catch (error) {
-      console.error('Error:', error);
-    } 
-};
 
 export const sendMessage = async (orderId, message) => {
     try {
