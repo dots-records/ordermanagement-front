@@ -6,6 +6,8 @@ import { getOrder, resetNewMessages, updateMessages,patchOrderChanged } from '..
 import DotsDrawer from '../../globalComponents/drawer/DotsDrawer';
 import DotsAppBar from '../../globalComponents/app_bar/DotsAppBar';
 import { appBarHeight } from '../../config/constants';
+import OrderInfo from './components/information/OrderInfo';
+import OrderItems from './components/items/OrderItems';
 
 const Order = () => {
     const { orderId } = useParams();
@@ -42,12 +44,16 @@ const Order = () => {
             {/* Caja que delimita con el drawer y el appbar y contiene el resto de la pantalla*/}
             <Box
                 sx={{
-                    p: 0,
+                    p: 3,
                     mt: `${appBarHeight}px`,
                     boxShadow: 'none',
                 }}
             >
-                <OrderMessages order = {order} loading={loading} setOrder={setOrder} setLoading={setLoading} />
+                <Box sx={{ display: 'flex', flexDirection: 'row', gap: 2 , alignItems: 'flex-start'}}>
+                    <OrderInfo order={order} loading={loading} />
+                    <OrderItems order={order} loading={loading} />
+                    <OrderMessages order = {order} loading={loading} setOrder={setOrder} setLoading={setLoading} />
+                </Box>
             </Box>
         </Box>
       

@@ -80,7 +80,7 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                 <TableBody>
                     {orders?.length === 0 ? (
                         <TableRow>
-                            <TableCell colSpan={5} sx={{ textAlign: 'center', py: 2, height: '200px' }}>
+                            <TableCell colSpan={6} sx={{ textAlign: 'center', py: 2, height: '200px' }}>
                                 <Box 
                                     sx={{ 
                                         border: '2px solid', 
