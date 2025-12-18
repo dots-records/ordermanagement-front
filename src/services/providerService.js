@@ -2,7 +2,7 @@ import api from '../api/axiosConfig';
 
 export const getProviders = async (releaseId) => {
     try {
-        const response = await api.get(`dots/getProviders/releaseId=${releaseId}`);
+        const response = await api.get(`dots/releases/${releaseId}/providers`);
         return response.data;
     } catch (error) {
       console.error('Error:', error);
@@ -10,30 +10,27 @@ export const getProviders = async (releaseId) => {
 };
 
 
-export const createProviderStock = async (releaseId, price, units, condition) => {
+export const createProviderInStock = async (releaseId, price, units, condition, description) => {
     try {
-        console.log(price)
-        console.log(units)
-        const response = await api.post(`dots/createProvider/releaseId=${releaseId}`, {type: "Stock", price: price, 
-          units: units, condition: condition}, {
+      await api.post(`dots/releases/${releaseId}/providers`, {type: "In Stock", price: price, 
+        units: units, condition: condition, description: description}, {
         headers: {
-            'Content-Type': 'application/json' // Asegúrate de enviar como JSON
+          'Content-Type': 'application/json'
         }
-        
-    });
+      });
     } catch (error) {
       console.error('Error:', error);
     } 
 };
 
-export const createProviderOnline = async (releaseId, price, link) => {
+export const createProviderOnline = async (releaseId, price, link, condition, description) => {
     try {
-        const response = await api.post(`dots/createProvider/releaseId=${releaseId}`, {type: "Online", price: price, link: link}, {
+      await api.post(`dots/releases/${releaseId}/providers`, {type: "Online", price: price, 
+        link: link, description: description, condition: condition}, {
         headers: {
-            'Content-Type': 'application/json' // Asegúrate de enviar como JSON
+            'Content-Type': 'application/json' 
         }
-        
-    });
+      });
     } catch (error) {
       console.error('Error:', error);
     } 

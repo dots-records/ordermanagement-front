@@ -36,7 +36,7 @@ const ProviderTable = ({ providers, loading }) => {
         if (!selectedProvider) return false;
         if (!selectedProvider.type) return false;
         if (!selectedProvider.price) return false;
-        if (selectedProvider.type === 'Stock' && (!selectedProvider.units || !selectedProvider.condition)) return false;
+        if (selectedProvider.type === 'In Stock' && (!selectedProvider.units || !selectedProvider.condition)) return false;
         if (selectedProvider.type === 'Online' && !selectedProvider.link) return false;
         return true;
     };
@@ -77,12 +77,14 @@ const ProviderTable = ({ providers, loading }) => {
                                 fontFamily: 'InterSemiBold',
                                 fontSize: 13.5,
                                 color: 'rgba(0,0,0,0.85)',
-                                backgroundColor: provider.type === 'Stock' 
+                                backgroundColor: provider.type === 'In Stock' 
                                     ? 'rgba(255, 207, 63, 0.15)' 
                                     : 'rgba(126, 202, 63, 0.15)',
-                                border: provider.type === 'Stock' 
+                                border: provider.type === 'In Stock' 
                                     ? '1px solid rgba(255, 207, 63, 0.7)' 
                                     : '1px solid rgba(126, 202, 63, 0.7)',
+                                textShadow:'0px 0px 4px rgba(0,0,0,0.10)',
+                                boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
                                 borderRadius: 1.2,
                                 textAlign: 'center',
                                 px: 1.2,
@@ -93,14 +95,14 @@ const ProviderTable = ({ providers, loading }) => {
                         </Box>
                         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                             <Typography sx={{ fontFamily: 'InterSemiBold', fontSize: 13.5, color: 'rgba(0,0,0,0.85)', mt: -0.2 }}>
-                                {provider.type}
-                            </Typography>
-                            <Typography sx={{ fontFamily: 'InterRegular', fontSize: '11px', color: "rgba(0,0,0,0.5)", mt: -0.2 }}>
                                 {provider.price} €
+                            </Typography>
+                            <Typography sx={{ fontFamily: 'InterRegular', fontSize: '11px', color: "rgba(0,0,0,0.5)", mt: -0.3 }}>
+                                {provider.type} {provider.description && ` · ${provider.description}`}
                             </Typography>
                         </Box>
                         <Box sx={{ ml: 'auto', display: 'flex', gap: 1, alignItems: 'center' }}>
-                            {provider.type === 'Stock' ? (
+                            {provider.type === 'In Stock' ? (
                                 <Chip
                                     label={`${provider.units} units`}
                                     sx={{
@@ -145,11 +147,11 @@ const ProviderTable = ({ providers, loading }) => {
                         onChange={(e) => setSelectedProvider({ ...selectedProvider, type: e.target.value })}
                         {...minimalTextField}
                     >
-                        <MenuItem value="Stock">Stock</MenuItem>
+                        <MenuItem value="In Stock">In Stock</MenuItem>
                         <MenuItem value="Online">Online</MenuItem>
                     </TextField>
 
-                    {selectedProvider?.type === 'Stock' && (
+                    {selectedProvider?.type === 'In Stock' && (
                         <TextField
                             select
                             label="Condition"
@@ -173,7 +175,7 @@ const ProviderTable = ({ providers, loading }) => {
                         {...minimalTextField}
                     />
 
-                    {selectedProvider?.type === 'Stock' ? (
+                    {selectedProvider?.type === 'In Stock' ? (
                         <TextField
                             label="Units"
                             type="number"
