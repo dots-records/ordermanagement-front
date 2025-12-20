@@ -36,3 +36,28 @@ export const createProviderOnline = async (releaseId, price, link, condition, de
     } 
 };
 
+export const updateProvider = async (releaseId, providerId, type, price, link, units, condition, description) => {
+    try {
+      await api.put(`dots/releases/${releaseId}/providers/${providerId}`, {type: type, price: price, 
+        link: link, units: units , description: description, condition: condition}, {
+        headers: {
+            'Content-Type': 'application/json' 
+        }
+      });
+    } catch (error) {
+      console.error('Error:', error);
+    } 
+};
+
+export const deleteProvider = async (releaseId, providerId) => {
+    try {
+      await api.delete(`dots/releases/${releaseId}/providers/${providerId}`, {
+        headers: {
+            'Content-Type': 'application/json' 
+        }
+      });
+    } catch (error) {
+      console.error('Error:', error);
+    } 
+};
+

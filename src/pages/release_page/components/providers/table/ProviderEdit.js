@@ -1,8 +1,8 @@
 import React, { useState } from 'react'; 
+import { useEffect } from 'react';
 import { Typography, Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField, MenuItem, IconButton, Box } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
 import CloseIcon from '@mui/icons-material/Close';
-import { createProviderInStock, createProviderOnline, getProviders } from "../../../../services/providerService.js"
+import { updateProvider, getProviders, deleteProvider } from "../../../../../services/providerService.js"
 import { ToggleButton, ToggleButtonGroup } from '@mui/material';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import LanguageIcon from '@mui/icons-material/Language';
@@ -19,34 +19,48 @@ const conditionOptions = [
     { label: 'Poor', value: 'P' },
 ];
 
-const ProviderAdd = ({ releaseId, setProviders, setLoading }) => {
-    const [open, setOpen] = useState(false);
-    const [providerType, setProviderType] = useState('In Stock');
+const ProviderEdit = ({ releaseId, setProviders, setLoading, openEdit, setOpenEdit, provider }) => {
+    const [providerType, setProviderType] = useState('');
     const [price, setPrice] = useState('');
     const [units, setUnits] = useState('');
     const [link, setLink] = useState('');
     const [description, setDescription] = useState('');
-    const [condition, setCondition] = useState('M');
+    const [condition, setCondition] = useState('');
 
-    const handleOpen = () => setOpen(true);
+    
+
+    useEffect(() => {
+        if (provider) {
+            setProviderType(provider.type);
+            setPrice(provider.price);
+            setUnits(provider.units);
+            setLink(provider.link);
+            setDescription(provider.description);
+            setCondition(provider.condition);
+        }
+    }, [provider]);
 
     const handleClose = () => {
-        setOpen(false);
-        setPrice('');
-        setUnits('');
-        setLink('');
-        setCondition('M');
-        setDescription('');
+        setOpenEdit(false);
     };
 
     const handleSave = async () => {
         try {
             setLoading(true);
-            if (providerType === "In Stock") {
-                await createProviderInStock(releaseId, price, units, condition, description);
-            } else {
-                await createProviderOnline(releaseId, price, link, condition, description);
-            }
+            await updateProvider(releaseId, provider.id, providerType, price,  link,  units,condition, description);
+            const dataProviders = await getProviders(releaseId);
+            setProviders(dataProviders);
+            handleClose();
+        } catch (error) {
+            console.error("Error saving provider:", error);
+        }
+        setLoading(false);
+    };
+
+    const handleDelete = async () => {
+        try {
+            setLoading(true);
+            await deleteProvider(releaseId, provider.id);
             const dataProviders = await getProviders(releaseId);
             setProviders(dataProviders);
             handleClose();
@@ -70,6 +84,7 @@ const ProviderAdd = ({ releaseId, setProviders, setLoading }) => {
 
         return true;
     };
+
 
     const minimalTextField = {
         variant: 'standard', 
@@ -99,19 +114,10 @@ const ProviderAdd = ({ releaseId, setProviders, setLoading }) => {
 
     return (
         <>
-            <AddIcon 
-                onClick={handleOpen} 
-                sx={{
-                    fontSize: 22,
-                    color: 'black',
-                    cursor: 'pointer',
-                    '&:hover': { color: 'gray' },
-                }} 
-            />
 
             <Dialog
-                key={open ? 'open' : 'closed'}
-                open={open}
+                key={openEdit ? 'open' : 'closed'}
+                open={openEdit}
                 onClose={handleClose}
                 PaperProps={{
                     component: 'form',
@@ -133,7 +139,7 @@ const ProviderAdd = ({ releaseId, setProviders, setLoading }) => {
                 <DialogTitle>
                     <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
                         <Typography sx={{ fontFamily: "InterSemiBold", fontSize: 24 }}>
-                            Add Provider
+                            Edit Provider
                         </Typography>
                         <IconButton
                             onClick={handleClose}
@@ -284,6 +290,12 @@ const ProviderAdd = ({ releaseId, setProviders, setLoading }) => {
                 </DialogContent>
                 <DialogActions >
                     <Button
+                        onClick={handleDelete}
+                        sx={{ color: 'rgba(231, 93, 93, 1)', fontFamily: 'InterSemiBold', mx:1 }}
+                    >
+                        Delete
+                    </Button>
+                    <Button
                         type="submit"
                         sx={{ color: 'black', fontFamily: 'InterSemiBold', mx:1 }}
                         disabled={!isFormValid()}
@@ -296,4 +308,4 @@ const ProviderAdd = ({ releaseId, setProviders, setLoading }) => {
     );
 };
 
-export default ProviderAdd;
+export default ProviderEdit;
