@@ -103,12 +103,14 @@ const ProviderAdd = ({ releaseId, setProviders, setLoading }) => {
                 onClick={handleOpen} 
                 sx={{
                     fontSize: 22,
-                    color: 'black',
+                    color: 'rgba(0,0,0,0.6)',
                     cursor: 'pointer',
-                    '&:hover': { color: 'gray' },
+                    '&:hover': {
+                        color: 'rgba(0, 0, 0, 1)',
+                    },
                 }} 
             />
-
+                    
             <Dialog
                 key={open ? 'open' : 'closed'}
                 open={open}
