@@ -28,7 +28,7 @@ const ReleaseListings = ({ listings, loading }) => {
             </Box>
         
             <List >
-                {listings.map((listing, index) => (
+                {listings?.map((listing, index) => (
                     <ListItem 
                         key={index} 
                         sx={{ borderBottom: '1px solid #ddd', cursor: 'pointer'}} 
