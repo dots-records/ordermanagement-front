@@ -4,8 +4,11 @@ import ProviderAdd from './ProviderAdd';
 import ProviderTable from './table/ProviderTable';
 
 const ReleaseProviders = ({ providers, loading, releaseId, setProviders, setLoading }) => {
+    if (loading) {
+            return <Typography>Cargando...</Typography>;
+        }
     return (
-        <Box className="box-container" sx={{ width: '400px' }}>
+        <Box className="box-container" sx={{ width: '600px' }}>
             <Box sx={{ display: 'flex', mb: 2}}>
                 <Typography
                     sx={{
@@ -14,7 +17,7 @@ const ReleaseProviders = ({ providers, loading, releaseId, setProviders, setLoad
                         fontSize: 19,
                     }}
                 >
-                    Providers
+                    Providers & Listings
                 </Typography>
                 <Box sx={{ ml: 'auto' }}>
                     <ProviderAdd releaseId={releaseId} 

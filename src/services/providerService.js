@@ -10,10 +10,11 @@ export const getProviders = async (releaseId) => {
 };
 
 
-export const createProviderInStock = async (releaseId, price, units, condition, description) => {
+export const createProviderInStock = async (releaseId, price, units, discCondition,
+     sleeveCondition, description) => {
     try {
       await api.post(`dots/releases/${releaseId}/providers`, {type: "In Stock", price: price, 
-        units: units, condition: condition, description: description}, {
+        units: units, discCondition: discCondition, sleeveCondition: sleeveCondition, description: description}, {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -23,10 +24,11 @@ export const createProviderInStock = async (releaseId, price, units, condition, 
     } 
 };
 
-export const createProviderOnline = async (releaseId, price, link, condition, description) => {
+export const createProviderOnline = async (releaseId, price, link, discCondition,
+     sleeveCondition, description) => {
     try {
       await api.post(`dots/releases/${releaseId}/providers`, {type: "Online", price: price, 
-        link: link, description: description, condition: condition}, {
+        link: link,  discCondition: discCondition, sleeveCondition: sleeveCondition, description: description}, {
         headers: {
             'Content-Type': 'application/json' 
         }
@@ -36,10 +38,11 @@ export const createProviderOnline = async (releaseId, price, link, condition, de
     } 
 };
 
-export const updateProvider = async (releaseId, providerId, type, price, link, units, condition, description) => {
+export const updateProvider = async (releaseId, providerId, type, price, link, units, discCondition,
+     sleeveCondition, description) => {
     try {
       await api.put(`dots/releases/${releaseId}/providers/${providerId}`, {type: type, price: price, 
-        link: link, units: units , description: description, condition: condition}, {
+        link: link, units: units ,  discCondition: discCondition, sleeveCondition: sleeveCondition, description: description}, {
         headers: {
             'Content-Type': 'application/json' 
         }

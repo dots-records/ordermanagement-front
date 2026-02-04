@@ -5,16 +5,13 @@ import { appBarHeight } from '../../config/constants';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getRelease } from '../../services/releaseService';
-import { getListings } from '../../services/listingService';
 import { getProviders } from '../../services/providerService';
 import ReleaseInfo from './components/information/ReleaseInfo';
-import ReleaseListings from './components/listings/ReleaseListings';
 import ReleaseProviders from './components/providers/ReleaseProviders';
 
 const Release = () => {
     const { releaseId } = useParams();
     const [release, setRelease] = useState();
-    const [listings, setListings] = useState();
     const [providers, setProviders] = useState();
     const [loading, setLoading] = useState(true);
 
@@ -24,8 +21,6 @@ const Release = () => {
                 console.log(releaseId);
                 const dataReleases = await getRelease(releaseId);
                 setRelease(dataReleases);
-                const dataListings = await getListings(releaseId);
-                setListings(dataListings);
                 const dataProviders = await getProviders(releaseId);
                 setProviders(dataProviders);
                 setLoading(false);
@@ -50,7 +45,6 @@ const Release = () => {
             >
                 <Box sx={{ display: 'flex', flexDirection: 'row', gap: 2 , alignItems: 'flex-start'}}>
                     <ReleaseInfo release={release} loading={loading} />
-                    <ReleaseListings listings={listings} loading={loading} />
                     <ReleaseProviders providers={providers} loading={loading} releaseId={releaseId}
                      setProviders={setProviders} setLoading={setLoading}/>
                 </Box>

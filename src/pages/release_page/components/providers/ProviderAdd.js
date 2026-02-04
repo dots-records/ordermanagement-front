@@ -26,7 +26,8 @@ const ProviderAdd = ({ releaseId, setProviders, setLoading }) => {
     const [units, setUnits] = useState('');
     const [link, setLink] = useState('');
     const [description, setDescription] = useState('');
-    const [condition, setCondition] = useState('M');
+    const [discCondition, setDiscCondition] = useState('M');
+    const [sleeveCondition, setSleeveCondition] = useState('M');
 
     const handleOpen = () => setOpen(true);
 
@@ -35,7 +36,8 @@ const ProviderAdd = ({ releaseId, setProviders, setLoading }) => {
         setPrice('');
         setUnits('');
         setLink('');
-        setCondition('M');
+        setDiscCondition('M');
+        setSleeveCondition('M');
         setDescription('');
     };
 
@@ -43,9 +45,9 @@ const ProviderAdd = ({ releaseId, setProviders, setLoading }) => {
         try {
             setLoading(true);
             if (providerType === "In Stock") {
-                await createProviderInStock(releaseId, price, units, condition, description);
+                await createProviderInStock(releaseId, price, units, discCondition, sleeveCondition , description);
             } else {
-                await createProviderOnline(releaseId, price, link, condition, description);
+                await createProviderOnline(releaseId, price, link, discCondition, sleeveCondition, description);
             }
             const dataProviders = await getProviders(releaseId);
             setProviders(dataProviders);
@@ -57,16 +59,16 @@ const ProviderAdd = ({ releaseId, setProviders, setLoading }) => {
     };
 
     const isFormValid = () => {
-        const priceRegex = /^\d+(\.\d+)?$/;
+        const priceRegex = /^\d+(\.\d+)?\s*$/;
         if (!price || !priceRegex.test(price)) return false;
 
-        const unitsRegex = /^[1-9]\d*$/;
+        const unitsRegex = /^[1-9]\d*\s*$/;
         if (providerType === "In Stock" && (!units || !unitsRegex.test(units))) return false;
 
         const urlRegex = /^(https?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w-./?%&=]*)?$/;
         if (providerType === "Online" && (!link || !urlRegex.test(link))) return false;
 
-        if (!condition) return false;
+        if (!discCondition || !sleeveCondition ) return false;
 
         return true;
     };
@@ -155,7 +157,7 @@ const ProviderAdd = ({ releaseId, setProviders, setLoading }) => {
                                 mb: 0.5
                             }}
                         >
-                            Provider Type*
+                            Provider Type *
                         </Typography>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                         {providerType === 'In Stock' ? (
@@ -202,14 +204,64 @@ const ProviderAdd = ({ releaseId, setProviders, setLoading }) => {
                                 mb: 1.2
                             }}
                         >
-                            Condition*
+                            Disc Condition *
                         </Typography>
                         <ToggleButtonGroup
-                            value={condition}
+                            value={discCondition}
                             exclusive
                             onChange={(e, newValue) => {
                                 if (newValue !== null) {
-                                    setCondition(newValue);
+                                    setDiscCondition(newValue);
+                                }
+                            }}
+                            sx={{
+                                display: 'flex',
+                                flexWrap: 'wrap',
+                                }}
+                            >
+                           {conditionOptions.map((option) => (
+                                <ToggleButton
+                                    key={option.value}
+                                    value={option.value}
+                                    sx={{
+                                        fontFamily: 'InterRegular',
+                                        fontSize: 14,
+                                        px: 1.6,
+                                        py: 0.4,
+                                        color: 'rgba(0,0,0,0.7)',
+                                        border: '1px solid rgba(0,0,0,0.25)',
+                                        '&.Mui-selected': {
+                                            backgroundColor: 'rgba(0,0,0,0.85)',
+                                            color: 'white',
+                                            borderColor: 'rgba(0,0,0,0.85)',
+                                            '&:hover': {
+                                                backgroundColor: 'rgba(0,0,0,0.85)',
+                                            },
+                                        },
+                                    }}
+                                >
+                                    {option.value}
+                                </ToggleButton>
+                            ))}
+                        </ToggleButtonGroup>
+                    </Box>
+                    <Box sx={{ mt: 1.8 }}>
+                        <Typography
+                            sx={{
+                                fontFamily: 'InterRegular',
+                                fontSize: 12.5,
+                                color: 'rgba(0,0,0,0.5)',
+                                mb: 1.2
+                            }}
+                        >
+                            Sleeve Condition *
+                        </Typography>
+                        <ToggleButtonGroup
+                            value={sleeveCondition}
+                            exclusive
+                            onChange={(e, newValue) => {
+                                if (newValue !== null) {
+                                    setSleeveCondition(newValue);
                                 }
                             }}
                             sx={{
