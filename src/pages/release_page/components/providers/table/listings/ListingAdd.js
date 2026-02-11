@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 
 import { Typography, Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField, MenuItem, IconButton, Box } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
+import { CircularProgress } from '@mui/material';
 
 import vinted_icon from '../../../../../../files/vinted_icon.png';
 import wallapop_icon from '../../../../../../files/wallapop_icon.png';
 import discogs_icon from '../../../../../../files/discogs_icon.png';
-import {createListingVinted, createListingWallapop} from "../../../../../../services/listingService"
+import {createListingVinted, createListingWallapop, createListingDiscogs} from "../../../../../../services/listingService"
 
 
 const ListingAdd = ({ open, onClose, providerId, releaseId }) => {
@@ -14,24 +15,40 @@ const ListingAdd = ({ open, onClose, providerId, releaseId }) => {
     const [platform, setPlatform] = useState('Vinted');
     const [link, setLink] = useState('');
     const [sellingPrice, setSellingPrice] = useState('');
+    const [loadingListingsAdd, setLoadingListingAdd] = useState(false);
 
     const handleSave = async () => {
-        if (platform === "Vinted") {
-            await createListingVinted(releaseId, providerId, link, sellingPrice);
-        } else if (platform === "Wallapop"){
-            await createListingWallapop(releaseId, providerId, link, sellingPrice);
+        try {
+            setLoadingListingAdd(true);
+
+            if (platform === "Vinted") {
+                await createListingVinted(releaseId, providerId, link, sellingPrice);
+            } else if (platform === "Wallapop"){
+                await createListingWallapop(releaseId, providerId, link, sellingPrice);
+            } else if (platform === "Discogs"){
+                await createListingDiscogs(releaseId, providerId, sellingPrice);
+            }
+
+            onClose();
+            setLink('');
+            setSellingPrice('');
+
+        } catch (error) {
+            console.error("Error creating listing:", error);
+        } finally {
+            setLoadingListingAdd(false);
         }
-        onClose();
-        setLink('');
-        setSellingPrice('');
     };
+
 
     const isFormValid = () => {
         const priceRegex = /^\d+(\.\d+)?\s*$/;
         if (!sellingPrice || !priceRegex.test(sellingPrice)) return false;
 
-        const urlRegex = /^(https?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w-./?%&=]*)?$/;
-        if (!link || !urlRegex.test(link)) return false;
+        if (platform === 'Vinted' || platform === 'Wallapop') {
+            const urlRegex = /^(https?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w-./?%&=]*)?$/;
+            if (!link || !urlRegex.test(link)) return false;
+        }
         
         return true;
     };
@@ -181,14 +198,17 @@ const ListingAdd = ({ open, onClose, providerId, releaseId }) => {
                             <MenuItem value="Discogs">Discogs</MenuItem>
                         </TextField>
                     </Box>
-                    <TextField
-                        label="Link"
-                        value={link}
-                        onChange={(e) => setLink(e.target.value)}
-                        {...minimalTextField}
-                        required
-                        sx={{ mt:3, width: '100%'}}
-                    />
+                    {(platform === 'Vinted' || platform === 'Wallapop') && (
+                        <TextField
+                            label="Link"
+                            value={link}
+                            onChange={(e) => setLink(e.target.value)}
+                            {...minimalTextField}
+                            required
+                            sx={{ mt:3, width: '100%'}}
+                        />
+                    )}
+
 
                     <TextField
                         label="Selling Price"
@@ -204,11 +224,31 @@ const ListingAdd = ({ open, onClose, providerId, releaseId }) => {
                     <Button
                         type="submit"
                         sx={{ color: 'black', fontFamily: 'InterSemiBold', mx:1 }}
-                        disabled={!isFormValid()}
+                        disabled={!isFormValid() || loadingListingsAdd}
                     >
-                        Save
+                        {loadingListingsAdd ? <CircularProgress size={20} color="inherit" /> : "Save"}
                     </Button>
                 </DialogActions>
+
+                {loadingListingsAdd && (
+                    <Box
+                        sx={{
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            width: '100%',
+                            height: '100%',
+                            backgroundColor: 'rgba(255,255,255,0.7)',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            zIndex: 10,
+                            borderRadius: 2
+                        }}
+                    >
+                        <CircularProgress />
+                    </Box>
+                )}
             </Dialog>
         </>
     );
