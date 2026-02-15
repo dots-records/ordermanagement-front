@@ -7,7 +7,8 @@ import { CircularProgress } from '@mui/material';
 import vinted_icon from '../../../../../../files/vinted_icon.png';
 import wallapop_icon from '../../../../../../files/wallapop_icon.png';
 import discogs_icon from '../../../../../../files/discogs_icon.png';
-import {createListingVinted, createListingWallapop, createListingDiscogs} from "../../../../../../services/listingService"
+import {createListingVinted, createListingWallapop, 
+    createListingDiscogs, createListingOther } from "../../../../../../services/listingService"
 
 
 const ListingAdd = ({ open, onClose, providerId, releaseId }) => {
@@ -27,7 +28,10 @@ const ListingAdd = ({ open, onClose, providerId, releaseId }) => {
                 await createListingWallapop(releaseId, providerId, link, sellingPrice);
             } else if (platform === "Discogs"){
                 await createListingDiscogs(releaseId, providerId, sellingPrice);
+            } else if (platform === "Other"){
+                await createListingOther(releaseId, providerId, link, sellingPrice);
             }
+
 
             onClose();
             setLink('');
@@ -45,7 +49,7 @@ const ListingAdd = ({ open, onClose, providerId, releaseId }) => {
         const priceRegex = /^\d+(\.\d+)?\s*$/;
         if (!sellingPrice || !priceRegex.test(sellingPrice)) return false;
 
-        if (platform === 'Vinted' || platform === 'Wallapop') {
+        if (platform === 'Vinted' || platform === 'Wallapop' || platform === 'Other') {
             const urlRegex = /^(https?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w-./?%&=]*)?$/;
             if (!link || !urlRegex.test(link)) return false;
         }
@@ -98,7 +102,8 @@ const ListingAdd = ({ open, onClose, providerId, releaseId }) => {
                         backgroundColor: 'white',
                         color: 'black',
                         borderRadius: 2,
-                        p: 2
+                        p: 2,
+                        minWidth:400
                     }
                 }}
             >
@@ -196,9 +201,10 @@ const ListingAdd = ({ open, onClose, providerId, releaseId }) => {
                             <MenuItem value="Vinted">Vinted</MenuItem>
                             <MenuItem value="Wallapop">Wallapop</MenuItem>
                             <MenuItem value="Discogs">Discogs</MenuItem>
+                            <MenuItem value="Other">Other</MenuItem>
                         </TextField>
                     </Box>
-                    {(platform === 'Vinted' || platform === 'Wallapop') && (
+                    {(platform === 'Vinted' || platform === 'Wallapop'|| platform === 'Other') && (
                         <TextField
                             label="Link"
                             value={link}
@@ -218,9 +224,26 @@ const ListingAdd = ({ open, onClose, providerId, releaseId }) => {
                         required
                         sx={{ mt:3, width: '25%'}}
                     />
+
+
                     
                 </DialogContent>
                 <DialogActions >
+
+                    {(platform === 'Vinted' || platform === 'Wallapop') && (
+                        <Button
+                            sx={{ color: 'black', fontFamily: 'InterSemiBold', mx: 1 }}
+                            onClick={() => {
+                                if (platform === 'Vinted') {
+                                    window.open("https://www.vinted.es/items/new", '_blank');
+                                } else if (platform === 'Wallapop') {
+                                    window.open("https://es.wallapop.com/app/catalog/upload", '_blank');
+                                }
+                            }}
+                        >
+                            Upload
+                        </Button>
+                    )}
                     <Button
                         type="submit"
                         sx={{ color: 'black', fontFamily: 'InterSemiBold', mx:1 }}

@@ -41,16 +41,16 @@ export const patchOrderStatus = async (orderId, newStatus) => {
     }
 };
 
-export const patchOrderChanged = async (orderId, newChanged) => {
+export const patchOrderJustAdded = async (orderId, justAdded) => {
     try {
-        await api.patch(`dots/orders/${orderId}/changed`, { changed: newChanged }, {
+        await api.patch(`dots/orders/${orderId}/justAdded`, { justAdded: justAdded }, {
             headers: {
                 'Content-Type': 'application/json'
             }
         });
-        console.log(`Order ${orderId} updated to changed: ${newChanged}`);
+        console.log(`Order ${orderId} updated to justAdded: ${justAdded}`);
     } catch (error) {
-        console.error('Error updating order changed:', error.response?.data || error.message);
+        console.error('Error updating order justAdded:', error.response?.data || error.message);
         throw error;
     }
 };

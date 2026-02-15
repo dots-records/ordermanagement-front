@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Typography, Box, Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField } from '@mui/material';
 import { putReleaseFromDiscogs } from '../../../../services/releaseService';
 import { getSelectedTableReleases } from '../../functions/Functions';
+import AddIcon from '@mui/icons-material/Add';
+import { IconButton } from '@mui/material';
 
 
 const TableAdd = ({ setReleasesPage, setLoading, tableSelected} ) => {
@@ -49,7 +51,7 @@ const TableAdd = ({ setReleasesPage, setLoading, tableSelected} ) => {
                     },
                 }}
             >
-                Add
+                +
             </Button>
 
             <Dialog open={open} onClose={handleClose}>

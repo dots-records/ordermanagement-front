@@ -5,6 +5,7 @@ import TableSelector from './table/TableSelector';
 import TableFilter from './table/TableFilter';
 import TableSearcher from './table/TableSearcher';
 import Pagination from './table/Pagination';
+import TableAdd from './table/TableAdd';
 
 const BoxOrders = ({ loading, setLoading, ordersPage, setOrdersPage, timeAgo}) => {
     const [filter, setFilter] = useState('All');
@@ -52,7 +53,11 @@ const BoxOrders = ({ loading, setLoading, ordersPage, setOrdersPage, timeAgo}) =
                 tableSelected={tableSelected}
                 numberPage={ordersPage?.number}
             />
-
+            <TableAdd
+                setOrdersPage={setOrdersPage}
+                setLoading={setLoading}
+                tableSelected={tableSelected}
+            />
             <Pagination tableSelected={tableSelected} setLoading = {setLoading} ordersPage={ordersPage} 
             searchTerm={searchTerm} setOrdersPage={setOrdersPage} />
                 

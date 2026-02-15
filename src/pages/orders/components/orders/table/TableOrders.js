@@ -17,8 +17,27 @@ import {
 import { ArrowDropDown } from '@mui/icons-material';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { getBoxColor, getBar } from './functions/Functions';
+import DatasetLinkedIcon from '@mui/icons-material/DatasetLinked';
+import PriorityHighRoundedIcon from '@mui/icons-material/PriorityHighRounded';
+import DialogAssociation from './association_dialog/DialogAssociation';
+
 
 const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders, searchTerm }) => {
+    const [openDialog, setOpenDialog] = useState(false);
+    const [selectedOrder, setSelectedOrder] = useState(null);
+
+    const handleOpenDialog = (order, e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        setSelectedOrder(order);
+        setOpenDialog(true);
+    };
+
+    const handleCloseDialog = () => {
+        setOpenDialog(false);
+        setSelectedOrder(null);
+    };
+
     if (loading) {
         return (
             <Box 
@@ -37,6 +56,7 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
     }
 
     return (
+        <>
         <TableContainer
             sx={{ 
                 width: 1176,
@@ -72,6 +92,9 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                         </TableCell>
                         <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.65)', width: '40px' }}>
                             Link
+                        </TableCell>
+                        <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.65)', width: '40px' }}>
+                            Assoc.
                         </TableCell>
                         
                     </TableRow>
@@ -119,18 +142,18 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                                 }}
                                 sx={{
                                     textDecoration: 'none',
-                                    background: order.changed
+                                    background: order.justAdded
                                         ? 'linear-gradient(90deg, rgba(33,150,243,0.03), rgba(33,150,243,0.00))'
                                         : index % 2 === 0
                                         ? 'white'
                                         : 'rgba(0, 0, 0, 0.02)',
-                                    boxShadow: order.changed ? 'inset 0 0 10px rgba(33,150,243,0.1)' : 'none',
+                                    boxShadow: order.justAdded ? 'inset 0 0 10px rgba(33,150,243,0.1)' : 'none',
                                     '&:hover': {
-                                        backgroundColor: order.changed
+                                        backgroundColor: order.justAdded
                                             ? 'rgba(33,150,243,0.05)'
                                             : 'rgba(0, 0, 0, 0.05)',
                                         '& .number-box': {
-                                            color: order.changed ? '#03386eff' : 'rgba(0,0,0,1)',
+                                            color: order.justAdded ? '#03386eff' : 'rgba(0,0,0,1)',
                                             borderColor:  'rgba(0,0,0,0.25)',
                                         },
                                     },
@@ -153,11 +176,11 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                                             }
                                             sx={{
                                                 '& .MuiBadge-badge': {
-                                                    backgroundColor: order.changed
+                                                    backgroundColor: order.justAdded
                                                         ? 'rgba(47, 101, 183, 0.85)' // azul si cambió
                                                         : 'rgba(226, 30, 26, 0.85)', // rojo si no
                                                     color: 'white',
-                                                    boxShadow: order.changed
+                                                    boxShadow: order.justAdded
                                                         ? '0 0 6px rgba(33,150,243,0.2)'
                                                         : '0 0 6px rgba(254,117,114,0.2)',
                                                     fontFamily: 'InterSemiBold',
@@ -169,10 +192,10 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                                                 sx={{
                                                     fontFamily: 'InterSemiBold',
                                                     fontSize: 12,
-                                                    color: order.changed ? 'rgba(47, 101, 183, 1)': 'rgba(0,0,0,0.85)',
-                                                    backgroundColor: order.changed ? 'rgba(33,150,243,0.10)': `${getBoxColor(order.status, order.archived)}0.15)`,
-                                                    border: order.changed ? '1px solid rgba(33,150,243,0.5)': `1px solid ${getBoxColor(order.status, order.archived)}0.75)`,
-                                                    textShadow: order.changed ? '0px 0px 4px rgba(33,150,243,0.15)' : '0px 0px 4px rgba(0,0,0,0.10)',
+                                                    color: order.justAdded ? 'rgba(47, 101, 183, 1)': 'rgba(0,0,0,0.85)',
+                                                    backgroundColor: order.justAdded ? 'rgba(33,150,243,0.10)': `${getBoxColor(order.status, order.archived)}0.15)`,
+                                                    border: order.justAdded ? '1px solid rgba(33,150,243,0.5)': `1px solid ${getBoxColor(order.status, order.archived)}0.75)`,
+                                                    textShadow: order.justAdded ? '0px 0px 4px rgba(33,150,243,0.15)' : '0px 0px 4px rgba(0,0,0,0.10)',
                                                 
                                                     borderRadius: 2,
                                                     textAlign: 'center',
@@ -185,7 +208,7 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                                                     transition: 'all 0.2s ease-in-out',
                                                     cursor: 'pointer',
                                                     '&:hover': {
-                                                        backgroundColor: order.changed ? 'rgba(33,150,243,0.20)' : `${getBoxColor(order.status, order.archived)}0.25)`,
+                                                        backgroundColor: order.justAdded ? 'rgba(33,150,243,0.20)' : `${getBoxColor(order.status, order.archived)}0.25)`,
                                                         boxShadow: '0 2px 6px rgba(0,0,0,0.15)',
                                                         transform: 'translateY(-1px)',
                                                     },
@@ -200,10 +223,10 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                                             sx={{
                                                 fontFamily: 'InterSemiBold',
                                                 fontSize: 12,
-                                               color: order.changed ? 'rgba(47, 101, 183, 1)': 'rgba(0,0,0,0.85)',
-                                                    backgroundColor: order.changed ? 'rgba(33,150,243,0.10)': `${getBoxColor(order.status, order.archived)}0.15)`,
-                                                    border: order.changed ? '1px solid rgba(33,150,243,0.5)': `1px solid ${getBoxColor(order.status, order.archived)}0.75)`,
-                                                    textShadow: order.changed ? '0px 0px 4px rgba(33,150,243,0.15)' : '0px 0px 4px rgba(0,0,0,0.10)',
+                                               color: order.justAdded ? 'rgba(47, 101, 183, 1)': 'rgba(0,0,0,0.85)',
+                                                    backgroundColor: order.justAdded ? 'rgba(33,150,243,0.10)': `${getBoxColor(order.status, order.archived)}0.15)`,
+                                                    border: order.justAdded ? '1px solid rgba(33,150,243,0.5)': `1px solid ${getBoxColor(order.status, order.archived)}0.75)`,
+                                                    textShadow: order.justAdded ? '0px 0px 4px rgba(33,150,243,0.15)' : '0px 0px 4px rgba(0,0,0,0.10)',
                                                 borderRadius: 2,
                                                 textAlign: 'center',
                                                 py: 0.5,
@@ -215,7 +238,7 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                                                 transition: 'all 0.2s ease-in-out',
                                                 cursor: 'pointer',
                                                 '&:hover': {
-                                                    backgroundColor: order.changed ? 'rgba(33,150,243,0.20)' :`${getBoxColor(order.status, order.archived)}0.25)`,
+                                                    backgroundColor: order.justAdded ? 'rgba(33,150,243,0.20)' :`${getBoxColor(order.status, order.archived)}0.25)`,
                                                     boxShadow: '0 2px 6px rgba(0,0,0,0.15)',
                                                     transform: 'translateY(-1px)',
                                                 },
@@ -228,7 +251,7 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
 
                                 <TableCell sx={{ maxWidth: '200px', position: 'relative'}}>
                                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                                        {order.changed && (
+                                        {order.justAdded && (
                                             <Box
                                                 sx={{
                                                     width: 8,
@@ -251,8 +274,8 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                                             sx={{
                                                 fontFamily: 'InterBold',
                                                 fontSize: 14.5,
-                                                color: order.changed ? 'rgba(47, 101, 183, 1)' : 'rgba(0,0,0,0.75)',
-                                                textShadow: order.changed ? '0px 0px 4px rgba(33,150,243,0.15)' : '0px 0px 4px rgba(0,0,0,0.10)',
+                                                color: order.justAdded ? 'rgba(47, 101, 183, 1)' : 'rgba(0,0,0,0.75)',
+                                                textShadow: order.justAdded ? '0px 0px 4px rgba(33,150,243,0.15)' : '0px 0px 4px rgba(0,0,0,0.10)',
                                                 borderRadius: 1,
                                                 transition: 'all 0.25s ease-in-out',
                                                 overflow: 'hidden',
@@ -261,7 +284,7 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                                                 wordBreak: 'break-word', 
                                             }}
                                         >
-                                            {order.items.map(item => item.name).join(', ')}
+                                            {order.items.map(item => item.release.name).join(', ')}
                                         </Typography>
                                     </Box>
 
@@ -269,7 +292,7 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                                         sx={{
                                             fontFamily: 'InterSemiBold',
                                             fontSize: 12,
-                                            color: order.changed ? 'rgba(13, 71, 161, 0.7)' : 'rgba(0,0,0,0.5)',
+                                            color: order.justAdded ? 'rgba(13, 71, 161, 0.7)' : 'rgba(0,0,0,0.5)',
                                             transition: 'color 0.3s ease-in-out',
                                             overflow: 'hidden',
                                             textOverflow: 'ellipsis',
@@ -278,7 +301,7 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                                             mt: 0.2
                                         }}
                                     >
-                                        {order.items.map(item => item.artists.map(artist => artist.name)).join(', ')}
+                                        {order.items.map(item => item.release.artists.map(artist => artist.name)).join(', ')}
                                     </Typography>
                                 </TableCell>
                                     
@@ -287,7 +310,7 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                                         sx={{
                                             fontFamily: 'InterRegular',
                                             fontSize: 12,
-                                            color: order.changed ? 'rgba(13, 71, 161, 0.7)' : 'rgba(0,0,0,0.5)',
+                                            color: order.justAdded ? 'rgba(13, 71, 161, 0.7)' : 'rgba(0,0,0,0.5)',
                                             transition: 'color 0.3s ease-in-out',
                                             overflow: 'hidden',
                                             textOverflow: 'ellipsis',
@@ -296,7 +319,7 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                                             mt: 0.2
                                         }}
                                     >
-                                        {order.items.map(item => item.artists.map(artist => artist.name)).join(', ')}
+                                        {order.items.map(item => item.release.artists.map(artist => artist.name)).join(', ')}
                                     </Typography>
                                 </TableCell>
 
@@ -353,6 +376,38 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                                     )}
                                 </TableCell>
 
+                                <TableCell sx={{ textAlign: 'center' }}>
+                                    <Button
+                                        variant="outlined"
+                                        size="small"
+                                        onClick={(e) => handleOpenDialog(order, e)}
+                                        sx={{
+                                            width: 32,
+                                            height: 32,
+                                            minWidth: 32,
+                                            borderRadius: 1.5,
+                                            padding: 0,
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            borderColor: 'rgba(0,0,0,0.2)',
+                                            backgroundColor: 'white',
+                                            transition: 'all 0.2s ease-in-out',
+                                            '&:hover': {
+                                                backgroundColor: 'rgba(0,0,0,0.05)',
+                                                borderColor: 'rgba(0,0,0,0.3)',
+                                            },
+                                        }}
+                                    >
+                                        {order.associated ? (
+                                            <DatasetLinkedIcon sx={{ color: 'rgba(0,0,0,0.65)', fontSize: 22 }} />
+                                        ) : (
+                                            <PriorityHighRoundedIcon sx={{ color: 'rgba(0,0,0,0.65)', fontSize: 22 }} />
+                                        )}
+                                    </Button>
+
+                                </TableCell>
+
                                 
 
                             </TableRow>
@@ -361,7 +416,14 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                 </TableBody>
             </Table>
         </TableContainer>
+        <DialogAssociation
+            open={openDialog}
+            handleClose={handleCloseDialog}
+            order={selectedOrder}
+        />
+        </>
     );
+    
 }
 
 export default TableOrders;

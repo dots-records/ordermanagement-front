@@ -9,45 +9,72 @@ import {
 } from '@mui/material';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import ProviderEdit from './ProviderEdit';
-import ListingAdd from './listings/ListingAdd';
-import EditIcon from '@mui/icons-material/Edit';
-import { IconButton } from '@mui/material';
 import { useState, useEffect } from 'react';
-import ListingTable from './listings/ListingTable';
+import { CircularProgress } from '@mui/material';
+import { getProviders } from "../../../../../../services/providerService";
+import TableListings from './TableListings';
 
 
 
-const ProviderTable = ({ providers, loading, setProviders, setLoading, releaseId }) => {
+
+
+const TableProviders = ({ releaseId, order, setListingAssociated, listingAssociated}) => {
     const [openedProvider, setOpenedProvider] = useState(null);
-    const [providerForEditing, setProviderForEditing] = useState(null);
-    const [openEdit, setOpenEdit] = useState(false);
-    const [openAddListing, setOpenAddListing] = useState(false);
-    const [listingsRefreshKey, setListingsRefreshKey] = useState(0);
+    const [providers, setProviders] = useState(null);
+    const [loading, setLoading] = useState(true);
+    
+    const fetchProviders = async () => {
+        setLoading(true);
+        try {
+        const response = await getProviders(releaseId);
+        setProviders(response);
+        setOpenedProvider(null);
+        } catch (err) {
+        console.log(err);
+        } finally {
+        setLoading(false);
+        }
+    };
 
     useEffect(() => {
-        if (providers.length && !openedProvider) {
-            setOpenedProvider(providers[0]);
-        }
-    }, [providers]);
+        if (!releaseId) return;
+            fetchProviders();
+    }, [releaseId]);
+    
 
-    const handleEditOpen = (provider) => {
-        setProviderForEditing({ ...provider });
-        setOpenEdit(true);
-    };
     const handleRowToggle = (provider) => {
         setOpenedProvider(prev =>
             prev?.id === provider.id ? null : provider
         );
     };
 
-    const handleAddListingClose = () => {
-        setOpenAddListing(false);
-        setListingsRefreshKey(prev => prev + 1);
-    };
+    if (loading) return (
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            py: 3,
+          }}
+        >
+          <CircularProgress size={24} sx={{ color: 'rgba(0,0,0,0.4)' }} />
+        </Box>
+      );
 
-    if (loading) return <Typography>Cargando...</Typography>;
-
+    if (!providers || providers.length === 0) {
+          return (
+            <Typography
+              sx={{
+                fontSize: 12,
+                color: 'rgba(0,0,0,0.4)',
+                px: 1,
+                py: 1.4,
+              }}
+            >
+              No Providers yet
+            </Typography>
+          );
+        }
     return (
         <>
         <List>
@@ -58,7 +85,7 @@ const ProviderTable = ({ providers, loading, setProviders, setLoading, releaseId
                 <ListItem
                     onClick={() => handleRowToggle(provider)}
                     sx={{
-                    borderBottom: '1px solid #ddd',
+                    borderBottom: '1px solid #ededed',
                     gap: 2,
                     alignItems: 'center',
                     cursor: 'pointer',
@@ -71,7 +98,7 @@ const ProviderTable = ({ providers, loading, setProviders, setLoading, releaseId
                         alignItems: 'center',
                         gap: 1.2,
                         fontFamily: 'InterSemiBold',
-                        fontSize: 13.5,
+                        fontSize: 12.5,
                         color: 'rgba(0,0,0,0.8)',
                         backgroundColor:
                         provider.type === 'In Stock'
@@ -98,7 +125,7 @@ const ProviderTable = ({ providers, loading, setProviders, setLoading, releaseId
                     <Typography
                         sx={{
                         fontFamily: 'InterSemiBold',
-                        fontSize: 14,
+                        fontSize: 13,
                         color: 'rgba(0,0,0,0.85)',
                         mt: -0.2
                         }}
@@ -108,7 +135,7 @@ const ProviderTable = ({ providers, loading, setProviders, setLoading, releaseId
                     <Typography
                         sx={{
                         fontFamily: 'InterRegular',
-                        fontSize: 11.5,
+                        fontSize: 10.5,
                         color: 'rgba(0,0,0,0.5)',
                         mt: -0.3
                         }}
@@ -123,7 +150,7 @@ const ProviderTable = ({ providers, loading, setProviders, setLoading, releaseId
                         label={`${provider.units} units`}
                         sx={{
                             fontFamily: 'InterSemiBold',
-                            fontSize: 13,
+                            fontSize: 12,
                             borderRadius: '6px',
                             bgcolor: 'rgba(25, 118, 210, 0.08)',
                             color: '#1976d2',
@@ -134,10 +161,10 @@ const ProviderTable = ({ providers, loading, setProviders, setLoading, releaseId
                         <Button
                         variant="outlined"
                         size="small"
-                        endIcon={<OpenInNewIcon sx={{ fontSize: 16 }} />}
+                        endIcon={<OpenInNewIcon sx={{ fontSize: 15 }} />}
                         sx={{
                             fontFamily: 'InterSemiBold',
-                            fontSize: 13,
+                            fontSize: 12,
                             textTransform: 'none',
                             borderRadius: '6px',
                             px: 1.5,
@@ -152,22 +179,7 @@ const ProviderTable = ({ providers, loading, setProviders, setLoading, releaseId
                         </Button>
                     )}
                     
-                        <IconButton
-                            size="small"
-                            sx={{
-                                color: 'rgba(0,0,0,0.4)',
-                                '&:hover': {
-                                    color: 'rgba(0,0,0,0.85)',
-                                    backgroundColor: 'rgba(0,0,0,0.04)',
-                                },
-                            }}
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                handleEditOpen(provider);
-                            }}
-                            >
-                            <EditIcon sx={{ fontSize: 18 }} />
-                        </IconButton>
+                        
 
                     <ExpandMoreIcon
                         sx={{
@@ -180,38 +192,14 @@ const ProviderTable = ({ providers, loading, setProviders, setLoading, releaseId
                     </Box>
                 </ListItem>
                 <Collapse in={isOpen} timeout="auto" unmountOnExit>
-                    {isOpen && openedProvider && (
-                        <>
-                            <ListingTable
-                                key={`${openedProvider.id}-${listingsRefreshKey}`}
-                                releaseId={releaseId}
-                                provider={openedProvider}
-                            />
-
-                            <Box
-                                onClick={(e) => {
-                                    setOpenAddListing(true);
-                                }}
-                                sx={{
-                                    px: 0.4,
-                                    py: 0.8,
-                                    fontSize: 12.5,
-                                    color: 'rgba(0,0,0,0.6)',
-                                    backgroundColor: 'rgba(0,0,0,0.015)',
-                                    cursor: 'pointer',
-                                    textAlign: 'center',
-                                    '&:hover': {
-                                    backgroundColor: 'rgba(0,0,0,0.04)',
-                                    color: 'rgba(0,0,0,0.85)',
-                                    },
-                                }}
-                            >
-                                +
-                            </Box>
-                        </>
-
-
-                    )}
+                    <Box>
+                        <TableListings releaseId={releaseId} 
+                        provider={openedProvider}
+                        order={order}
+                        listingAssociated={listingAssociated}
+                        setListingAssociated={setListingAssociated}/>
+                    </Box>
+                        
                 </Collapse>
 
                 </Box>
@@ -219,25 +207,10 @@ const ProviderTable = ({ providers, loading, setProviders, setLoading, releaseId
             })}
         </List>
 
-        <ProviderEdit
-            openEdit={openEdit}
-            setOpenEdit={setOpenEdit}
-            setLoading={setLoading}
-            setProviders={setProviders}
-            releaseId={releaseId}
-            provider={providerForEditing}
-        />
-
-        
-        <ListingAdd
-            open={openAddListing}
-            onClose={handleAddListingClose}
-            providerId={openedProvider?.id}
-            releaseId={releaseId}
-        />
+       
         </>
 
     );
     };
 
-export default ProviderTable;
+export default TableProviders;

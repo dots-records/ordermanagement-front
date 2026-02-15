@@ -31,7 +31,7 @@ const TableFilter = ({filter, setFilter}) => {
                             textDecoration: 'none',
                             position: 'absolute',  // Posición absoluta
                             top: 24,               // Ajusta la distancia desde el borde superior
-                            right: 330,             // Ajusta la distancia desde el borde derecho
+                            right: 407,             // Ajusta la distancia desde el borde derecho
                             fontFamily: 'InterSemiBold',
                             fontSize: '13px',
                             backgroundColor: 'rgba(0, 0, 0, 0.03)',  // Color de fondo normal

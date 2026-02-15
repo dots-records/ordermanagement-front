@@ -8,7 +8,7 @@ const ReleaseProviders = ({ providers, loading, releaseId, setProviders, setLoad
             return <Typography>Cargando...</Typography>;
         }
     return (
-        <Box className="box-container" sx={{ width: '600px' }}>
+        <Box className="box-container" sx={{ width: '650px' }}>
             <Box sx={{ display: 'flex', mb: 2}}>
                 <Typography
                     sx={{
