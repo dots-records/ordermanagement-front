@@ -54,6 +54,7 @@ const TableListings = ({ releaseId, provider, order, setListingAssociated, listi
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
+        p: 2,
       }}
     >
       <CircularProgress size={24} sx={{ color: 'rgba(0,0,0,0.4)' }} />

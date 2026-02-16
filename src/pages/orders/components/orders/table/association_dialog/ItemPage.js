@@ -11,16 +11,24 @@ import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { IconButton } from '@mui/material';
 import { useState, useEffect } from 'react';
+import { TextField } from '@mui/material';
 import TableProviders from './TableProviders';
+import SelectedListing from './SelectedListing'; 
 
 
 
 const ItemPage = ({ order, item }) => {
     const [listingAssociated, setListingAssociated] = useState(null);
+    const [providerAssociated, setProviderAssociated] = useState(null);
+
 
     useEffect(() => {
         setListingAssociated(null);
+        setProviderAssociated(null);
     }, [item]);
+
+    if (!item) return <Typography>Cargando...</Typography>;
+
     return (
             <Box>
                 <ListItem
@@ -56,13 +64,32 @@ const ItemPage = ({ order, item }) => {
                     <Box sx={{ px: 2, backgroundColor:"rgba(0,0,0,0.02)" }}>
                          <TableProviders
                             setListingAssociated={setListingAssociated}
+                            providerAssociated={providerAssociated}
+                            setProviderAssociated={setProviderAssociated}
                             listingAssociated={listingAssociated}
                             releaseId={item.release.id}
                             order={order}
                         />
-                        
                     </Box>
                 </Collapse>
+                {listingAssociated != null && (
+                    <Box
+                        sx={{
+                            px: 6,
+                            py: 1,
+                            mt: 2,
+                            borderTop: '1px solid #ddd',
+                            backgroundColor: 'rgba(0,0,0,0.02)',
+                        }}
+                    >
+                        <SelectedListing 
+                            orderId={order.id}
+                            itemId={item.id}
+                            provider={providerAssociated} 
+                            listing={{ ...listingAssociated }} 
+                        />
+                    </Box>
+                )}
             </Box>
     );
     

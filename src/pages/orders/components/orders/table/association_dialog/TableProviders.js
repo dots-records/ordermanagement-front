@@ -18,8 +18,8 @@ import TableListings from './TableListings';
 
 
 
-const TableProviders = ({ releaseId, order, setListingAssociated, listingAssociated}) => {
-    const [openedProvider, setOpenedProvider] = useState(null);
+const TableProviders = ({ releaseId, order, setListingAssociated, listingAssociated,
+    providerAssociated, setProviderAssociated}) => {
     const [providers, setProviders] = useState(null);
     const [loading, setLoading] = useState(true);
     
@@ -28,7 +28,6 @@ const TableProviders = ({ releaseId, order, setListingAssociated, listingAssocia
         try {
         const response = await getProviders(releaseId);
         setProviders(response);
-        setOpenedProvider(null);
         } catch (err) {
         console.log(err);
         } finally {
@@ -43,7 +42,7 @@ const TableProviders = ({ releaseId, order, setListingAssociated, listingAssocia
     
 
     const handleRowToggle = (provider) => {
-        setOpenedProvider(prev =>
+        setProviderAssociated(prev =>
             prev?.id === provider.id ? null : provider
         );
     };
@@ -79,7 +78,7 @@ const TableProviders = ({ releaseId, order, setListingAssociated, listingAssocia
         <>
         <List>
             {providers.map((provider) => {
-            const isOpen = openedProvider?.id === provider.id;
+            const isOpen = providerAssociated?.id === provider.id;
             return (
                 <Box key={provider.id}>
                 <ListItem
@@ -194,7 +193,7 @@ const TableProviders = ({ releaseId, order, setListingAssociated, listingAssocia
                 <Collapse in={isOpen} timeout="auto" unmountOnExit>
                     <Box>
                         <TableListings releaseId={releaseId} 
-                        provider={openedProvider}
+                        provider={providerAssociated}
                         order={order}
                         listingAssociated={listingAssociated}
                         setListingAssociated={setListingAssociated}/>

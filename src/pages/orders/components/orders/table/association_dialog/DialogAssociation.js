@@ -31,7 +31,6 @@ const DialogAssociation = ({ open, handleClose, order }) => {
   };
 
 
-  // +1 para la confirmación
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth PaperProps={{ sx: { borderRadius: 2, p: 2 } }}>
       <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
