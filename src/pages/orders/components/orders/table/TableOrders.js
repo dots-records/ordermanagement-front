@@ -12,32 +12,36 @@ import {
     Typography,
     Badge,
     Button, 
+    ListItem,
     Checkbox
 } from '@mui/material';
 import { ArrowDropDown } from '@mui/icons-material';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { getBoxColor, getBar } from './functions/Functions';
-import DatasetLinkedIcon from '@mui/icons-material/DatasetLinked';
+import AlbumIcon from '@mui/icons-material/Album';
 import PriorityHighRoundedIcon from '@mui/icons-material/PriorityHighRounded';
-import DialogAssociation from './association_dialog/DialogAssociation';
+import Popover from '@mui/material/Popover';
+import CheckIcon from '@mui/icons-material/Check';
 
 
 const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders, searchTerm }) => {
-    const [openDialog, setOpenDialog] = useState(false);
+
+    const [anchorEl, setAnchorEl] = useState(null);
     const [selectedOrder, setSelectedOrder] = useState(null);
 
-    const handleOpenDialog = (order, e) => {
-        e.stopPropagation();
-        e.preventDefault();
+    const handleAssocClick = (event, order) => {
+        event.stopPropagation();
+        event.preventDefault();
+        setAnchorEl(event.currentTarget);
         setSelectedOrder(order);
-        setOpenDialog(true);
     };
 
-    const handleCloseDialog = () => {
-        setOpenDialog(false);
+    const handleClosePopover = () => {
+        setAnchorEl(null);
         setSelectedOrder(null);
     };
 
+    const open = Boolean(anchorEl);
     if (loading) {
         return (
             <Box 
@@ -78,7 +82,7 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                             Id
                         </TableCell>
                         <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.65)'  }}>
-                            Items
+                            Title
                         </TableCell>
                         <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.65)', width: '200px' }}>
                             Info.
@@ -94,7 +98,7 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                             Link
                         </TableCell>
                         <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.65)', width: '40px' }}>
-                            Assoc.
+                            Items
                         </TableCell>
                         
                     </TableRow>
@@ -380,7 +384,7 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                                     <Button
                                         variant="outlined"
                                         size="small"
-                                        onClick={(e) => handleOpenDialog(order, e)}
+                                        onClick={(e) => handleAssocClick(e, order)}
                                         sx={{
                                             width: 32,
                                             height: 32,
@@ -399,8 +403,8 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                                             },
                                         }}
                                     >
-                                        {order.associated ? (
-                                            <DatasetLinkedIcon sx={{ color: 'rgba(0,0,0,0.65)', fontSize: 22 }} />
+                                        {order.items?.every(item => item.associated === true) ? (
+                                            <AlbumIcon sx={{ color: 'rgba(0,0,0,0.65)', fontSize: 22 }} />
                                         ) : (
                                             <PriorityHighRoundedIcon sx={{ color: 'rgba(0,0,0,0.65)', fontSize: 22 }} />
                                         )}
@@ -416,11 +420,71 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                 </TableBody>
             </Table>
         </TableContainer>
-        <DialogAssociation
-            open={openDialog}
-            handleClose={handleCloseDialog}
-            order={selectedOrder}
-        />
+        <Popover
+            open={open}
+            anchorEl={anchorEl}
+            onClose={handleClosePopover}
+            anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'center',
+            }}
+            transformOrigin={{
+                vertical: 'bottom',
+                horizontal: 'center',
+            }}
+            PaperProps={{
+                sx: {
+                    p: 2,
+                    borderRadius: 2,
+                    minWidth: 250,
+                    boxShadow: '0 8px 20px rgba(0,0,0,0.15)'
+                }
+            }}
+        >
+            {selectedOrder?.items.map((item, index) => (
+                <ListItem
+                        key={index}
+                        sx={{ 
+                            borderBottom: '1px solid #ddd',
+                            borderLeft: item.associated ? '2px solid rgba(126, 202, 63,0.4)' : "transparent",
+                            backgroundColor: item.associated ? "rgba(126, 202, 63,0.075)" : "transparent",
+                            gap: 2,
+                            alignItems: 'center',
+                        }}
+                    >
+                    <img 
+                            src={item.release.thumb} 
+                            style={{ width: '35px', height: '35px', objectFit: 'cover', borderRadius: '3px'}}
+                        />
+                    <Box> 
+                            <Typography sx={{ fontFamily: 'InterBold', fontSize: 13 , color: 'rgba(0,0,0,0.70)', textShadow:  '0px 0px 4px rgba(0,0,0,0.10)'}}>
+                                {item.release.name}
+                            </Typography>
+                            <Typography sx={{ fontFamily: 'InterSemiBold', fontSize: 10, color: 'rgba(0,0,0,0.5)',}}>
+                                {item.release.artists.map(artist => artist.name).join(', ')}
+                            </Typography>
+                            
+                    </Box>
+
+                    {item.associated && (
+                        <Box sx={{ ml: 'auto', display: 'flex', alignItems: 'center' }}>
+                            <CheckIcon 
+                                sx={{ 
+                                    fontSize: 18,
+                                    color: '#2e7d32',
+                                    backgroundColor: 'rgba(46,125,50,0.1)',
+                                    borderRadius: '50%',
+                                    p: 0.3
+                                }} 
+                            />
+                        </Box>
+                    )}
+
+                   
+                </ListItem>
+            ))}
+        </Popover>
+
         </>
     );
     

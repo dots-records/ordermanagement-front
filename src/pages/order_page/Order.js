@@ -16,11 +16,9 @@ const Order = () => {
     const { newMessagesCustomer, newMessagesDiscogs, newMessagesSeller } = location.state || {};
 
     
-    
-
-    useEffect(() => {
-                const fetchData = async () => {
+    const fetchData = async () => {
                     try {
+                        setLoading(true)
                         await updateMessages(orderId)
                         const data = await getOrder(orderId);
                         
@@ -34,6 +32,9 @@ const Order = () => {
                         console.log(err);
                       }
                 };
+
+    useEffect(() => {
+                
                 fetchData();
         }, []);
 
@@ -51,7 +52,7 @@ const Order = () => {
             >
                 <Box sx={{ display: 'flex', flexDirection: 'row', gap: 2 , alignItems: 'flex-start'}}>
                     <OrderInfo order={order} loading={loading} />
-                    <OrderItems order={order} loading={loading} />
+                    <OrderItems order={order} loading={loading} fetchOrder={fetchData} />
                     <OrderMessages order = {order} loading={loading} setOrder={setOrder} setLoading={setLoading} />
                 </Box>
             </Box>

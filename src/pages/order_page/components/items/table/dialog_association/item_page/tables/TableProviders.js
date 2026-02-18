@@ -11,7 +11,7 @@ import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useState, useEffect } from 'react';
 import { CircularProgress } from '@mui/material';
-import { getProviders } from "../../../../../../services/providerService";
+import { getProviders } from "../../../../../../../../services/providerService";
 import TableListings from './TableListings';
 
 

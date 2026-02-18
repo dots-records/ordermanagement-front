@@ -8,7 +8,7 @@ import {
   Checkbox,
 } from '@mui/material';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-import { getListings} from '../../../../../../services/listingService';
+import { getListings} from '../../../../../../../../services/listingService';
 import { useState, useEffect } from 'react';
 import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';

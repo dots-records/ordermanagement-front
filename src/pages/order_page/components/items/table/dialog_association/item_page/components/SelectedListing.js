@@ -10,10 +10,11 @@ import {
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { useState, useEffect } from 'react';
 import SaveIcon from '@mui/icons-material/Save';
-import { patchOrderItemListing } from '../../../../../../services/itemService';
+import { patchOrderItemAssociated, patchOrderItemListing, patchOrderItemProvider } from '../../../../../../../../services/itemService';
+import { deleteListing } from '../../../../../../../../services/listingService';
 import { CircularProgress } from '@mui/material';
 
-const SelectedListing = ({ orderId, itemId, listing, provider }) => {
+const SelectedListing = ({ orderId, releaseId, itemId, listing, provider, setItemAfterAssociation }) => {
     const [loading, setLoading] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [price, setPrice] = useState(listing.sellingPrice);
@@ -29,8 +30,34 @@ const SelectedListing = ({ orderId, itemId, listing, provider }) => {
                 listing.link,
                 Number(price)
             );
+            await patchOrderItemProvider(
+                orderId,
+                itemId,
+                provider.id,
+                provider.type,
+                provider.price,
+                provider.link,
+                provider.units,
+                provider.discCondition,
+                provider.sleeveCondition,
+                provider.description,
+            );
+
+            await patchOrderItemAssociated(
+                orderId,
+                itemId,
+                true,
+            );
+
+            await deleteListing(
+                releaseId,
+                provider.id,
+                listing.id,
+            );
+            
             setIsEditing(false);
             setLoading(false);
+            setItemAfterAssociation(true);
         } catch (error) {
             console.error('Error al guardar el precio', error);
         }
