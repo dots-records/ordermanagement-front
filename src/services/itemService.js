@@ -31,6 +31,26 @@ export const patchOrderItemProvider = async (orderId, itemId, providerId, provid
     } 
 };
 
+export const patchOrderItemRelease = async (orderId, itemId, releaseId, releaseName, releaseArtists,
+    releaseThumb) => {
+    try {
+        console.log(orderId)
+        console.log(itemId)
+        console.log(releaseId)
+                    console.log(releaseName)
+                    console.log(releaseArtists)
+                    console.log(releaseThumb)
+        await api.patch(`dots/orders/${orderId}/items/${itemId}/release`, 
+            {id: releaseId, name: releaseName, artists: releaseArtists, thumb: releaseThumb}, {
+        headers: {
+            'Content-Type': 'application/json' 
+        }
+      });
+    } catch (error) {
+      console.error('Error:', error);
+    } 
+};
+
 export const patchOrderItemAssociated = async (orderId, itemId, associated) => {
     try {
         await api.patch(`dots/orders/${orderId}/items/${itemId}/associated`, 

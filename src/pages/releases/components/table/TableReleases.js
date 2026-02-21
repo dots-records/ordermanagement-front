@@ -43,9 +43,7 @@ const TableReleases = ({ loading, releases, releasesSelected, setReleasesSelecte
     return (
         <TableContainer
             sx={{ 
-                width: 1176,
-                mx: 'auto', 
-                height: 470,
+                
                 mt: 2, 
                 overflowY: 'auto',
                 '&::-webkit-scrollbar': { width: '2px' },

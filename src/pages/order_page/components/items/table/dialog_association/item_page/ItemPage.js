@@ -15,6 +15,8 @@ import TableListingsAfterAssociation from './tables/TableListingsAfterAssociatio
 import ListingAdd from './components/ListingAdd';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
+import { patchProviderUnits } from '../../../../../../../services/providerService';
+import TableListingsForDeletion from './tables/TableListingsForDeletion';
 
 
 
@@ -37,13 +39,23 @@ const ItemPage = ({ order, item, setClosable}) => {
 
     useEffect(() => {
         if (itemAfterAssociation) {
+            if(providerAssociated.type === 'In Stock') {
+                const newUnits = providerAssociated.units - 1;
+                setProviderAssociated(prev => ({
+                    ...prev,
+                    units: newUnits
+                }));
+                patchProviderUnits(item.release.id, providerAssociated.id
+                , providerAssociated.units - 1
+                )
+            }
             setClosable(false);
             setShowNotificationAssociation(true);
         }
     }, [itemAfterAssociation]);
 
     useEffect(() => {
-        if (itemAfterAssociation) {
+        if (listingHandled) {
             setClosable(true);
             setShowNotificationListingAdded(true);
         }
@@ -75,6 +87,12 @@ const ItemPage = ({ order, item, setClosable}) => {
                             <Typography sx={{ fontFamily: 'InterSemiBold', fontSize: 12, color: 'rgba(0,0,0,0.5)',}}>
                                 {item.release.artists.map(artist => artist.name).join(', ')}
                             </Typography>
+                            <Typography sx={{ fontFamily: 'InterRegular', fontSize: 10, color: 'rgba(0,0,0,0.5)',}}>
+                                                            {"Condition of Item: "}
+                                                            {item.discCondition}
+                                                            {" "}
+                                                            {item.sleeveCondition}
+                                                        </Typography>
                         </Box>
                         
                     </Box>
@@ -156,9 +174,25 @@ const ItemPage = ({ order, item, setClosable}) => {
                                 </Box>
                             ) : (providerAssociated.type === 'In Stock' && providerAssociated.units === 0) ? (
                                 <Box>
-                                    <Typography sx={{ fontFamily: 'InterSemiBold', fontSize: 12, color: 'rgba(0,0,0,0.5)', mb: 2}}>
-                                        Provider is out of stock. 
-                                    </Typography>
+                                    <Box sx={{ px: 2, backgroundColor:"rgba(0,0,0,0.02)" }}>
+                                        <SelectedProvider provider={providerAssociated}/>
+                                    </Box>
+                                    <Box sx={{ borderBottom: '1px solid #ddd', py: 1}}>
+                                        <Typography
+                                            sx={{
+                                                fontFamily: 'InterRegular',
+                                                fontSize: 11,
+                                                color: 'rgba(0,0,0,0.5)',
+                                                textAlign: 'center'
+                                            }}
+                                        >
+                                            Provider is out of stock. Delete all listings.
+                                        </Typography>
+                                        
+                                    </Box>
+                                    <Box sx={{ px: 2, backgroundColor:"rgba(0,0,0,0.02)" }}>
+                                        <TableListingsForDeletion releaseId={item.release.id} provider={providerAssociated}/>
+                                    </Box>
                                 </Box>
                             ) : null}
                         

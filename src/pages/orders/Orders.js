@@ -39,8 +39,10 @@ const Orders = () => {
                 sx={{
                     p: 3,
                     mt: `${appBarHeight}px`,
-                    boxShadow: 'none',
-                    position: 'relative'
+                    position: 'relative',
+                    
+                    width: "100vw",
+                    height: "40vh",
                 }}
             >
                 

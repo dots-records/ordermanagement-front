@@ -63,9 +63,8 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
         <>
         <TableContainer
             sx={{ 
-                width: 1176,
-                mx: 'auto', 
-                height: 500,
+                width: '100%',
+                height: '60vh',
                 mt: 2.5, 
                 overflowY: 'auto',
                 '&::-webkit-scrollbar': {
@@ -83,9 +82,6 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                         </TableCell>
                         <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.65)'  }}>
                             Title
-                        </TableCell>
-                        <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.65)', width: '200px' }}>
-                            Info.
                         </TableCell>
                         <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.65)', width: '180px' }}>
                             Status
@@ -309,23 +305,7 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                                     </Typography>
                                 </TableCell>
                                     
-                                 <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.75)', fontSize: 13 }}>
-                                   <Typography
-                                        sx={{
-                                            fontFamily: 'InterRegular',
-                                            fontSize: 12,
-                                            color: order.justAdded ? 'rgba(13, 71, 161, 0.7)' : 'rgba(0,0,0,0.5)',
-                                            transition: 'color 0.3s ease-in-out',
-                                            overflow: 'hidden',
-                                            textOverflow: 'ellipsis',
-                                            whiteSpace: 'normal',
-                                            wordBreak: 'break-word',
-                                            mt: 0.2
-                                        }}
-                                    >
-                                        {order.items.map(item => item.release.artists.map(artist => artist.name)).join(', ')}
-                                    </Typography>
-                                </TableCell>
+                                
 
                                
 
@@ -462,6 +442,13 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                             </Typography>
                             <Typography sx={{ fontFamily: 'InterSemiBold', fontSize: 10, color: 'rgba(0,0,0,0.5)',}}>
                                 {item.release.artists.map(artist => artist.name).join(', ')}
+                            </Typography>
+
+                            <Typography sx={{ fontFamily: 'InterRegular', fontSize: 9, color: 'rgba(0,0,0,0.5)',}}>
+                                {"Condition of Item: "}
+                                {item.discCondition}
+                                {" "}
+                                {item.sleeveCondition}
                             </Typography>
                             
                     </Box>

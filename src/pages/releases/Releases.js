@@ -31,7 +31,8 @@ const Releases = () => {
                 sx={{
                     p: 3,
                     mt: `${appBarHeight}px`,
-                    boxShadow: 'none',
+                    width: "100vw",
+                    height: "40vh",
                     position: 'relative' // Agrega position relative al contenedor principal
                 }}
             >

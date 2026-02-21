@@ -31,6 +31,30 @@ const Release = () => {
         fetchData();
     }, []);
 
+    if (!loading && !release) {
+            return (
+                <>
+                    <DotsAppBar />
+                    <DotsDrawer />
+                    <Box
+                        sx={{
+                            p: 3,
+                            mt: `${appBarHeight}px`,
+                            display: 'flex',
+                            height: '100vh',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            fontFamily: 'InterSemiBold',
+                            fontSize: 14,
+                            color: 'rgba(0,0,0,0.45)',
+                        }}
+                    >
+                        Release not available
+                    </Box>
+                </>
+            );
+        }
+    
     return (
         <Box sx={{ display: 'flex' }}>
             <DotsAppBar />
@@ -40,7 +64,6 @@ const Release = () => {
                 sx={{
                     p: 3,
                     mt: `${appBarHeight}px`,
-                    boxShadow: 'none',
                 }}
             >
                 <Box sx={{ display: 'flex', flexDirection: 'row', gap: 2 , alignItems: 'flex-start'}}>

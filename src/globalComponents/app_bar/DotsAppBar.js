@@ -9,7 +9,7 @@ import { drawerWidth, appBarHeight } from '../../config/constants';
 const DotsAppBar = () => {
 
     return (
-        <AppBar position="fixed" sx={{ width: `calc(100%)`, ml: `${drawerWidth}px`, height: appBarHeight, color: 'black', backgroundColor: 'rgba(0,0,0,0.0)', boxShadow: 'none', borderBottom: 1, borderColor: 'rgba(0, 0, 0, 0.2)'}}>
+        <AppBar position="fixed" sx={{ width: '100%', ml: `${drawerWidth}px`, height: appBarHeight, color: 'black', backgroundColor: 'rgba(0,0,0,0)', boxShadow: 'none', borderBottom: 1, borderColor: 'rgba(0, 0, 0, 0.2)'}}>
             <Toolbar>
                 <Typography variant="h5" sx={{ fontFamily: 'InterExtraBold' }}>
                 Dots

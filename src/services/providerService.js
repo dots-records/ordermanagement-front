@@ -64,3 +64,18 @@ export const deleteProvider = async (releaseId, providerId) => {
     } 
 };
 
+export const patchProviderUnits = async (releaseId, providerId, units) => {
+    try {
+        await api.patch(`dots/releases/${releaseId}/providers/${providerId}/units`
+            , { units: units }, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+        );
+        
+    } catch (error) {
+      console.error('Error updating provider units:', error.response?.data || error.message);
+    throw error;
+    } 
+};

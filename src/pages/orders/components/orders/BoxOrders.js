@@ -19,8 +19,7 @@ const BoxOrders = ({ loading, setLoading, ordersPage, setOrdersPage, timeAgo}) =
             borderColor: 'rgba(0, 0, 0, 0.10)',
             borderRadius: 2,
             p: 2,
-            pb: 0,
-            position: 'relative' // Agrega position relative al contenedor de la tabla
+            position: 'relative' 
             }}
         >
             {!loading && timeAgo && (

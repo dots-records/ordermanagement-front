@@ -38,6 +38,31 @@ const Order = () => {
                 fetchData();
         }, []);
 
+
+        if (!loading && !order) {
+        return (
+            <>
+                <DotsAppBar />
+                <DotsDrawer />
+                <Box
+                    sx={{
+                        p: 3,
+                        mt: `${appBarHeight}px`,
+                        display: 'flex',
+                        height: '100vh',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontFamily: 'InterSemiBold',
+                        fontSize: 14,
+                        color: 'rgba(0,0,0,0.45)',
+                    }}
+                >
+                    Order not available
+                </Box>
+            </>
+        );
+    }
+
     return (
       <Box sx={{ display: 'flex' }}>
             <DotsAppBar />
