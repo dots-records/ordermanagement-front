@@ -21,6 +21,7 @@ import { getBoxColor, getBar } from './functions/Functions';
 import AlbumIcon from '@mui/icons-material/Album';
 import PriorityHighRoundedIcon from '@mui/icons-material/PriorityHighRounded';
 import Popover from '@mui/material/Popover';
+import MoneyIcon from '@mui/icons-material/Money';
 import CheckIcon from '@mui/icons-material/Check';
 
 
@@ -94,7 +95,14 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                             Link
                         </TableCell>
                         <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.65)', width: '40px' }}>
-                            Items
+                            It.
+                        </TableCell>
+                        <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.65)', width: '40px' }}>
+                            Pay.
+                        </TableCell>
+
+                        <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.65)', width: '40px' }}>
+                            Warn.
                         </TableCell>
                         
                     </TableRow>
@@ -129,31 +137,45 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                             </TableCell>
                         </TableRow>
                     ) : (
-                        orders?.map((order, index) => (
+                        orders?.map((order, index) => {
+                            const isReadyToPack =
+                                    order.status === "Payment Received" &&
+                                    order.items?.every(item => item.associated === true) &&
+                                    order.paymentId != null &&
+                                    (!order.warning || order.warning.trim() === "");
+
+                            return (
                             
                             <TableRow
                                 key={order.id}
                                 component={Link}
                                 to={`/orders/${order.id}`}
-                                state={{ 
-                                    newMessagesCustomer: order.newMessagesCustomer, 
-                                    newMessagesSeller: order.newMessagesSeller, 
-                                    newMessagesDiscogs: order.newMessagesDiscogs
-                                }}
                                 sx={{
                                     textDecoration: 'none',
                                     background: order.justAdded
                                         ? 'linear-gradient(90deg, rgba(33,150,243,0.03), rgba(33,150,243,0.00))'
+                                        : isReadyToPack
+                                        ? 'linear-gradient(90deg, rgba(126, 202, 63,0.08), rgba(126, 202, 63,0.02))'
                                         : index % 2 === 0
                                         ? 'white'
                                         : 'rgba(0, 0, 0, 0.02)',
-                                    boxShadow: order.justAdded ? 'inset 0 0 10px rgba(33,150,243,0.1)' : 'none',
+                                    boxShadow: order.justAdded
+                                        ? 'inset 0 0 10px rgba(33,150,243,0.1)'
+                                        : isReadyToPack
+                                        ? 'inset 0 0 10px rgba(126, 202, 63,0.1)'
+                                        : 'none',
                                     '&:hover': {
                                         backgroundColor: order.justAdded
                                             ? 'rgba(33,150,243,0.05)'
+                                            : isReadyToPack
+                                            ? 'rgba(126, 202, 63,0.05)'
                                             : 'rgba(0, 0, 0, 0.05)',
                                         '& .number-box': {
-                                            color: order.justAdded ? '#03386eff' : 'rgba(0,0,0,1)',
+                                            color: order.justAdded
+                                                ? '#03386eff'
+                                                : isReadyToPack
+                                                ? 'rgb(65, 124, 17)'
+                                                : 'rgba(0,0,0,1)',
                                             borderColor:  'rgba(0,0,0,0.25)',
                                         },
                                     },
@@ -161,72 +183,32 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                             >
                                 
                                 <TableCell>
-                                    {order.newMessagesCustomer > 0 ? (
-                                        <Badge
-                                            badgeContent={
-                                                <Typography
-                                                    sx={{
-                                                        fontFamily: 'InterSemiBold',
-                                                        fontSize: '10px',
-                                                        color: 'white',
-                                                    }}
-                                                >
-                                                    {order.newMessagesCustomer}
-                                                </Typography>
-                                            }
-                                            sx={{
-                                                '& .MuiBadge-badge': {
-                                                    backgroundColor: order.justAdded
-                                                        ? 'rgba(47, 101, 183, 0.85)' // azul si cambió
-                                                        : 'rgba(226, 30, 26, 0.85)', // rojo si no
-                                                    color: 'white',
-                                                    boxShadow: order.justAdded
-                                                        ? '0 0 6px rgba(33,150,243,0.2)'
-                                                        : '0 0 6px rgba(254,117,114,0.2)',
-                                                    fontFamily: 'InterSemiBold',
-                                                },
-                                            }}
-                                        >
-                                            <Box
-                                                className="number-box"
-                                                sx={{
-                                                    fontFamily: 'InterSemiBold',
-                                                    fontSize: 12,
-                                                    color: order.justAdded ? 'rgba(47, 101, 183, 1)': 'rgba(0,0,0,0.85)',
-                                                    backgroundColor: order.justAdded ? 'rgba(33,150,243,0.10)': `${getBoxColor(order.status, order.archived)}0.15)`,
-                                                    border: order.justAdded ? '1px solid rgba(33,150,243,0.5)': `1px solid ${getBoxColor(order.status, order.archived)}0.75)`,
-                                                    textShadow: order.justAdded ? '0px 0px 4px rgba(33,150,243,0.15)' : '0px 0px 4px rgba(0,0,0,0.10)',
-                                                
-                                                    borderRadius: 2,
-                                                    textAlign: 'center',
-                                                    py: 0.5,
-                                                    px: 1.2,
-                                                    display: 'inline-flex',
-                                                    alignItems: 'center',
-                                                    justifyContent: 'center',
-                                                    boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-                                                    transition: 'all 0.2s ease-in-out',
-                                                    cursor: 'pointer',
-                                                    '&:hover': {
-                                                        backgroundColor: order.justAdded ? 'rgba(33,150,243,0.20)' : `${getBoxColor(order.status, order.archived)}0.25)`,
-                                                        boxShadow: '0 2px 6px rgba(0,0,0,0.15)',
-                                                        transform: 'translateY(-1px)',
-                                                    },
-                                                }}
-                                            >
-                                                {order.id}
-                                            </Box>
-                                        </Badge>
-                                    ) : (
+                                    
                                         <Box
                                             className="number-box"
                                             sx={{
                                                 fontFamily: 'InterSemiBold',
                                                 fontSize: 12,
-                                               color: order.justAdded ? 'rgba(47, 101, 183, 1)': 'rgba(0,0,0,0.85)',
-                                                    backgroundColor: order.justAdded ? 'rgba(33,150,243,0.10)': `${getBoxColor(order.status, order.archived)}0.15)`,
-                                                    border: order.justAdded ? '1px solid rgba(33,150,243,0.5)': `1px solid ${getBoxColor(order.status, order.archived)}0.75)`,
-                                                    textShadow: order.justAdded ? '0px 0px 4px rgba(33,150,243,0.15)' : '0px 0px 4px rgba(0,0,0,0.10)',
+                                                color: order.justAdded
+                                                    ? 'rgba(47, 101, 183, 1)'
+                                                    : isReadyToPack
+                                                    ? 'rgb(85, 143, 38)'
+                                                    : 'rgba(0,0,0,0.85)',
+                                                backgroundColor: order.justAdded
+                                                    ? 'rgba(33,150,243,0.10)'
+                                                    : isReadyToPack
+                                                    ? 'rgba(126, 202, 63,0.1)'
+                                                    : `${getBoxColor(order.status, order.archived)}0.15)`,
+                                                border: order.justAdded
+                                                    ? '1px solid rgba(33,150,243,0.5)'
+                                                    : isReadyToPack
+                                                    ? '1px solid rgba(111, 173, 60, 0.5)'
+                                                    : `1px solid ${getBoxColor(order.status, order.archived)}0.75)`,
+                                                textShadow: order.justAdded
+                                                    ? '0px 0px 4px rgba(33,150,243,0.15)'
+                                                    : isReadyToPack
+                                                    ? '0px 0px 4px rgba(126, 202, 63,0.15)'
+                                                    : '0px 0px 4px rgba(0,0,0,0.10)',
                                                 borderRadius: 2,
                                                 textAlign: 'center',
                                                 py: 0.5,
@@ -238,7 +220,11 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                                                 transition: 'all 0.2s ease-in-out',
                                                 cursor: 'pointer',
                                                 '&:hover': {
-                                                    backgroundColor: order.justAdded ? 'rgba(33,150,243,0.20)' :`${getBoxColor(order.status, order.archived)}0.25)`,
+                                                    backgroundColor: order.justAdded
+                                                        ? 'rgba(33,150,243,0.10)'
+                                                        : isReadyToPack
+                                                        ? 'rgba(126, 202, 63,0.2)'
+                                                        : `${getBoxColor(order.status, order.archived)}0.25)`,
                                                     boxShadow: '0 2px 6px rgba(0,0,0,0.15)',
                                                     transform: 'translateY(-1px)',
                                                 },
@@ -246,20 +232,23 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                                         >
                                             {order.id}
                                         </Box>
-                                    )}
                                 </TableCell>
 
                                 <TableCell sx={{ maxWidth: '200px', position: 'relative'}}>
                                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                                        {order.justAdded && (
+                                        {(order.justAdded || isReadyToPack) && (
                                             <Box
                                                 sx={{
                                                     width: 8,
                                                     height: 8,
                                                     borderRadius: '50%',
                                                     mt: 0.07,
-                                                    background: 'linear-gradient(135deg, #42a5f5, #1e88e5)',
-                                                    boxShadow: '0 0 6px rgba(33,150,243,0.6)',
+                                                    background: order.justAdded
+                                                        ? 'linear-gradient(135deg, #42a5f5, #1e88e5)' // azul
+                                                        : 'linear-gradient(135deg, #66bb6a, #388e3c)', 
+                                                    boxShadow: order.justAdded
+                                                        ? '0 0 6px rgba(33,150,243,0.6)'
+                                                        : '0 0 6px rgba(126, 202, 63,0.6)',
                                                     animation: 'pulse 1.8s infinite ease-in-out',
                                                     '@keyframes pulse': {
                                                         '0%': { transform: 'scale(0.8)', opacity: 1 },
@@ -274,8 +263,17 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                                             sx={{
                                                 fontFamily: 'InterBold',
                                                 fontSize: 14.5,
-                                                color: order.justAdded ? 'rgba(47, 101, 183, 1)' : 'rgba(0,0,0,0.75)',
-                                                textShadow: order.justAdded ? '0px 0px 4px rgba(33,150,243,0.15)' : '0px 0px 4px rgba(0,0,0,0.10)',
+                                                color: order.justAdded
+                                                    ? 'rgba(47, 101, 183, 1)'
+                                                    : isReadyToPack
+                                                    ? 'rgb(85, 143, 38)'
+                                                    : 'rgba(0,0,0,0.75)',
+
+                                                textShadow: order.justAdded
+                                                    ? '0px 0px 4px rgba(33,150,243,0.15)'
+                                                    : isReadyToPack
+                                                    ? '0px 0px 4px rgba(85, 143, 38,0.15)'
+                                                    : '0px 0px 4px rgba(0,0,0,0.10)',
                                                 borderRadius: 1,
                                                 transition: 'all 0.25s ease-in-out',
                                                 overflow: 'hidden',
@@ -292,7 +290,11 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                                         sx={{
                                             fontFamily: 'InterSemiBold',
                                             fontSize: 12,
-                                            color: order.justAdded ? 'rgba(13, 71, 161, 0.7)' : 'rgba(0,0,0,0.5)',
+                                            color: order.justAdded
+                                                    ? 'rgba(47, 101, 183, 0.7)'
+                                                    : isReadyToPack
+                                                    ? 'rgba(85, 143, 38, 0.7)'
+                                                    : 'rgba(0,0,0,0.5)',
                                             transition: 'color 0.3s ease-in-out',
                                             overflow: 'hidden',
                                             textOverflow: 'ellipsis',
@@ -384,7 +386,7 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                                         }}
                                     >
                                         {order.items?.every(item => item.associated === true) ? (
-                                            <AlbumIcon sx={{ color: 'rgba(0,0,0,0.65)', fontSize: 22 }} />
+                                            <CheckIcon sx={{ color: 'rgba(0,0,0,0.65)', fontSize: 22 }} />
                                         ) : (
                                             <PriorityHighRoundedIcon sx={{ color: 'rgba(0,0,0,0.65)', fontSize: 22 }} />
                                         )}
@@ -392,10 +394,75 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
 
                                 </TableCell>
 
+                                <TableCell sx={{ textAlign: 'center' }}>
+                                    <Button
+                                        variant="outlined"
+                                        size="small"
+                                        sx={{
+                                            width: 32,
+                                            height: 32,
+                                            minWidth: 32,
+                                            borderRadius: 1.5,
+                                            padding: 0,
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            borderColor: 'rgba(0,0,0,0.2)',
+                                            backgroundColor: 'white',
+                                            transition: 'all 0.2s ease-in-out',
+                                            '&:hover': {
+                                                backgroundColor: 'rgba(0,0,0,0.05)',
+                                                borderColor: 'rgba(0,0,0,0.3)',
+                                            },
+                                        }}
+                                    >
+                                        {order.paymentId != null     ? (
+                                            <CheckIcon sx={{ color: 'rgba(0,0,0,0.65)', fontSize: 22 }} />
+                                        ) : (
+                                            <PriorityHighRoundedIcon sx={{ color: 'rgba(0,0,0,0.65)', fontSize: 22 }} />
+                                        )}
+                                    </Button>
+
+                                </TableCell>
+
+                                <TableCell sx={{ textAlign: 'center' }}>
+                                    <Button
+                                        variant="outlined"
+                                        size="small"
+                                        sx={{
+                                            width: 32,
+                                            height: 32,
+                                            minWidth: 32,
+                                            borderRadius: 1.5,
+                                            padding: 0,
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            borderColor: 'rgba(0,0,0,0.2)',
+                                            backgroundColor: 'white',
+                                            transition: 'all 0.2s ease-in-out',
+                                            '&:hover': {
+                                                backgroundColor: 'rgba(0,0,0,0.05)',
+                                                borderColor: 'rgba(0,0,0,0.3)',
+                                            },
+                                        }}
+                                    >
+                                        {(order.warning != null && order.warning.trim() !== "")? (
+                                            <PriorityHighRoundedIcon sx={{ color: 'rgba(0,0,0,0.65)', fontSize: 22 }} />
+                                        ) : (
+                                            <CheckIcon sx={{ color: 'rgba(0,0,0,0.65)', fontSize: 22 }} />
+                                        )}
+                                    </Button>
+
+                                </TableCell>
+
+                                        
+
                                 
 
                             </TableRow>
-                        ))
+                        );
+                        })
                     )}
                 </TableBody>
             </Table>

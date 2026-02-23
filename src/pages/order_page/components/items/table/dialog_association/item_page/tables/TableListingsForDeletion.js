@@ -8,13 +8,15 @@ import {
   Checkbox,
 } from '@mui/material';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-import { getListings} from '../../../../../../../../services/listingService';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { getListings, deleteListing} from '../../../../../../../../services/listingService';
 import { useState, useEffect } from 'react';
 import { CircularProgress } from '@mui/material';
 
-const TableListingsForDeletion = ({ releaseId, provider}) => {
+const TableListingsForDeletion = ({ releaseId, provider, setListingsDeleted}) => {
   const [listings, setListings] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [selectedListings, setSelectedListings] = useState([]);
 
   const getDaysAgo = (dateString) => {
     if (!dateString) return null;
@@ -46,6 +48,48 @@ const TableListingsForDeletion = ({ releaseId, provider}) => {
         fetchListings();
    }, [provider?.id, releaseId]);
 
+   const handleToggle = (id) => {
+    setSelectedListings((prev) =>
+      prev.includes(id)
+        ? prev.filter((item) => item !== id)
+        : [...prev, id]
+    );
+  };
+
+  const handleSelectAll = () => {
+    if (!listings) return;
+
+    if (selectedListings.length === listings.length) {
+      setSelectedListings([]);
+    } else {
+      setSelectedListings(listings.map((l) => l.id));
+    }
+  };
+
+  const handleDeleteSelected = async () => {
+      setLoading(true);
+      if (selectedListings.length === 1) {
+        await deleteListing(releaseId, provider.id, selectedListings[0]);
+      } else if (selectedListings.length > 1) {
+        await Promise.all(
+                selectedListings.map((lid) =>
+                deleteListing(releaseId, provider.id, lid)
+              ));
+      }
+      await fetchListings();
+      setLoading(false);
+    };
+
+    useEffect(() => {
+        if (!listings) return;
+
+        if (listings.length === 0) {
+            setListingsDeleted(true);
+        } else {
+            setListingsDeleted(false);
+        }
+    }, [listings])
+
   if (loading) return (
     <Box
       sx={{
@@ -73,25 +117,95 @@ const TableListingsForDeletion = ({ releaseId, provider}) => {
       </Typography>
     );
   }
+
+  const allSelected = selectedListings.length === listings.length;
   return (
     <>
+        <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              px: 2,
+              backgroundColor: 'rgba(0,0,0,0.01)'
+            }}
+          >
+            
+            <Box sx={{ display: 'flex', alignItems: 'center', ml: 'auto', mr: "16px", 
+             }}>
+                <IconButton
+                    size="small"
+                    onClick={selectedListings.length > 0 ? handleDeleteSelected : undefined}
+                    disabled={selectedListings.length === 0}
+                    sx={{
+                    color: 'rgba(0,0,0,0.35)',
+                    '&:hover': {
+                        color: selectedListings.length > 0
+                        ? 'rgba(0,0,0,0.85)'
+                        : 'rgba(0,0,0,0.35)',
+                        backgroundColor: 'transparent',
+                    },
+                    }}
+                >
+                    <DeleteIcon sx={{ fontSize: 17 }} />
+                </IconButton>
+              
+              
+                <Box
+                onClick={handleSelectAll}
+                sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    cursor: 'pointer',
+                    userSelect: 'none',
+                    
+                }}
+                >
+                <Checkbox
+                    size="small"
+                    checked={allSelected}
+                    indeterminate={
+                    selectedListings.length > 0 &&
+                    selectedListings.length < listings.length
+                    }
+                    sx={{
+                    color: 'rgba(0,0,0,0.35)',
+                    '&.Mui-checked': {
+                        color: 'rgba(0,0,0,0.35)',
+                    },
+                    '&.MuiCheckbox-indeterminate': {
+                        color: 'rgba(0,0,0,0.35)',
+                    },
+                    }}
+                />
+                </Box>
+            </Box>
+        </Box>
       <List disablePadding>
         {listings.map((listing) => {
           const rawProfit = listing.sellingPrice - provider?.price;
           const profit = rawProfit.toFixed(2);
           const isPositive = profit >= 0;
+          const isSelected = selectedListings.includes(listing.id);
           const daysAgo = getDaysAgo(listing.dateLastEdition);
 
           return (
             <ListItem
               key={listing.id}
+              onClick={() => handleToggle(listing.id) }
               sx={{
                 px: 4,
-                py: 1,
+                py: 0,
                 display: 'flex',
                 alignItems: 'center',
                 gap: 2,
                 borderBottom: '1px solid rgba(0,0,0,0.06)',
+                cursor: 'pointer' ,
+                backgroundColor: isSelected ? 'rgba(0, 0, 0, 0.05)' :'white' ,
+                transition: 'background-color 0.2s ease-in-out',
+                '&:hover': {
+                  backgroundColor:'rgba(0, 0, 0, 0.05)',
+                },
               }}
             >
               
@@ -200,7 +314,18 @@ const TableListingsForDeletion = ({ releaseId, provider}) => {
                 )}
                 
               </Box>
-              
+              <Checkbox
+                size="small"
+                checked={isSelected}
+                onChange={() => handleToggle(listing.id)}
+                onClick={(e) => e.stopPropagation()}
+                sx={{
+                  color: 'rgba(0,0,0,0.35)',
+                  '&.Mui-checked': {
+                    color: 'rgba(0,0,0,0.6)',
+                  },
+                }}
+              />
 
               
             </ListItem>

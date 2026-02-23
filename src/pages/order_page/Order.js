@@ -1,25 +1,23 @@
 import { useParams } from 'react-router-dom';
 import {Box } from '@mui/material';
 import {useState, useEffect} from 'react';
-import OrderMessages from './components/messages/OrderMessages';
-import { getOrder, resetNewMessages, updateMessages,patchOrderJustAdded } from '../../services/orderService';
+import { getOrder, patchOrderJustAdded } from '../../services/orderService';
 import DotsDrawer from '../../globalComponents/drawer/DotsDrawer';
 import DotsAppBar from '../../globalComponents/app_bar/DotsAppBar';
 import { appBarHeight } from '../../config/constants';
 import OrderInfo from './components/information/OrderInfo';
 import OrderItems from './components/items/OrderItems';
+import OrderPayment from './components/payment/OrderPayment';
 
 const Order = () => {
     const { orderId } = useParams();
     const [order, setOrder] = useState();
     const [loading, setLoading] = useState(true);
-    const { newMessagesCustomer, newMessagesDiscogs, newMessagesSeller } = location.state || {};
 
     
     const fetchData = async () => {
                     try {
                         setLoading(true)
-                        await updateMessages(orderId)
                         const data = await getOrder(orderId);
                         
                         if (data.justAdded) {
@@ -27,13 +25,13 @@ const Order = () => {
                         }    
                         setOrder(data);
                         setLoading(false)
-                        resetNewMessages(orderId)
+                        
                       } catch(err) {
                         console.log(err);
                       }
                 };
 
-    useEffect(() => {
+        useEffect(() => {
                 
                 fetchData();
         }, []);
@@ -77,8 +75,10 @@ const Order = () => {
             >
                 <Box sx={{ display: 'flex', flexDirection: 'row', gap: 2 , alignItems: 'flex-start'}}>
                     <OrderInfo order={order} loading={loading} />
+                    
                     <OrderItems order={order} loading={loading} fetchOrder={fetchData} />
-                    <OrderMessages order = {order} loading={loading} setOrder={setOrder} setLoading={setLoading} />
+                    <OrderPayment order={order} loading={loading} fetchOrder={fetchData} />
+                    
                 </Box>
             </Box>
         </Box>

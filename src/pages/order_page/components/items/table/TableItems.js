@@ -11,7 +11,7 @@ import Popover from '@mui/material/Popover';
 import SelectedProvider from "./item_information/SelectedProvider";
 import SelectedListing from "./item_information/SelectedListing";
 
-const TableItems = ({ order, loading, fetchOrder }) => {
+const TableItems = ({ order, fetchOrder }) => {
     const [dialogOpen, setDialogOpen] = useState(false);
     const [dialogSwapOpen, setDialogSwapOpen] = useState(false);
     const [selectedItem, setSelectedItem] = useState(null);
@@ -54,10 +54,6 @@ const TableItems = ({ order, loading, fetchOrder }) => {
     
     const navigate = useNavigate();
     const open = Boolean(anchorEl);
-    //hacer que returne una bolita de esas
-    if (loading) {
-        return <Typography>Cargando...</Typography>;
-    }
 
     return (
         <>

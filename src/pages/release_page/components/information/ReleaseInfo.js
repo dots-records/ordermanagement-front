@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { IconButton, Box, Typography, Paper, Divider } from "@mui/material";
+import { IconButton, Box, Typography, Paper, Divider, CircularProgress} from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
@@ -7,7 +7,21 @@ const ReleaseInfo = ({ release, loading }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
 
     if (loading) {
-        return <Typography>Cargando...</Typography>;
+        return (
+            <Box className="box-container" sx={{ width: "250px" }}>
+                <Box 
+                    sx={{ 
+                        display: 'flex', 
+                        width: "100%", 
+                        height: "100%",
+                        justifyContent: 'center',
+                        alignItems: 'center',  
+                    }}
+                >
+                    <CircularProgress size={24} />
+                </Box>
+            </Box>
+        );
     }
 
     const images = release?.images || [];

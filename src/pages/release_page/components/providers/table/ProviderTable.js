@@ -18,7 +18,7 @@ import ListingTable from './listings/ListingTable';
 
 
 
-const ProviderTable = ({ providers, loading, setProviders, setLoading, releaseId }) => {
+const ProviderTable = ({ providers, setProviders, setLoading, releaseId }) => {
     const [openedProvider, setOpenedProvider] = useState(null);
     const [providerForEditing, setProviderForEditing] = useState(null);
     const [openEdit, setOpenEdit] = useState(false);
@@ -46,7 +46,6 @@ const ProviderTable = ({ providers, loading, setProviders, setLoading, releaseId
         setListingsRefreshKey(prev => prev + 1);
     };
 
-    if (loading) return <Typography>Cargando...</Typography>;
 
     return (
         <>

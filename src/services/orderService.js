@@ -41,6 +41,48 @@ export const patchOrderStatus = async (orderId, newStatus) => {
     }
 };
 
+export const patchOrderWarning = async (orderId, warning) => {
+    try {
+        await api.patch(`dots/orders/${orderId}/warning`, { warning: warning }, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        console.log(`Order ${orderId} updated to warning: ${warning}`);
+    } catch (error) {
+        console.error('Error updating order warning:', error.response?.data || error.message);
+        throw error;
+    }
+};
+
+export const patchOrderInformation = async (orderId, information) => {
+    try {
+        await api.patch(`dots/orders/${orderId}/information`, { information: information }, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        console.log(`Order ${orderId} updated to information: ${information}`);
+    } catch (error) {
+        console.error('Error updating order information:', error.response?.data || error.message);
+        throw error;
+    }
+};
+
+export const patchOrderPaymentId = async (orderId, paymentId) => {
+    try {
+        await api.patch(`dots/orders/${orderId}/paymentId`, { paymentId: paymentId }, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        console.log(`Order ${orderId} updated to paymentId: ${paymentId}`);
+    } catch (error) {
+        console.error('Error updating order paymentId:', error.response?.data || error.message);
+        throw error;
+    }
+};
+
 export const patchOrderJustAdded = async (orderId, justAdded) => {
     try {
         await api.patch(`dots/orders/${orderId}/justAdded`, { justAdded: justAdded }, {
@@ -54,47 +96,6 @@ export const patchOrderJustAdded = async (orderId, justAdded) => {
         throw error;
     }
 };
-
-
-
-
-
-export const resetNewMessages = async (orderId) => {
-    try {
-        await api.post(`dots/resetNewMessages/${orderId}`);
-        return 0;
-    } catch (err) {
-        console.error(err);
-        return 1;
-    }
-};
-
-export const updateMessages = async (orderId) => {
-    try {
-        await api.post(`dots/updateMessages/${orderId}`);
-        return 0;
-    } catch (err) {
-        console.error(err);
-        return 1;
-    }
-};
-
-
-
-export const sendMessage = async (orderId, message) => {
-    try {
-       const response = await api.post(`/dots/sendMessage/${orderId}`, { message: message }, {
-        headers: {
-            'Content-Type': 'application/json' // Asegúrate de enviar como JSON
-        }
-    });
-       console.log(response.data);
-    } catch (error) {
-       console.error('Error:', error);
-    }
- };
-
- 
 
  export const getOrdersInformation = async () => {
     try {

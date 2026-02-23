@@ -15,8 +15,9 @@ import TableListingsAfterAssociation from './tables/TableListingsAfterAssociatio
 import ListingAdd from './components/ListingAdd';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
-import { patchProviderUnits } from '../../../../../../../services/providerService';
+import { patchProviderUnits, deleteProvider, getProviders} from '../../../../../../../services/providerService';
 import TableListingsForDeletion from './tables/TableListingsForDeletion';
+import { archiveReleases } from '../../../../../../../services/releaseService';
 
 
 
@@ -25,6 +26,7 @@ const ItemPage = ({ order, item, setClosable}) => {
     const [providerAssociated, setProviderAssociated] = useState(null);
     const [itemAfterAssociation, setItemAfterAssociation] = useState(false);
     const [listingHandled, setListingHandled] = useState(false);
+    const [listingsDeleted, setListingsDeleted] = useState(false);
     const [showNotificationAssociation, setShowNotificationAssociation] = useState(false);
     const [showNotificationListingAdded, setShowNotificationListingAdded] = useState(false);
 
@@ -60,6 +62,18 @@ const ItemPage = ({ order, item, setClosable}) => {
             setShowNotificationListingAdded(true);
         }
     }, [listingHandled]);
+
+    const handleDeletion = async () => {
+        await deleteProvider(item.release.id, providerAssociated.id);
+
+        const providers = await getProviders(item.release.id);
+
+        if (!providers || providers.length === 0) {
+            //await archiveReleases(item.release.id);
+        }
+
+        setClosable(true);
+    };
 
     if (!item) return <Typography>Cargando...</Typography>;
 
@@ -173,27 +187,67 @@ const ItemPage = ({ order, item, setClosable}) => {
                                     )}
                                 </Box>
                             ) : (providerAssociated.type === 'In Stock' && providerAssociated.units === 0) ? (
-                                <Box>
-                                    <Box sx={{ px: 2, backgroundColor:"rgba(0,0,0,0.02)" }}>
-                                        <SelectedProvider provider={providerAssociated}/>
+                                    listingsDeleted == false ? (
+                                        <Box>
+                                        <Box sx={{ px: 2, backgroundColor:"rgba(0,0,0,0.02)" }}>
+                                            <SelectedProvider provider={providerAssociated}/>
+                                        </Box>
+                                        <Box sx={{ borderBottom: '1px solid #ddd', py: 1}}>
+                                            <Typography
+                                                sx={{
+                                                    fontFamily: 'InterRegular',
+                                                    fontSize: 11,
+                                                    color: 'rgba(0,0,0,0.5)',
+                                                    textAlign: 'center'
+                                                }}
+                                            >
+                                                Provider is out of stock. Delete all listings.
+                                            </Typography>
+                                            
+                                        </Box>
+                                        <Box sx={{ px: 2, backgroundColor:"rgba(0,0,0,0.02)" }}>
+                                            <TableListingsForDeletion releaseId={item.release.id} 
+                                            setListingsDeleted={setListingsDeleted}
+                                            provider={providerAssociated}/>
+                                        </Box>
                                     </Box>
-                                    <Box sx={{ borderBottom: '1px solid #ddd', py: 1}}>
-                                        <Typography
-                                            sx={{
-                                                fontFamily: 'InterRegular',
-                                                fontSize: 11,
-                                                color: 'rgba(0,0,0,0.5)',
-                                                textAlign: 'center'
-                                            }}
-                                        >
-                                            Provider is out of stock. Delete all listings.
-                                        </Typography>
-                                        
-                                    </Box>
-                                    <Box sx={{ px: 2, backgroundColor:"rgba(0,0,0,0.02)" }}>
-                                        <TableListingsForDeletion releaseId={item.release.id} provider={providerAssociated}/>
-                                    </Box>
-                                </Box>
+                                ):(
+                                    <> 
+                                        <Box sx={{ borderBottom: '1px solid #ddd', py: 1}}>
+                                            <Typography
+                                                sx={{
+                                                    fontFamily: 'InterRegular',
+                                                    fontSize: 11,
+                                                    color: 'rgba(0,0,0,0.5)',
+                                                    textAlign: 'center'
+                                                }}
+                                            >
+                                                Delete Provider and archive Release if no more providers are available
+                                            </Typography>
+                                        </Box>
+                                            <Box sx={{ display: "flex", justifyContent: "center", py: 2 }}>
+                                                <Button
+                                                    variant="contained"
+                                                    size="small"
+                                                    onClick={handleDeletion}
+                                                    sx={{
+                                                        fontFamily: 'InterSemiBold',
+                                                        fontSize: 11,
+                                                        backgroundColor: 'rgba(0,0,0,0.75)',
+                                                        textTransform: 'none',
+                                                        boxShadow: 'none',
+                                                        '&:hover': {
+                                                            backgroundColor: 'rgba(0,0,0,0.9)',
+                                                            boxShadow: 'none'
+                                                        }
+                                                    }}
+                                                >
+                                                    Handle
+                                                </Button>
+                                            </Box>
+                                        </>
+                                )
+                                
                             ) : null}
                         
                     </>
