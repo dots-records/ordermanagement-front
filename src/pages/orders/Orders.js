@@ -1,8 +1,5 @@
 import { useState, useEffect } from 'react';
-import Box from '@mui/material/Box';
-import DotsAppBar from "../../globalComponents/app_bar/DotsAppBar";
-import DotsDrawer from "../../globalComponents/drawer/DotsDrawer";
-import { appBarHeight } from '../../config/constants';
+import DashboardLayout from "../../globalComponents/dashboard_layout/DashboardLayout";
 import { getSelectedTableOrders, getLastUpdateDiscogs } from './functions/Functions';
 import BoxOrders from './components/orders/BoxOrders';
 
@@ -11,7 +8,6 @@ const Orders = () => {
     const [loading, setLoading] = useState(true);
     const [formattedDate, setFormattedDate] = useState('');
 
-    // Obtener datos al cargar la página
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
@@ -21,10 +17,9 @@ const Orders = () => {
             const response2 = await getLastUpdateDiscogs();
             if (response2) {
                 const date = new Date(response2);
-                const readable = date.toLocaleString(); // ejemplo: 02/09/2025 08:25:34
+                const readable = date.toLocaleString(); 
                 setFormattedDate(readable);
             }
-
             setLoading(false);
         };
         fetchData();
@@ -32,30 +27,15 @@ const Orders = () => {
 
 
     return (
-        <Box sx={{ display: 'flex' }}>
-            <DotsAppBar/>
-            <DotsDrawer/>
-            <Box
-                sx={{
-                    p: 3,
-                    mt: `${appBarHeight}px`,
-                    position: 'relative',
-                    
-                    width: "100vw",
-                    height: "40vh",
-                }}
-            >
-                
-
-                <BoxOrders  
-                    loading={loading}
-                    setLoading={setLoading}
-                    ordersPage={ordersPage}
-                    setOrdersPage={setOrdersPage}
-                    timeAgo={formattedDate }
-                />
-            </Box>
-        </Box>
+        <DashboardLayout>
+            <BoxOrders
+                loading={loading}
+                setLoading={setLoading}
+                ordersPage={ordersPage}
+                setOrdersPage={setOrdersPage}
+                timeAgo={formattedDate}
+            />
+        </DashboardLayout>
     );
 };
 

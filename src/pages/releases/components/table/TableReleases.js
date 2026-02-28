@@ -28,9 +28,9 @@ const TableReleases = ({ loading, releases, releasesSelected, setReleasesSelecte
             <Box 
                 sx={{ 
                     display: 'flex', 
-                    width: 1176, 
                     mt: 2, 
-                    height: 470,
+                    width: '100%',
+                    height: '60vh',
                     justifyContent: 'center',
                     alignItems: 'center',  
                 }}
@@ -44,6 +44,8 @@ const TableReleases = ({ loading, releases, releasesSelected, setReleasesSelecte
         <TableContainer
             sx={{ 
                 
+                width: '100%',
+                height: '60vh',
                 mt: 2, 
                 overflowY: 'auto',
                 '&::-webkit-scrollbar': { width: '2px' },

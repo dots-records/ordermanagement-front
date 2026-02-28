@@ -1,7 +1,8 @@
 .box-container {
-    border: 1px solid rgba(0, 0, 0, 0.10); /* Color del borde con opacidad */
-    border-radius: 8px; /* Bordes redondeados */
-    padding: 16px; /* Padding interno */
+    border: 0.08rem solid rgba(0, 0, 0, 0.15); /* Color del borde con opacidad */
+    border-radius: 0.5rem; /* Bordes redondeados */
+    padding: 1rem; /* Padding interno */
+    background-color: white;
 }
 
 .dialog-container {

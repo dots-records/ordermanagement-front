@@ -1,22 +1,23 @@
 
 import ListItemButton from '@mui/material/ListItemButton';
 import { Box } from '@mui/material';
-import AlbumIcon from '@mui/icons-material/Album';
 import Typography from '@mui/material/Typography';
+import PaymentsIcon from '@mui/icons-material/Payments';
 
 
-const OrdersButton = ({ selected, open }) => {
+const PaymentsButton = ({ selected, open }) => {
 
     return (
         <ListItemButton  
             sx={{ 
+                width: '100%',
                 py: '0.8rem',
                 color: selected ? 'black' : 'rgba(0,0,0,0.4)',
                 '& .MuiSvgIcon-root': {
                         color: selected ? 'black' : 'rgba(0,0,0,0.4)',
                 },
                 '&:hover': {
-                    color: 'rgba(0,0,0,1)', 
+                    color: 'black', 
                     '& .MuiSvgIcon-root': {
                         color: 'black',
                     }
@@ -25,7 +26,7 @@ const OrdersButton = ({ selected, open }) => {
             }}
         >
 
-            <Box sx={{
+              <Box sx={{
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: open ? 'flex-start': 'center',
@@ -33,7 +34,7 @@ const OrdersButton = ({ selected, open }) => {
                     width: '100%',
                 }}
             >
-                <AlbumIcon sx={{fontSize: '1.2rem',}}/>
+                <PaymentsIcon sx={{fontSize: '1.2rem',}}/>
                 {open && (
                     <Typography
                         sx={{
@@ -41,12 +42,14 @@ const OrdersButton = ({ selected, open }) => {
                             fontSize: '1rem',
                         }}
                     >
-                        Orders
+                        Payments
                     </Typography>
                 )}
+                
+
             </Box>
         </ListItemButton>
     );
 }
 
-export default OrdersButton;
+export default PaymentsButton;

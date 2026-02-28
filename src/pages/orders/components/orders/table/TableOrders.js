@@ -48,11 +48,11 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
             <Box 
                 sx={{ 
                     display: 'flex', 
-                    width: 1176, 
-                    mt: 2.5, 
-                    height: 500,
+                    width: '100%',
+                    height: '50vh',
                     justifyContent: 'center',
                     alignItems: 'center',  
+                    color: 'black'
                 }}
             >
                 <CircularProgress size={33} />
@@ -62,80 +62,76 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
 
     return (
         <>
+        
         <TableContainer
             sx={{ 
-                width: '100%',
-                height: '60vh',
-                mt: 2.5, 
+                height: '50vh',
                 overflowY: 'auto',
                 '&::-webkit-scrollbar': {
                     width: '2px',
                 },
             }}
         >
-            <Table stickyHeader>
+            <Table stickyHeader sx={{ height: '100%' }}>
                 <TableHead>
                     <TableRow>
                         <TableCell 
-                            sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.65)', width: '10px' }}
+                            sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.65)', width: '1%',
+                            }}
                         >
                             Id
                         </TableCell>
                         <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.65)'  }}>
                             Title
                         </TableCell>
-                        <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.65)', width: '180px' }}>
+                        <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.65)', width: '15%' }}>
                             Status
                         </TableCell>
-                        <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.65)', width: '140px' }}>
+                        <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.65)', width: '15%' }}>
                             Created
                             <ArrowDropDown sx={{ fontSize: 18, ml: 0.3,  color: 'rgba(0,0,0,0.65)' }} />
                         </TableCell>
-                        <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.65)', width: '40px' }}>
+                        <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.65)', width: '1%' }}>
                             Link
                         </TableCell>
-                        <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.65)', width: '40px' }}>
+                        <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.65)', width: '1%' }}>
                             It.
                         </TableCell>
-                        <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.65)', width: '40px' }}>
+                        <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.65)', width: '1%' }}>
                             Pay.
                         </TableCell>
 
-                        <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.65)', width: '40px' }}>
+                        <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.65)', width: '1%' }}>
                             Warn.
                         </TableCell>
                         
                     </TableRow>
                 </TableHead>
 
-                <TableBody>
+                 <TableBody
+                    sx={{
+                        minHeight: '100%',
+                    }}
+                >
                     {orders?.length === 0 ? (
-                        <TableRow>
-                            <TableCell colSpan={6} sx={{ textAlign: 'center', py: 2, height: '200px' }}>
-                                <Box 
-                                    sx={{ 
-                                        border: '2px solid', 
-                                        borderColor: 'rgba(0,0,0,0.1)',
-                                        borderRadius: 1.5,
-                                        height: '380px',  
-                                        alignItems: 'center',  
-                                        display: 'flex',  
+                        <TableRow sx={{ height: '100%' }}> {/* ocupa todo el alto de la tabla */}
+                            <TableCell colSpan={8} sx={{ p: 0}}> {/* quitar padding para que se expanda */}
+                                <Box
+                                    sx={{
+                                        height: '100%',   // se expande con TableCell
+                                        display: 'flex',
                                         justifyContent: 'center',
+                                        alignItems: 'center',
                                         textAlign: 'center',
-                                        backgroundColor: 'rgba(0,0,0,0.02)',
-                                        mx: 'auto',
-                                        maxWidth: '100%' 
+                                        backgroundColor: 'rgba(0,0,0,0.015)',
                                     }}
                                 >
-                                    <Typography 
-                                        variant="body2" 
-                                        sx={{ color: 'rgba(0, 0, 0, 0.45)', fontFamily: 'InterSemiBold' }}
-                                    >
-                                        No orders available
-                                    </Typography>
+                                <Typography sx={{ fontSize: '0.8rem', color: 'rgba(0, 0, 0, 0.45)', fontFamily: 'InterRegular' }}>
+                                    No orders available
+                                </Typography>
                                 </Box>
                             </TableCell>
-                        </TableRow>
+                            </TableRow>
                     ) : (
                         orders?.map((order, index) => {
                             const isReadyToPack =
@@ -151,6 +147,7 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                                 component={Link}
                                 to={`/orders/${order.id}`}
                                 sx={{
+                                    maxHeight: 'max-content',
                                     textDecoration: 'none',
                                     background: order.justAdded
                                         ? 'linear-gradient(90deg, rgba(33,150,243,0.03), rgba(33,150,243,0.00))'

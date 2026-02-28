@@ -5,6 +5,7 @@ import { IconButton } from '@mui/material';
 import { getSelectedTableOrders } from '../../../functions/Functions';
 import vinted_icon from '../../../../../files/vinted_icon.png';
 import wallapop_icon from '../../../../../files/wallapop_icon.png';
+import AddIcon from '@mui/icons-material/Add';
 
 
 const TableAdd = ({ setOrdersPage, setLoading, tableSelected} ) => {
@@ -39,13 +40,10 @@ const TableAdd = ({ setOrdersPage, setLoading, tableSelected} ) => {
                 onClick={handleOpen}
                 variant="outlined"
                 sx={{
-                    position: 'absolute',
-                    top: 24,
-                    right:330 ,
                     fontFamily: 'InterSemiBold',
-                    fontSize: '13px',
+                    fontSize: '0.75rem',
                     backgroundColor: 'rgba(0, 0, 0, 0.03)',
-                    borderColor: 'rgba(0, 0, 0, 0.2)',
+                    borderColor: 'rgba(0, 0, 0, 0.3)',
                     color: 'rgba(0,0,0,0.6)',
                     textTransform: 'none',
                     '&:hover': {
@@ -55,7 +53,7 @@ const TableAdd = ({ setOrdersPage, setLoading, tableSelected} ) => {
                     },
                 }}
             >
-                +
+                <AddIcon sx={{fontSize: '0.875rem' }}/>
             </Button>
 
             <Dialog

@@ -1,13 +1,13 @@
 import DotsDrawer from '../../globalComponents/drawer/DotsDrawer';
 import DotsAppBar from '../../globalComponents/app_bar/DotsAppBar';
 import { Box } from '@mui/material';
-import { appBarHeight } from '../../config/constants';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getRelease } from '../../services/releaseService';
 import { getProviders } from '../../services/providerService';
 import ReleaseInfo from './components/information/ReleaseInfo';
 import ReleaseProviders from './components/providers/ReleaseProviders';
+import DashboardLayout from '../../globalComponents/dashboard_layout/DashboardLayout';
 
 const Release = () => {
     const { releaseId } = useParams();
@@ -33,46 +33,33 @@ const Release = () => {
 
     if (!loading && !release) {
             return (
-                <>
-                    <DotsAppBar />
-                    <DotsDrawer />
+                <DashboardLayout>
                     <Box
+                        className="box-container"
                         sx={{
-                            p: 3,
-                            mt: `${appBarHeight}px`,
                             display: 'flex',
-                            height: '100vh',
+                            height: '100%',
                             alignItems: 'center',
                             justifyContent: 'center',
                             fontFamily: 'InterSemiBold',
-                            fontSize: 14,
-                            color: 'rgba(0,0,0,0.45)',
+                            fontSize: '0.875rem',
+                            color: 'rgba(0,0,0,0.5)',
                         }}
                     >
                         Release not available
                     </Box>
-                </>
+                </DashboardLayout>
             );
         }
     
     return (
-        <Box sx={{ display: 'flex' }}>
-            <DotsAppBar />
-            <DotsDrawer />
-            {/* Caja que delimita con el drawer y el appbar y contiene el resto de la pantalla */}
-            <Box
-                sx={{
-                    p: 3,
-                    mt: `${appBarHeight}px`,
-                }}
-            >
-                <Box sx={{ display: 'flex', flexDirection: 'row', gap: 2 , alignItems: 'flex-start'}}>
-                    <ReleaseInfo release={release} loading={loading} />
-                    <ReleaseProviders providers={providers} loading={loading} releaseId={releaseId}
+        <DashboardLayout>
+            <Box sx={{ display: 'flex', flexDirection: 'row', gap: 2 , alignItems: 'flex-start', height:'100%'}}>
+                <ReleaseInfo release={release} loading={loading} />
+                <ReleaseProviders providers={providers} loading={loading} releaseId={releaseId}
                      setProviders={setProviders} setLoading={setLoading}/>
-                </Box>
             </Box>
-        </Box>
+        </DashboardLayout>
     );
 };
 

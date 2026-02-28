@@ -1,25 +1,60 @@
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import design from '../../files/design.png'
-import { drawerWidth, appBarHeight } from '../../config/constants';
-
+import {Box, Typography} from '@mui/material';
+import logo_cropped from '../../files/logo_cropped.png';
 
 const DotsAppBar = () => {
+  return (
+    <Box
+      sx={{
+        width: '100%',
+        display: 'flex',
+        borderBottom: '0.08rem solid rgba(0,0,0,0.15)',
+        boxSizing: 'border-box',
+      }}
+    >
+      {/* Logo a la izquierda */}
+        <Box sx={{ 
+            display: 'flex', 
+            alignItems: 'center',
+            flexDirection: 'column',
+            justifyContent:'center',
+            width: '3rem',
+            p: '0.8rem',
+            
+        }}>
 
-    return (
-        <AppBar position="fixed" sx={{ width: '100%', ml: `${drawerWidth}px`, height: appBarHeight, color: 'black', backgroundColor: 'rgba(0,0,0,0)', boxShadow: 'none', borderBottom: 1, borderColor: 'rgba(0, 0, 0, 0.2)'}}>
-            <Toolbar>
-                <Typography variant="h5" sx={{ fontFamily: 'InterExtraBold' }}>
-                Dots
-                </Typography>
-                <Box sx= {{ width: '20', ml :1}}>
-            <img src={design} alt="Descripción de la imagen"style={{ width: '40px', height: 'auto' }}/>
+            <Box sx={{ 
+                display: 'flex', 
+                alignItems: 'center',
+                justifyContent:'center',
+                
+            }}>
+                <img
+                    src={logo_cropped}
+                    alt="Logo"
+                    style={{ 
+                        width: '1.5rem', 
+                        height: 'auto', 
+                        display: 'block', 
+                        opacity: 0.8, }}
+                />
+
+
             </Box>
-            </Toolbar>
-        </AppBar>
-    );
-}
+            
+                 
+        </Box>
+        <Box sx={{ 
+            display: 'flex', 
+            alignItems: 'center',
+            flexDirection: 'column',
+            justifyContent:'center',
+            py: '0.8rem',
+            
+        }}>
+        </Box>
+        
+    </Box>
+  );
+};
 
 export default DotsAppBar;

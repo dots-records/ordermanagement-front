@@ -14,54 +14,77 @@ const BoxOrders = ({ loading, setLoading, ordersPage, setOrdersPage, timeAgo}) =
     const filteredOrders = ordersPage?.content.filter(order => filter === 'All' || order.status === filter);
     return (
         <Box
+            className="box-container"
             sx={{
-            border: '1px solid',
-            borderColor: 'rgba(0, 0, 0, 0.10)',
-            borderRadius: 2,
-            p: 2,
-            position: 'relative' 
+                display: 'flex',
+                position: 'relative', 
+                flexDirection: 'column',
+                height: '100%',
+                alignItems: 'flex-start',
+                gap: '0.5rem',
             }}
         >
-            {!loading && timeAgo && (
-                <Box
-                    sx={{
-                        textDecoration: 'none',
-                        position: 'absolute', // Posición absoluta
-                        top: 48, // Ajusta la distancia desde el borde superior
-                        left: 18, // Ajusta la distancia desde el borde derecho
-                        fontFamily: 'InterRegular',
-                        fontSize: '12px',
-                        color: 'rgba(0,0,0,0.6)', // Color del texto normal
-                    }}
-                >
-                    Discogs Update: {timeAgo}
+            <Box sx={{
+                display: 'flex',
+                width:'100%',
+                flexDirection: 'row',
+                alignItems: 'flex-start',
+            }}>
+                <Box>
+                    <TableSelector setLoading={setLoading} setTableSelected={setTableSelected} 
+                    setOrdersPage={setOrdersPage} tableSelected={tableSelected} searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>
+                    {!loading && timeAgo && (
+                        <Box
+                            sx={{
+                                fontFamily: 'InterRegular',
+                                fontSize: '0.75rem',
+                                color: 'rgba(0,0,0,0.6)', 
+                            }}
+                        >
+                            Discogs Update: {timeAgo}
+                        </Box>
+                    )}
                 </Box>
-            )}
+                <Box sx={{ display: 'flex', justifyContent: 'flex-end', flex: 1, gap: '0.5rem' }}>
+                    <TableAdd
+                        setOrdersPage={setOrdersPage}
+                        setLoading={setLoading}
+                        tableSelected={tableSelected}
+                    />
+                    <TableFilter filter = {filter} setFilter = {setFilter}/>
+                    <TableSearcher
+                        setOrdersPage={setOrdersPage}
+                        setLoading={setLoading}
+                        tableSelected={tableSelected}
+                        setSearchTerm={setSearchTerm}
+                    />
+                </Box>
+            </Box>
 
-            <TableSelector setLoading={setLoading} setTableSelected={setTableSelected} 
-            setOrdersPage={setOrdersPage} tableSelected={tableSelected} searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>
-            <TableFilter filter = {filter} setFilter = {setFilter}/>
-            <TableSearcher setOrdersPage={setOrdersPage} setLoading = {setLoading} tableSelected={tableSelected}
-                  setSearchTerm={setSearchTerm} />
-            <TableOrders 
-                setOrdersPage = {setOrdersPage} 
-                setLoading = {setLoading} 
-                orders={filteredOrders} 
-                loading={loading}
-                searchTerm={searchTerm}
-                tableSelected={tableSelected}
-                numberPage={ordersPage?.number}
-            />
-            <TableAdd
-                setOrdersPage={setOrdersPage}
-                setLoading={setLoading}
-                tableSelected={tableSelected}
-            />
-            <Pagination tableSelected={tableSelected} setLoading = {setLoading} ordersPage={ordersPage} 
-            searchTerm={searchTerm} setOrdersPage={setOrdersPage} />
-                
+            <Box sx={{
+                display: 'flex',
+                width:'100%',
+                border: '1px solid black',
+            }}>
+                <TableOrders
+                    setOrdersPage={setOrdersPage}
+                    setLoading={setLoading}
+                    orders={filteredOrders}
+                    loading={loading}
+                    searchTerm={searchTerm}
+                    tableSelected={tableSelected}
+                    numberPage={ordersPage?.number}
+                />
+            </Box>
 
-            
+            <Box sx={{
+                display: 'flex',
+                width:'100%',
+                border: '1px solid black',
+            }}>
+                <Pagination tableSelected={tableSelected} setLoading = {setLoading} ordersPage={ordersPage} 
+                        searchTerm={searchTerm} setOrdersPage={setOrdersPage} />
+            </Box>
         </Box>
     );
 };

@@ -20,6 +20,7 @@ function App() {
           <Route path="orders/:orderId" element={<Order />} />
           <Route path="releases" element={<Releases />} />
           <Route path="releases/:releaseId" element={<Release />} />
+          <Route path="payments" element={<Releases />} />
         </Route>
       </Routes>
     </div>

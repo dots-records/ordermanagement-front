@@ -14,8 +14,8 @@ const BoxReleases = ({ loading, setLoading, releasesPage, setReleasesPage }) => 
     return (
         <Box
             sx={{
-                border: "1px solid",
-                borderColor: "rgba(0, 0, 0, 0.10)",
+                border: '0.08rem solid rgba(0,0,0,0.15)',
+                backgroundColor: 'white',
                 borderRadius: 2,
                 p: 2,
                 pb: 0,

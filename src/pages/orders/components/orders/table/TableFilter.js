@@ -6,8 +6,6 @@ import {Money, AccessTime, LocalShipping, DoNotDisturb, Receipt, Autorenew} from
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
 
-import { setActiveOrders, setInactiveOrders, setAllOrders } from '../../../functions/Functions';
-
 const TableFilter = ({filter, setFilter}) => {
     const [anchorEl, setAnchorEl] = useState(null);
 
@@ -23,34 +21,32 @@ const TableFilter = ({filter, setFilter}) => {
     return(
         <>
             <Button
-                        aria-controls={anchorEl ? 'simple-menu' : undefined}
-                        aria-haspopup="true"
-                        onClick={handleClick}
-                        variant="outlined"
-                        sx={{
-                            textDecoration: 'none',
-                            position: 'absolute',  // Posición absoluta
-                            top: 24,               // Ajusta la distancia desde el borde superior
-                            right: 407,             // Ajusta la distancia desde el borde derecho
-                            fontFamily: 'InterSemiBold',
-                            fontSize: '13px',
-                            backgroundColor: 'rgba(0, 0, 0, 0.03)',  // Color de fondo normal
-                            borderColor: 'rgba(0, 0, 0, 0.2)',       // Color del borde normal
-                            color: 'rgba(0,0,0,0.6)',                // Color del texto normal
-                            textTransform: 'none',
-                            '&:hover': {
-                                backgroundColor: 'rgba(0, 0, 0, 0.03)', // Color de fondo al hacer hover
-                                color: 'rgba(0, 0, 0, 1)',              // Color del texto al hacer hover
-                                borderColor: 'rgba(0, 0, 0, 0.25)',    // Color del borde al hacer hover
-                                '& .MuiSvgIcon-root': {                // Estilo para el icono cuando se pasa el ratón sobre el botón
-                                    color: 'rgba(0, 0, 0, 1)',        // Color del icono al hacer hover
-                                },
-                            },
-                        }}
-                    >
-                        {filter}
-                        <MenuIcon sx={{ fontSize: '10px', ml: 0.5 }} /> {/* Muestra el filtro seleccionado */}
-                    </Button>
+                aria-controls={anchorEl ? 'simple-menu' : undefined}
+                aria-haspopup="true"
+                onClick={handleClick}
+                variant="outlined"
+                sx={{
+                    textDecoration: 'none',
+                    fontFamily: 'InterSemiBold',
+                    fontSize: '0.75rem',
+                    backgroundColor: 'rgba(0, 0, 0, 0.03)', 
+                    borderColor: 'rgba(0, 0, 0, 0.3)',      
+                    color: 'rgba(0,0,0,0.6)',             
+                    textTransform: 'none',
+                    gap: '0.5rem',
+                    '&:hover': {
+                        backgroundColor: 'rgba(0, 0, 0, 0.03)',
+                        color: 'rgba(0, 0, 0, 1)',              
+                        borderColor: 'rgba(0, 0, 0, 0.25)', 
+                        '& .MuiSvgIcon-root': {               
+                            color: 'rgba(0, 0, 0, 1)',    
+                        },
+                    },
+                }}
+            >
+                {filter}
+                <MenuIcon sx={{fontSize: '0.75rem' }} />
+            </Button>
 
             <Menu
                 id="filter-menu"
@@ -59,9 +55,9 @@ const TableFilter = ({filter, setFilter}) => {
                 onClose={() => setAnchorEl(null)}
                 PaperProps={{
                     sx: {
-                        width: 255,
+                        width: '15.9375rem',
                         '& .MuiMenuItem-root': {
-                            fontSize: 12,
+                            fontSize: '0.75rem',
                             fontFamily: 'InterSemiBold',
                         },
                     },
@@ -69,65 +65,65 @@ const TableFilter = ({filter, setFilter}) => {
             >
                 <MenuItem onClick={() => handleClose('All')}>All</MenuItem>
 
-                <MenuItem onClick={() => handleClose('Payment Received')}>
-                    <Money sx={{ fontSize: 20, color: 'rgba(0,0,0,0.6)' }} />
-                    <Typography sx={{ fontSize: 12, fontFamily: 'InterSemiBold', ml: 1 }}>
+                <MenuItem onClick={() => handleClose('Payment Received')} sx={{gap:'0.5rem'}}>
+                    <Money sx={{ fontSize: '1.25rem', color: 'rgba(0,0,0,0.6)' }} />
+                    <Typography sx={{ fontSize: '0.75rem',fontFamily: 'InterSemiBold'}}>
                         Payment Received
                     </Typography>
                 </MenuItem>
 
-                <MenuItem onClick={() => handleClose('In Progress')}>
-                    <AccessTime sx={{ fontSize: 20, color: 'rgba(0,0,0,0.6)' }} />
-                    <Typography sx={{ fontSize: 12, fontFamily: 'InterSemiBold', ml: 1 }}>
+                <MenuItem onClick={() => handleClose('In Progress')} sx={{gap:'0.5rem'}}>
+                    <AccessTime sx={{ fontSize: '1.25rem', color: 'rgba(0,0,0,0.6)' }} />
+                    <Typography sx={{ fontSize: '0.75rem', fontFamily: 'InterSemiBold'}}>
                         In Progress
                     </Typography>
                 </MenuItem>
 
-                <MenuItem onClick={() => handleClose('Shipped')}>
-                    <LocalShipping sx={{ fontSize: 20, color: 'rgba(0,0,0,0.6)' }} />
-                    <Typography sx={{ fontSize: 12, fontFamily: 'InterSemiBold', ml: 1 }}>
+                <MenuItem onClick={() => handleClose('Shipped')} sx={{gap:'0.5rem'}}>
+                    <LocalShipping sx={{ fontSize: '1.25rem', color: 'rgba(0,0,0,0.6)' }} />
+                    <Typography sx={{ fontSize: '0.75rem', fontFamily: 'InterSemiBold' }}>
                         Shipped
                     </Typography>
                 </MenuItem>
 
-                <MenuItem onClick={() => handleClose("Cancelled (Per Buyer's Request)")}>
-                    <DoNotDisturb sx={{ fontSize: 20, color: 'rgba(0,0,0,0.6)' }} />
-                    <Typography sx={{ fontSize: 12, fontFamily: 'InterSemiBold', ml: 1 }}>
+                <MenuItem onClick={() => handleClose("Cancelled (Per Buyer's Request)")} sx={{gap:'0.5rem'}}>
+                    <DoNotDisturb sx={{ fontSize: '1.25rem', color: 'rgba(0,0,0,0.6)' }} />
+                    <Typography sx={{ fontSize: '0.75rem', fontFamily: 'InterSemiBold' }}>
                         Cancelled (Per Buyer's Request)
                     </Typography>
                 </MenuItem>
 
-                <MenuItem onClick={() => handleClose('Cancelled (Non-Paying Buyer)')}>
-                    <DoNotDisturb sx={{ fontSize: 20, color: 'rgba(0,0,0,0.6)' }} />
-                    <Typography sx={{ fontSize: 12, fontFamily: 'InterSemiBold', ml: 1 }}>
+                <MenuItem onClick={() => handleClose('Cancelled (Non-Paying Buyer)')} sx={{gap:'0.5rem'}}>
+                    <DoNotDisturb sx={{ fontSize: '1.25rem', color: 'rgba(0,0,0,0.6)' }} />
+                    <Typography sx={{ fontSize: '0.75rem', fontFamily: 'InterSemiBold' }}>
                         Cancelled (Non-Paying Buyer)
                     </Typography>
                 </MenuItem>
 
-                <MenuItem onClick={() => handleClose('Cancelled (Item Unavailable)')}>
-                    <DoNotDisturb sx={{ fontSize: 20, color: 'rgba(0,0,0,0.6)' }} />
-                    <Typography sx={{ fontSize: 12, fontFamily: 'InterSemiBold', ml: 1 }}>
+                <MenuItem onClick={() => handleClose('Cancelled (Item Unavailable)')} sx={{gap:'0.5rem'}}>
+                    <DoNotDisturb sx={{ fontSize: '1.25rem', color: 'rgba(0,0,0,0.6)' }} />
+                    <Typography sx={{ fontSize: '0.75rem', fontFamily: 'InterSemiBold' }}>
                         Cancelled (Item Unavailable)
                     </Typography>
                 </MenuItem>
 
-                <MenuItem onClick={() => handleClose('Invoice Sent')}>
-                    <Receipt sx={{ fontSize: 20, color: 'rgba(0,0,0,0.6)' }} />
-                    <Typography sx={{ fontSize: 12, fontFamily: 'InterSemiBold', ml: 1 }}>
+                <MenuItem onClick={() => handleClose('Invoice Sent')} sx={{gap:'0.5rem'}}>
+                    <Receipt sx={{ fontSize: '1.25rem', color: 'rgba(0,0,0,0.6)' }} />
+                    <Typography sx={{ fontSize: '0.75rem', fontFamily: 'InterSemiBold'}}>
                         Invoice Sent
                     </Typography>
                 </MenuItem>
 
-                <MenuItem onClick={() => handleClose('Payment Pending')}>
-                    <Autorenew sx={{ fontSize: 20, color: 'rgba(0,0,0,0.6)' }} />
-                    <Typography sx={{ fontSize: 12, fontFamily: 'InterSemiBold', ml: 1 }}>
+                <MenuItem onClick={() => handleClose('Payment Pending')} sx={{gap:'0.5rem'}}>
+                    <Autorenew sx={{ fontSize: '1.25rem', color: 'rgba(0,0,0,0.6)' }} />
+                    <Typography sx={{ fontSize: '0.75rem', fontFamily: 'InterSemiBold' }}>
                         Payment Pending
                     </Typography>
                 </MenuItem>
 
-                <MenuItem onClick={() => handleClose('Other')}>
-                    <MoreHorizIcon sx={{ fontSize: 20, color: 'rgba(0,0,0,0.6)' }} />
-                    <Typography sx={{ fontSize: 12, fontFamily: 'InterSemiBold', ml: 1 }}>
+                <MenuItem onClick={() => handleClose('Other')} sx={{gap:'0.5rem'}}>
+                    <MoreHorizIcon sx={{ fontSize: '1.25rem', color: 'rgba(0,0,0,0.6)' }} />
+                    <Typography sx={{ fontSize: '0.75rem', fontFamily: 'InterSemiBold' }}>
                         Other
                     </Typography>
                 </MenuItem>

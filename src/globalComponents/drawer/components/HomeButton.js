@@ -1,42 +1,53 @@
 
 import ListItemButton from '@mui/material/ListItemButton';
-import { ListItemIcon } from '@mui/material';
+import { Box } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import Typography from '@mui/material/Typography';
 
 
-const HomeButton = ({ drawerWidth, buttonMargain }) => {
+const HomeButton = ({ selected, open }) => {
 
     return (
         <ListItemButton  
             sx={{ 
-                height: 50,
-                width: drawerWidth - buttonMargain*2,
-                transform: `translateX(${buttonMargain}px)`,
-                border: '2px solid transparent',
-                color: 'rgba(0, 0, 0, 0.8)',// Color del texto por defecto
+                width: '100%',
+                py: '0.8rem',
+                color: selected ? 'black' : 'rgba(0,0,0,0.4)',
                 '& .MuiSvgIcon-root': {
-                        color: 'rgba(0, 0, 0, 0.35)', // Cambia el color del ícono al hacer hover
-                    },
+                        color: selected ? 'black' : 'rgba(0,0,0,0.4)',
+                },
                 '&:hover': {
-                    border: '2px solid',
-                    color: 'rgba(0,0,0,1)', // Cambia el color del texto al pasar el ratón
-                    backgroundColor: 'rgba(0,0,0,0.02)', // Cambia el color de fondo al pasar el ratón
-                    borderColor: 'rgba(0, 0, 0, 0.2)', 
-                    borderWidth: 1.5,
+                    color: 'black', 
                     '& .MuiSvgIcon-root': {
-                        color: 'black', // Cambia el color del ícono al hacer hover
+                        color: 'black',
                     }
                 },
-                borderRadius: 1.5,
+                borderBottom: '0.08rem solid rgba(0,0,0,0.05)'
             }}
         >
-            <ListItemIcon sx={{minWidth: 35}}>
-                    <HomeIcon/>
-            </ListItemIcon>
-            <Typography sx={{ fontFamily: 'InterSemiBold',  fontSize: 17}} >
-                Home
-            </Typography>
+
+              <Box sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: open ? 'flex-start': 'center',
+                    gap: '0.6rem',
+                    width: '100%',
+                }}
+            >
+                <HomeIcon sx={{fontSize: '1.2rem',}}/>
+                {open && (
+                    <Typography
+                        sx={{
+                            fontFamily: 'InterSemiBold',
+                            fontSize: '1rem',
+                        }}
+                    >
+                        Home
+                    </Typography>
+                )}
+                
+
+            </Box>
         </ListItemButton>
     );
 }
