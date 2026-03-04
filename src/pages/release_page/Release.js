@@ -54,10 +54,11 @@ const Release = () => {
     
     return (
         <DashboardLayout>
-            <Box sx={{ display: 'flex', flexDirection: 'row', gap: 2 , alignItems: 'flex-start', height:'100%'}}>
+            <Box sx={{ display: 'flex', flexDirection: 'row', gap: '1rem' , alignItems: 'flex-start'}}>
                 <ReleaseInfo release={release} loading={loading} />
                 <ReleaseProviders providers={providers} loading={loading} releaseId={releaseId}
                      setProviders={setProviders} setLoading={setLoading}/>
+                
             </Box>
         </DashboardLayout>
     );

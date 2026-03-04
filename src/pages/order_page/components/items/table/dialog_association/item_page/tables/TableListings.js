@@ -54,25 +54,26 @@ const TableListings = ({ releaseId, provider, order, setListingAssociated, listi
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        p: 2,
+        py: '1rem',
       }}
     >
-      <CircularProgress size={24} sx={{ color: 'rgba(0,0,0,0.4)' }} />
+      <CircularProgress size={'1rem'} sx={{color: 'rgba(0,0,0,0.4)'}} />
     </Box>
   );
 
   if (!listings || listings.length === 0) {
     return (
-      <Typography
-        sx={{
-          fontSize: 12,
-          color: 'rgba(0,0,0,0.4)',
-          px: 1,
-          py: 1.4,
-        }}
-      >
-        No listings yet
-      </Typography>
+      <Box sx={{width: '100%', justifyItems: 'center'}}>
+        <Typography
+          sx={{
+            fontSize: '0.7rem',
+            color: 'rgba(0,0,0,0.4)',
+            py: '0.5rem'
+          }}
+        >
+          No Listings yet
+        </Typography>
+      </Box>
     );
   }
   return (
@@ -90,16 +91,15 @@ const TableListings = ({ releaseId, provider, order, setListingAssociated, listi
             <ListItem
               key={listing.id}
               onClick={() => {
-                    if (!validListing) return; // seguridad extra
-                    setListingAssociated(listing); // guardar el listing seleccionado en el padre
+                    if (!validListing) return; 
+                    setListingAssociated(listing);
                     }}
               sx={{
-                px: 4,
-                py: 1,
+                px: '2rem',
                 display: 'flex',
                 alignItems: 'center',
-                gap: 2,
-                borderBottom: '1px solid rgba(0,0,0,0.06)',
+                gap: '1rem',
+                borderBottom: '0.0625rem solid rgba(0,0,0,0.06)',
                 cursor: validListing ?  'pointer': "cursor" ,
                 '&:hover': {
                   backgroundColor: validListing ? 'rgba(0, 0, 0, 0.05)' : "transparent",
@@ -107,19 +107,19 @@ const TableListings = ({ releaseId, provider, order, setListingAssociated, listi
               }}
             >
               
-              <Box sx ={{ width: "170px"}}>                
+              <Box sx ={{ width: "25%"}}>                
                 <Box
                   sx={{
                     fontFamily: 'InterSemiBold',
-                    fontSize: 10,
+                    fontSize: '0.625rem',
                     color: validListing ? 'rgba(0, 0, 0, 0.6)' : "rgba(0, 0, 0, 0.3)",
                     backgroundColor: validListing ? 'rgba(0,0,0,0.02)' : "rgba(0, 0, 0, 0.01)",
-                    border: validListing ?  '1px solid rgba(0,0,0,0.2)' : '1px solid rgba(0,0,0,0.1)',
+                    border: validListing ?  '0.0625rem solid rgba(0,0,0,0.2)' : '0.0625rem solid rgba(0,0,0,0.1)',
                     textShadow: validListing ? '0px 0px 4px rgba(0,0,0,0.10)' : "none",
-                    borderRadius: 2,
+                    borderRadius: '0.5rem',
                     textAlign: 'center',
-                    py: 0.5,
-                    px: 1.2,
+                    py: '0.25rem',
+                    px: '0.6rem',
                     display: 'inline-flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -137,11 +137,11 @@ const TableListings = ({ releaseId, provider, order, setListingAssociated, listi
               <Typography
                 sx={{
                   textAlign: 'right',
-                  fontSize: 12,
-                  width: 80,
+                  fontSize: '0.75rem',
+                  width: '15%',
                   fontFamily: 'InterSemiBold',
                   color: validListing ? 'rgba(0,0,0,0.85)' : 'rgba(0,0,0,0.3)',
-                  flexShrink: 0,
+                  flexShrink: 0
                 }}
               >
                 {listing.sellingPrice} €
@@ -150,11 +150,11 @@ const TableListings = ({ releaseId, provider, order, setListingAssociated, listi
               <Typography
                 sx={{
                   textAlign: 'left',
-                  fontSize: 12,
-                  width: 80,
+                  fontSize: '0.75rem',
+                  width: '20%',
                   fontFamily: 'InterSemiBold',
                   color: validListing ? 'rgba(0,0,0,0.5)' : 'rgba(0,0,0,0.3)',
-                  flexShrink: 0,
+                  flexShrink: 0
                 }}
               >
                 {isPositive ? '+' : ''}
@@ -162,13 +162,13 @@ const TableListings = ({ releaseId, provider, order, setListingAssociated, listi
               </Typography>
               <Box
                 sx={{
-                  width: 80,
-                  textAlign: 'center',
+                  width: '20%',
+                  textAlign: 'center'
                 }}
               >
                 <Typography
                   sx={{
-                    fontSize: 10,
+                    fontSize: '0.625rem',
                     color: validListing ? 'rgba(0,0,0,0.4)' : 'rgba(0,0,0,0.3)',
                     fontFamily: 'InterRegular',
                     
@@ -187,17 +187,16 @@ const TableListings = ({ releaseId, provider, order, setListingAssociated, listi
               <Box
                 sx={{
                   ml: 'auto',
-                  width: 30,
                   display: 'flex',
                   justifyContent: 'flex-end',
-                  flexShrink: 0,
+                  flexShrink: 0
                 }}
               >
                 {listing.link && (
                   <IconButton
                     size="small"
                     onClick={(e) => {
-                      e.stopPropagation(); // 🔹 evita que el ListItem reciba el click
+                      e.stopPropagation(); 
                       window.open(listing.link, '_blank');
                     }}
                     sx={{
@@ -207,12 +206,12 @@ const TableListings = ({ releaseId, provider, order, setListingAssociated, listi
                       },
                     }}
                   >
-                    <OpenInNewIcon sx={{ fontSize: 16 }} />
+                    <OpenInNewIcon sx={{ fontSize: '1rem' }} />
                   </IconButton>
                 )}
                 
               </Box>
-              <Box sx={{ ml: 'auto', display: 'flex', gap: 1, alignItems: 'center' }}>
+              <Box sx={{ ml: 'auto', display: 'flex', alignItems: 'center' }}>
                 <IconButton
                     size="small"
                     disabled={!validListing} // 🔹 deshabilitado si no es válido
@@ -226,7 +225,7 @@ const TableListings = ({ releaseId, provider, order, setListingAssociated, listi
                 >
                     {isSelected ? (
                     <RadioButtonCheckedIcon sx={{
-                        fontSize: 16,
+                        fontSize: '1rem',
                         color: validListing ? 'rgba(0,0,0,0.85)' : 'rgba(0,0,0,0.3)',
                         '&:hover': {
                             color: 'rgba(0,0,0,0.85)' ,
@@ -236,7 +235,7 @@ const TableListings = ({ releaseId, provider, order, setListingAssociated, listi
                     />
                     ) : (
                     <RadioButtonUncheckedIcon sx={{
-                        fontSize: 16,
+                        fontSize: '1rem',
                         color: validListing ? 'rgba(0,0,0,0.45)' : 'rgba(0,0,0,0.3)',
                         '&:hover': {
                             color: 'rgba(0,0,0,0.85)' ,

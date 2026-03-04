@@ -13,24 +13,25 @@ import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 const SelectedProvider = ({ provider }) => {
     if (!provider) {
         return (
-        <Typography
-            sx={{
-            fontSize: 12,
-            color: 'rgba(0,0,0,0.4)',
-            px: 1,
-            py: 1.4,
-            }}
-        >
-            Info. Not Available
-        </Typography>
+            <Box sx={{width: '100%', justifyItems: 'center'}}>
+                <Typography
+                    sx={{
+                        fontSize: '0.75rem',
+                        color: 'rgba(0,0,0,0.4)',
+                        py: '0.5rem'
+                    }}
+                >
+                    Provider Not Available
+                </Typography>
+            </Box>
         );
     }
 
     return (
         <ListItem
             sx={{
-                borderBottom: '1px solid #ededed',
-                gap: 2,
+                borderBottom: '0.0625rem solid #ededed',
+                gap: '1rem',
                 alignItems: 'center',
             }}
         >
@@ -38,9 +39,9 @@ const SelectedProvider = ({ provider }) => {
                 sx={{
                     display: 'flex',
                     alignItems: 'center',
-                    gap: 1.2,
+                    gap: '0.6rem',
                     fontFamily: 'InterSemiBold',
-                    fontSize: 12.5,
+                    fontSize: '0.78125rem',
                     color: 'rgba(0,0,0,0.8)',
                     backgroundColor:
                     provider.type === 'In Stock'
@@ -48,18 +49,18 @@ const SelectedProvider = ({ provider }) => {
                         : 'rgba(126, 202, 63, 0.12)',
                     border:
                     provider.type === 'In Stock'
-                        ? '1px solid rgba(255, 207, 63, 0.45)'
-                        : '1px solid rgba(126, 202, 63, 0.45)',
-                    borderRadius: 8,
+                        ? '0.0625rem solid rgba(255, 207, 63, 0.45)'
+                        : '0.0625rem solid rgba(126, 202, 63, 0.45)',
+                    borderRadius: '4rem',
                     boxShadow: '0 1px 2px rgba(0,0,0,0.08)',
-                    px: 1.4,
-                    py: 0.6,
+                    px: '0.7rem',
+                    py: '0.15rem',
                 }}
             >
-                <Box sx={{ lineHeight: 1 }}>
+                <Box >
                     {provider.discCondition}
                 </Box>
-                <Box sx={{ lineHeight: 1, opacity: 0.75 }}>
+                <Box sx={{  opacity: 0.75 }}>
                     {provider.sleeveCondition}
                 </Box>
             </Box>
@@ -67,9 +68,8 @@ const SelectedProvider = ({ provider }) => {
                 <Typography
                     sx={{
                         fontFamily: 'InterSemiBold',
-                        fontSize: 13,
-                        color: 'rgba(0,0,0,0.85)',
-                        mt: -0.2
+                        fontSize: '0.8125rem',
+                        color: 'rgba(0,0,0,0.85)'
                     }}
                 >
                     {provider.price} €
@@ -77,47 +77,50 @@ const SelectedProvider = ({ provider }) => {
                 <Typography
                     sx={{
                         fontFamily: 'InterRegular',
-                        fontSize: 10.5,
+                        fontSize: '0.65625rem',
                         color: 'rgba(0,0,0,0.5)',
-                        mt: -0.3
+                        whiteSpace: 'normal',    
+                        wordBreak: 'break-word',  
+                        overflowWrap: 'anywhere',
                     }}
                 >
                     {provider.type}
                     {provider.description && ` · ${provider.description}`}
                 </Typography>
             </Box>
-            <Box sx={{ ml: 'auto', display: 'flex', gap: 1, alignItems: 'center' }}>
+            <Box sx={{ ml: 'auto', display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
                 {provider.type === 'In Stock' ? (
                     <Chip
                         label={`${provider.units} units`}
                         sx={{
                             fontFamily: 'InterSemiBold',
-                            fontSize: 12,
+                            fontSize: '0.75rem',
                             borderRadius: '6px',
                             bgcolor: 'rgba(25, 118, 210, 0.08)',
                             color: '#1976d2',
-                            height: 22,
+                            height: '1.375rem',
                         }}
                     />
                 ) : (
                     <Button
-                        variant="outlined"
-                        size="small"
-                        endIcon={<OpenInNewIcon sx={{ fontSize: 15 }} />}
-                        sx={{
-                            fontFamily: 'InterSemiBold',
-                            fontSize: 12,
-                            textTransform: 'none',
-                            borderRadius: '6px',
-                            px: 1.5,
-                            py: 0.3
-                        }}
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            window.open(provider.link, '_blank');
-                        }}
-                    >
+                            variant="outlined"
+                            size="small"
+                            sx={{
+                                fontFamily: 'InterSemiBold',
+                                fontSize: '0.75rem',
+                                textTransform: 'none',
+                                borderRadius: '0.375rem',
+                                gap: '0.5rem',
+                                height: '1.375rem',
+                                color: '#1976d2',
+                            }}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                window.open(provider.link, '_blank');
+                            }}
+                        >
                         Open
+                        <OpenInNewIcon sx={{fontSize: '0.75rem',color: '#1976d2',}} />
                     </Button>
                 )}
             </Box>        

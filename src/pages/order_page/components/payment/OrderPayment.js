@@ -10,12 +10,12 @@ const OrderPayment = ({ order, loading, fetchOrder }) => {
 
     if (loading) {
         return (
-            <Box className="box-container" sx={{ width: "200px" }}>
+            <Box className="box-container" sx={{ width: "30%" }}>
                 <Typography 
                     sx={{ 
                         textAlign: "left", 
                         fontFamily: "InterBold", 
-                        fontSize: 18 
+                        fontSize: '1.125rem' 
                     }}
                 >
                     Payment
@@ -29,7 +29,7 @@ const OrderPayment = ({ order, loading, fetchOrder }) => {
                         alignItems: 'center',  
                     }}
                 >
-                    <CircularProgress size={24} />
+                    <CircularProgress size={'1.5rem'} />
                 </Box>
             </Box>
         );
@@ -41,13 +41,14 @@ const OrderPayment = ({ order, loading, fetchOrder }) => {
 
     return (
         
-        <Box className="box-container" sx={{ width: "280px" }}>
-            <Box sx={{ display: 'flex', mb: 2}}>
+        <Box className="box-container" sx={{ width: "30%", overflowY: "auto",  
+                overflowX: "hidden"   }}>
+            <Box sx={{ display: 'flex'}}>
                 <Typography 
                     sx={{ 
                         textAlign: "left", 
                         fontFamily: "InterBold", 
-                        fontSize: 18 
+                        fontSize: '1.125rem' 
                     }}
                 >
                     Payment

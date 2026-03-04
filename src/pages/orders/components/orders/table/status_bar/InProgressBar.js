@@ -43,37 +43,42 @@ const InProgressBar = ({ orderId, setOrdersPage, tableSelected, numberPage, sear
             justifyContent: 'center',
             width: '100%',
             height: '100%',
-            backgroundColor: 'rgba(255, 255, 255, 0.7)',
+            backgroundColor: 'rgba(255, 255, 255, 0.53)',
             zIndex: 1,
           }}
         >
-          <CircularProgress size={20}/>
+          <CircularProgress size={'1.375rem'}/>
         </Box>
       )}
 
-      <MoneyIcon sx={{ fontSize: 22}} />
-
-      <Box
+      <MoneyIcon
         sx={{
-          width: 22,
-          height: '2.5px',
-          backgroundColor: 'rgba(0, 0, 0, 1)',
-          mx: -0.28,
+          fontSize: '1.375rem',
         }}
       />
 
-      <AccessTimeIcon sx={{ fontSize: 22}} />
+      <Box
+        sx={{
+          width:'1.375rem',
+          height: '0.15625rem',
+          mx: '-0.125rem',
+          backgroundColor: 'rgba(0, 0, 0, 1)',
+        }}
+      />
+
+      <AccessTimeIcon sx={{ fontSize: '1.375rem'}} />
 
       <Box
         sx={{
-          width: 22,
-          height: '2.5px',
+          width: '1.375rem',
+          height: '0.15625rem',
+          mx: '-0.125rem',
           background: hover
             ? 'rgba(0,0,0,1)'
             : 'linear-gradient(to right, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0.35) 50%)',
-          mx: -0.28,
         }}
       />
+      
 
       <Box
         onMouseEnter={() => setHover(true)}
@@ -89,8 +94,8 @@ const InProgressBar = ({ orderId, setOrdersPage, tableSelected, numberPage, sear
           className="shipping-icon"
           sx={{
             color: hover ? 'rgba(0, 0, 0, 1)' : 'rgba(0, 0, 0, 0.35)',
-            marginLeft: 0.088,
-            fontSize: 22
+            fontSize: '1.375rem',
+            ml: '0.07rem'
           }}
           
         />

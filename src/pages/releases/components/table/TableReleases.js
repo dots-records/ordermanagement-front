@@ -28,14 +28,14 @@ const TableReleases = ({ loading, releases, releasesSelected, setReleasesSelecte
             <Box 
                 sx={{ 
                     display: 'flex', 
-                    mt: 2, 
                     width: '100%',
-                    height: '60vh',
+                    height: '67vh',
                     justifyContent: 'center',
                     alignItems: 'center',  
+                    color: 'black',
                 }}
             >
-                <CircularProgress size={33} />
+                <CircularProgress size={'2.0625rem'} />
             </Box>
         );
     }
@@ -43,45 +43,39 @@ const TableReleases = ({ loading, releases, releasesSelected, setReleasesSelecte
     return (
         <TableContainer
             sx={{ 
-                
-                width: '100%',
-                height: '60vh',
-                mt: 2, 
+                height: '67vh',
                 overflowY: 'auto',
-                '&::-webkit-scrollbar': { width: '2px' },
+                '&::-webkit-scrollbar': {
+                    width: '2px',
+                },
             }}
         >
-            <Table stickyHeader>
+            <Table stickyHeader sx={{ height: '100%' }}>
                 <TableHead>
                     <TableRow>
-                        <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.65)', width: '50px' }}>Photo</TableCell>
+                        <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.65)', width: '1%' }}>Photo</TableCell>
                         <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.65)' }}>Title & Artists</TableCell>
                         <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.65)' }}>Description</TableCell>
-                        <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.65)', width: '50px' }}>Select</TableCell>
+                        <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.65)', width: '1%' }}>Select</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {releases?.length === 0 ? (
-                        <TableRow>
-                            <TableCell colSpan={4} sx={{ textAlign: 'center', py: 2, height: '200px' }}>
-                                <Box 
-                                    sx={{ 
-                                        border: '2px solid', 
-                                        borderColor: 'rgba(0,0,0,0.1)',
-                                        borderRadius: 1.5,
-                                        height: '380px',  
-                                        alignItems: 'center',  
-                                        display: 'flex',  
+                        <TableRow sx={{ height: '100%' }}>
+                            <TableCell colSpan={4} sx={{ p: 0}}>
+                                <Box
+                                    sx={{
+                                        height: '100%',   
+                                        display: 'flex',
                                         justifyContent: 'center',
+                                        alignItems: 'center',
                                         textAlign: 'center',
-                                        backgroundColor: 'rgba(0,0,0,0.02)',
-                                        mx: 'auto',
-                                        maxWidth: '100%' 
+                                        backgroundColor: 'rgba(0,0,0,0.015)',
                                     }}
                                 >
-                                    <Typography variant="body2" sx={{ color: 'rgba(0, 0, 0, 0.45)', fontFamily: 'InterSemiBold' }}>
-                                        No releases available
-                                    </Typography>
+                                <Typography sx={{ fontSize: '0.8rem', color: 'rgba(0, 0, 0, 0.45)', fontFamily: 'InterRegular' }}>
+                                    No releases available
+                                </Typography>
                                 </Box>
                             </TableCell>
                         </TableRow>
@@ -102,24 +96,24 @@ const TableReleases = ({ loading, releases, releasesSelected, setReleasesSelecte
                                         transition: 'background-color 0.2s ease-in-out',
                                     }}
                                 >
-                                    <TableCell sx={{ width: '50px' }}>
+                                    <TableCell >
                                         <img 
                                             src={release.thumb} 
                                             alt={release.title} 
-                                            style={{ width: '45px', height: '45px', objectFit: 'cover', borderRadius: '3px'
+                                            style={{ width: '2.8125rem', height: '2.8125rem', objectFit: 'cover', borderRadius: '0.1875rem'
                                             }}
                                         />
                                     </TableCell>
                                     <TableCell>
-                                        <Typography sx={{ fontFamily: 'InterBold', fontSize: 14.5 , color: 'rgba(0,0,0,0.70)', textShadow:  '0px 0px 4px rgba(0,0,0,0.10)'}}>{release.title}</Typography>
-                                        <Typography sx={{ fontFamily: 'InterSemiBold', fontSize: 12, color: 'rgba(0,0,0,0.5)',
+                                        <Typography sx={{ fontFamily: 'InterBold', fontSize: '0.90625rem' , color: 'rgba(0,0,0,0.70)', textShadow:  '0px 0px 4px rgba(0,0,0,0.10)'}}>{release.title}</Typography>
+                                        <Typography sx={{ fontFamily: 'InterSemiBold', fontSize: '0.75rem', color: 'rgba(0,0,0,0.5)',
                                                  }}>
                                             {release.artists.map(artist => artist.name).join(', ')}
                                         </Typography>
                                     </TableCell>
                                     <TableCell>
-                                        <Typography sx={{ fontFamily: 'InterBold', fontSize: 14.5, color: 'rgba(0,0,0,0.70)',  textShadow:  '0px 0px 4px rgba(0,0,0,0.10)' }}>{release.formats.map(format => format.name).join(', ')}</Typography>
-                                        <Typography sx={{ fontFamily: 'InterSemiBold', fontSize: 12, color: 'rgba(0,0,0,0.5)' }}>
+                                        <Typography sx={{ fontFamily: 'InterBold', fontSize: '0.90625rem', color: 'rgba(0,0,0,0.70)',  textShadow:  '0px 0px 4px rgba(0,0,0,0.10)' }}>{release.formats.map(format => format.name).join(', ')}</Typography>
+                                        <Typography sx={{ fontFamily: 'InterSemiBold', fontSize: '0.75rem', color: 'rgba(0,0,0,0.5)' }}>
                                             {release.formats.map(format => format.descriptions.join(', ')).join(' | ')}
                                         </Typography>
                                     </TableCell>

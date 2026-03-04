@@ -46,7 +46,7 @@ const TableSearcher = ({ setOrdersPage, setLoading, tableSelected, setSearchTerm
                 placeholder="Search orders..."
                 value={localSearchTerm}
                 onChange={(e) => setLocalSearchTerm(e.target.value)}
-                onKeyDown={handleKeyDown} // Manejar la tecla presionada
+                onKeyDown={handleKeyDown} 
                 style={{
                     padding: '0.5rem 0.75rem',
                     fontSize: '0.75rem',

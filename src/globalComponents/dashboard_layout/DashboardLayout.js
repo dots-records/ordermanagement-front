@@ -4,14 +4,14 @@ import DotsDrawer from '../drawer/DotsDrawer';
 
 const DashboardLayout = ({ children }) => {
   return (
-    <Box sx={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
+    <Box sx={{ height: '100vh', display: 'flex', flexDirection: 'column'}}>
       <DotsAppBar />
-      <Box sx={{ display: 'flex', backgroundColor: 'rgba(0,0,0,0.015)', flexGrow: 1, }}>
+      <Box sx={{ display: 'flex', backgroundColor: 'rgba(0,0,0,0.015)', flexGrow: 1}}>
         <DotsDrawer/>
         <Box
           sx={{
             flexGrow: 1,
-            p: 3,
+            p: '1.5rem'
           }}
         >
           {children}

@@ -96,25 +96,26 @@ const TableListingsForDeletion = ({ releaseId, provider, setListingsDeleted}) =>
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        p: 2,
+        py: '1rem',
       }}
     >
-      <CircularProgress size={24} sx={{ color: 'rgba(0,0,0,0.4)' }} />
+      <CircularProgress size={'1rem'} sx={{color: 'rgba(0,0,0,0.4)'}} />
     </Box>
   );
 
   if (!listings || listings.length === 0) {
     return (
-      <Typography
-        sx={{
-          fontSize: 12,
-          color: 'rgba(0,0,0,0.4)',
-          px: 1,
-          py: 1.4,
-        }}
-      >
-        No listings yet
-      </Typography>
+      <Box sx={{width: '100%', justifyItems: 'center'}}>
+        <Typography
+          sx={{
+            fontSize: '0.675rem',
+            color: 'rgba(0,0,0,0.4)',
+            py: '0.5rem'
+          }}
+        >
+          No Listings yet
+        </Typography>
+      </Box>
     );
   }
 
@@ -126,12 +127,12 @@ const TableListingsForDeletion = ({ releaseId, provider, setListingsDeleted}) =>
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
-              px: 2,
+              px: '1rem',
               backgroundColor: 'rgba(0,0,0,0.01)'
             }}
           >
             
-            <Box sx={{ display: 'flex', alignItems: 'center', ml: 'auto', mr: "16px", 
+            <Box sx={{ display: 'flex', alignItems: 'center', ml: 'auto', px: "1rem", 
              }}>
                 <IconButton
                     size="small"
@@ -147,7 +148,7 @@ const TableListingsForDeletion = ({ releaseId, provider, setListingsDeleted}) =>
                     },
                     }}
                 >
-                    <DeleteIcon sx={{ fontSize: 17 }} />
+                    <DeleteIcon sx={{ fontSize: '1.0625rem' }} />
                 </IconButton>
               
               
@@ -194,14 +195,13 @@ const TableListingsForDeletion = ({ releaseId, provider, setListingsDeleted}) =>
               key={listing.id}
               onClick={() => handleToggle(listing.id) }
               sx={{
-                px: 4,
-                py: 0,
+                px: '2rem',
                 display: 'flex',
                 alignItems: 'center',
-                gap: 2,
-                borderBottom: '1px solid rgba(0,0,0,0.06)',
+                gap: '1rem',
+                borderBottom: '0.0625rem solid rgba(0,0,0,0.06)',
                 cursor: 'pointer' ,
-                backgroundColor: isSelected ? 'rgba(0, 0, 0, 0.05)' :'white' ,
+                backgroundColor: isSelected ? 'rgba(0, 0, 0, 0.05)' :'transparent' ,
                 transition: 'background-color 0.2s ease-in-out',
                 '&:hover': {
                   backgroundColor:'rgba(0, 0, 0, 0.05)',
@@ -209,19 +209,19 @@ const TableListingsForDeletion = ({ releaseId, provider, setListingsDeleted}) =>
               }}
             >
               
-              <Box sx ={{ width: "170px"}}>                
+              <Box sx ={{ width: "25%"}}>                
                 <Box
                   sx={{
                     fontFamily: 'InterSemiBold',
-                    fontSize: 10,
+                    fontSize: '0.625rem',
                     color: 'rgba(0, 0, 0, 0.6)' ,
                     backgroundColor: 'rgba(0,0,0,0.02)' ,
                     border: '1px solid rgba(0,0,0,0.2)' ,
                     textShadow: '0px 0px 4px rgba(0,0,0,0.10)',
-                    borderRadius: 2,
+                    borderRadius: '0.5rem',
                     textAlign: 'center',
-                    py: 0.5,
-                    px: 1.2,
+                    py: '0.25rem',
+                    px: '0.6rem',
                     display: 'inline-flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -239,8 +239,8 @@ const TableListingsForDeletion = ({ releaseId, provider, setListingsDeleted}) =>
               <Typography
                 sx={{
                   textAlign: 'right',
-                  fontSize: 12,
-                  width: 80,
+                  fontSize: '0.75rem',
+                  width: '15%',
                   fontFamily: 'InterSemiBold',
                   color: 'rgba(0,0,0,0.85)' ,
                   flexShrink: 0,
@@ -252,8 +252,8 @@ const TableListingsForDeletion = ({ releaseId, provider, setListingsDeleted}) =>
               <Typography
                 sx={{
                   textAlign: 'left',
-                  fontSize: 12,
-                  width: 80,
+                  fontSize: '0.75rem',
+                  width: '20%',
                   fontFamily: 'InterSemiBold',
                   color:'rgba(0,0,0,0.5)',
                   flexShrink: 0,
@@ -264,13 +264,13 @@ const TableListingsForDeletion = ({ releaseId, provider, setListingsDeleted}) =>
               </Typography>
               <Box
                 sx={{
-                  width: 80,
+                  width: '20%',
                   textAlign: 'center',
                 }}
               >
                 <Typography
                   sx={{
-                    fontSize: 10,
+                    fontSize: '0.625rem',
                     color: 'rgba(0,0,0,0.4)' ,
                     fontFamily: 'InterRegular',
                     
@@ -289,7 +289,6 @@ const TableListingsForDeletion = ({ releaseId, provider, setListingsDeleted}) =>
               <Box
                 sx={{
                   ml: 'auto',
-                  width: 30,
                   display: 'flex',
                   justifyContent: 'flex-end',
                   flexShrink: 0,
@@ -309,7 +308,7 @@ const TableListingsForDeletion = ({ releaseId, provider, setListingsDeleted}) =>
                       },
                     }}
                   >
-                    <OpenInNewIcon sx={{ fontSize: 16 }} />
+                    <OpenInNewIcon sx={{ fontSize: '1rem' }} />
                   </IconButton>
                 )}
                 

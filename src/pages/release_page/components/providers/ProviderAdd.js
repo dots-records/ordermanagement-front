@@ -76,11 +76,11 @@ const ProviderAdd = ({ releaseId, setProviders, setLoading }) => {
     const minimalTextField = {
         variant: 'standard', 
         InputProps: {
-            style: { color: 'black', fontFamily: 'InterRegular', fontSize: 16, },
+            style: { color: 'black', fontFamily: 'InterRegular', fontSize: '1rem', },
         },
         InputLabelProps: {
             shrink: true,
-            style: { color: 'rgba(0,0,0,0.5)', fontFamily: 'InterRegular',fontSize: 16, },
+            style: { color: 'rgba(0,0,0,0.5)', fontFamily: 'InterRegular',fontSize: '1rem', },
         },
         sx: {
         '& .MuiOutlinedInput-root': {
@@ -104,7 +104,7 @@ const ProviderAdd = ({ releaseId, setProviders, setLoading }) => {
             <AddIcon 
                 onClick={handleOpen} 
                 sx={{
-                    fontSize: 22,
+                    fontSize: '1.375rem',
                     color: 'rgba(0,0,0,0.6)',
                     cursor: 'pointer',
                     '&:hover': {
@@ -128,218 +128,222 @@ const ProviderAdd = ({ releaseId, setProviders, setLoading }) => {
                     sx: {
                         backgroundColor: 'white',
                         color: 'black',
-                        borderRadius: 2,
-                        p: 2
+                        borderRadius: '0.5rem',
+                        p: '1rem',
+                        minWidth: '40vw'
                     }
                 }}
             >
 
-                <DialogTitle>
+                <DialogTitle sx={{ p:'0.5rem'}}>
                     <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
-                        <Typography sx={{ fontFamily: "InterSemiBold", fontSize: 24 }}>
+                        <Typography sx={{ fontFamily: "InterSemiBold", fontSize: '1.5rem' }}>
                             Add Provider
                         </Typography>
                         <IconButton
                             onClick={handleClose}
                             sx={{ color: 'rgba(0,0,0,1)'  }}
                         >
-                            <CloseIcon sx={{ fontSize: 24}} />
+                            <CloseIcon sx={{ fontSize: '1.5rem'}} />
                         </IconButton>
                     </Box>
                 </DialogTitle>
                 
-                <DialogContent sx={{my:2}}>
-                    <Typography
-                            sx={{
-                                fontFamily: 'InterRegular',
-                                fontSize: 12.5,
-                                color: 'rgba(0,0,0,0.5)',
-                                mb: 0.5
-                            }}
-                        >
-                            Provider Type *
-                        </Typography>
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                        {providerType === 'In Stock' ? (
-                            <InventoryIcon sx={{ fontSize: 22, color: 'rgba(0,0,0,0.7)' }} />
-                        ) : (
-                            <LanguageIcon sx={{ fontSize: 22, color: 'rgba(0,0,0,0.7)' }} />
-                        )}
+                <DialogContent sx={{p: 0}}>
+                    <Box sx={{ py: '1rem', px: '2rem',  gap: '1.5rem',display: 'flex', flexDirection: 'column' }}>
+                        <Box>
+                            <Typography
+                                    sx={{
+                                        fontFamily: 'InterRegular',
+                                        fontSize: '0.78125rem',
+                                        color: 'rgba(0,0,0,0.5)',
+                                        mb: '0.25rem'
+                                    }}
+                                >
+                                    Provider Type *
+                                </Typography>
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                {providerType === 'In Stock' ? (
+                                    <InventoryIcon sx={{ fontSize: '1.375rem', color: 'rgba(0,0,0,0.7)' }} />
+                                ) : (
+                                    <LanguageIcon sx={{ fontSize: '1.375rem', color: 'rgba(0,0,0,0.7)' }} />
+                                )}
 
-                        <TextField
-                            select
-                            value={providerType}
-                            onChange={(e) => setProviderType(e.target.value)}
-                            variant="standard"
-                            InputProps={{
-                                disableUnderline: true,
-                                style: {
-                                    color: 'black',
+                                <TextField
+                                    select
+                                    value={providerType}
+                                    onChange={(e) => setProviderType(e.target.value)}
+                                    variant="standard"
+                                    InputProps={{
+                                        disableUnderline: true,
+                                        style: {
+                                            color: 'black',
+                                            fontFamily: 'InterRegular',
+                                            fontSize: '1rem',
+                                            backgroundColor: 'transparent',
+                                        },
+                                    }}
+                                    sx={{
+                                        '& .MuiSelect-select': {
+                                            backgroundColor: 'transparent', 
+                                            '&:focus': {
+                                                backgroundColor: 'transparent', 
+                                            },
+                                        },
+                                    }}
+                                    required
+                                >
+                                    <MenuItem value="In Stock">In Stock</MenuItem>
+                                    <MenuItem value="Online">Online</MenuItem>
+                                </TextField>
+
+                            </Box>
+                        </Box>
+                        <Box>
+                            <Typography
+                                sx={{
                                     fontFamily: 'InterRegular',
-                                    fontSize: 16,
-                                    backgroundColor: 'transparent', // quita fondo gris
-                                },
-                            }}
-                            sx={{
-                                '& .MuiSelect-select': {
-                                    backgroundColor: 'transparent', // quita fondo gris al abrir
-                                    '&:focus': {
-                                        backgroundColor: 'transparent', // quita fondo gris al enfocar
-                                    },
-                                },
-                            }}
-                            required
-                        >
-                            <MenuItem value="In Stock">In Stock</MenuItem>
-                            <MenuItem value="Online">Online</MenuItem>
-                        </TextField>
+                                    fontSize: '0.78125rem',
+                                    color: 'rgba(0,0,0,0.5)',
+                                    mb: '0.6rem'
+                                }}
+                            >
+                                Disc Condition *
+                            </Typography>
+                            <ToggleButtonGroup
+                                value={discCondition}
+                                exclusive
+                                onChange={(e, newValue) => {
+                                    if (newValue !== null) {
+                                        setDiscCondition(newValue);
+                                    }
+                                }}
+                                sx={{
+                                    display: 'flex',
+                                    flexWrap: 'wrap',
+                                    }}
+                                >
+                            {conditionOptions.map((option) => (
+                                    <ToggleButton
+                                        key={option.value}
+                                        value={option.value}
+                                        sx={{
+                                            fontFamily: 'InterRegular',
+                                            fontSize: '0.875rem',
+                                            px: '0.7rem',
+                                            py: '0.2rem',
+                                            color: 'rgba(0,0,0,0.7)',
+                                            border: '0.0625rem solid rgba(0,0,0,0.25)',
+                                            '&.Mui-selected': {
+                                                backgroundColor: 'rgba(0,0,0,0.85)',
+                                                color: 'white',
+                                                borderColor: 'rgba(0,0,0,0.85)',
+                                                '&:hover': {
+                                                    backgroundColor: 'rgba(0,0,0,0.85)',
+                                                },
+                                            },
+                                        }}
+                                    >
+                                        {option.value}
+                                    </ToggleButton>
+                                ))}
+                            </ToggleButtonGroup>
+                        </Box>
+                        <Box >
+                            <Typography
+                                sx={{
+                                    fontFamily: 'InterRegular',
+                                    fontSize: '0.78125rem',
+                                    color: 'rgba(0,0,0,0.5)',
+                                    mb: '0.6rem'
+                                }}
+                            >
+                                Sleeve Condition *
+                            </Typography>
+                            <ToggleButtonGroup
+                                value={sleeveCondition}
+                                exclusive
+                                onChange={(e, newValue) => {
+                                    if (newValue !== null) {
+                                        setSleeveCondition(newValue);
+                                    }
+                                }}
+                                sx={{
+                                    display: 'flex',
+                                    flexWrap: 'wrap',
+                                    }}
+                                >
+                            {conditionOptions.map((option) => (
+                                    <ToggleButton
+                                        key={option.value}
+                                        value={option.value}
+                                        sx={{
+                                            fontFamily: 'InterRegular',
+                                            fontSize: '0.875rem',
+                                            px: '0.7rem',
+                                            py: '0.2rem',
+                                            color: 'rgba(0,0,0,0.7)',
+                                            border: '0.0625rem solid rgba(0,0,0,0.25)',
+                                            '&.Mui-selected': {
+                                                backgroundColor: 'rgba(0,0,0,0.85)',
+                                                color: 'white',
+                                                borderColor: 'rgba(0,0,0,0.85)',
+                                                '&:hover': {
+                                                    backgroundColor: 'rgba(0,0,0,0.85)',
+                                                },
+                                            },
+                                        }}
+                                    >
+                                        {option.value}
+                                    </ToggleButton>
+                                ))}
+                            </ToggleButtonGroup>
+                        </Box>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                <TextField
+                                    label="Price (.)"
+                                    value={price}
+                                    onChange={(e) => setPrice(e.target.value)}
+                                    {...minimalTextField}
+                                    required
+                                    sx={{ width: '25%'}}
+                                />
 
-                    </Box>
-                    <Box sx={{ mt: 1.8 }}>
-                        <Typography
-                            sx={{
-                                fontFamily: 'InterRegular',
-                                fontSize: 12.5,
-                                color: 'rgba(0,0,0,0.5)',
-                                mb: 1.2
-                            }}
-                        >
-                            Disc Condition *
-                        </Typography>
-                        <ToggleButtonGroup
-                            value={discCondition}
-                            exclusive
-                            onChange={(e, newValue) => {
-                                if (newValue !== null) {
-                                    setDiscCondition(newValue);
-                                }
-                            }}
-                            sx={{
-                                display: 'flex',
-                                flexWrap: 'wrap',
-                                }}
-                            >
-                           {conditionOptions.map((option) => (
-                                <ToggleButton
-                                    key={option.value}
-                                    value={option.value}
-                                    sx={{
-                                        fontFamily: 'InterRegular',
-                                        fontSize: 14,
-                                        px: 1.6,
-                                        py: 0.4,
-                                        color: 'rgba(0,0,0,0.7)',
-                                        border: '1px solid rgba(0,0,0,0.25)',
-                                        '&.Mui-selected': {
-                                            backgroundColor: 'rgba(0,0,0,0.85)',
-                                            color: 'white',
-                                            borderColor: 'rgba(0,0,0,0.85)',
-                                            '&:hover': {
-                                                backgroundColor: 'rgba(0,0,0,0.85)',
-                                            },
-                                        },
-                                    }}
-                                >
-                                    {option.value}
-                                </ToggleButton>
-                            ))}
-                        </ToggleButtonGroup>
-                    </Box>
-                    <Box sx={{ mt: 1.8 }}>
-                        <Typography
-                            sx={{
-                                fontFamily: 'InterRegular',
-                                fontSize: 12.5,
-                                color: 'rgba(0,0,0,0.5)',
-                                mb: 1.2
-                            }}
-                        >
-                            Sleeve Condition *
-                        </Typography>
-                        <ToggleButtonGroup
-                            value={sleeveCondition}
-                            exclusive
-                            onChange={(e, newValue) => {
-                                if (newValue !== null) {
-                                    setSleeveCondition(newValue);
-                                }
-                            }}
-                            sx={{
-                                display: 'flex',
-                                flexWrap: 'wrap',
-                                }}
-                            >
-                           {conditionOptions.map((option) => (
-                                <ToggleButton
-                                    key={option.value}
-                                    value={option.value}
-                                    sx={{
-                                        fontFamily: 'InterRegular',
-                                        fontSize: 14,
-                                        px: 1.6,
-                                        py: 0.4,
-                                        color: 'rgba(0,0,0,0.7)',
-                                        border: '1px solid rgba(0,0,0,0.25)',
-                                        '&.Mui-selected': {
-                                            backgroundColor: 'rgba(0,0,0,0.85)',
-                                            color: 'white',
-                                            borderColor: 'rgba(0,0,0,0.85)',
-                                            '&:hover': {
-                                                backgroundColor: 'rgba(0,0,0,0.85)',
-                                            },
-                                        },
-                                    }}
-                                >
-                                    {option.value}
-                                </ToggleButton>
-                            ))}
-                        </ToggleButtonGroup>
-                    </Box>
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt:3 }}>
+                                <TextField
+                                    label="Description"
+                                    value={description}
+                                    onChange={(e) => setDescription(e.target.value)}
+                                    {...minimalTextField}
+                                    sx={{ width: '75%'}}
+                                />
+                        </Box>
+                        
+
+                        {providerType === 'In Stock' ? (
                             <TextField
-                                label="Price (.)"
-                                value={price}
-                                onChange={(e) => setPrice(e.target.value)}
+                                label="Units"
+                                value={units}
+                                onChange={(e) => setUnits(e.target.value)}
                                 {...minimalTextField}
                                 required
-                                sx={{ width: '25%'}}
+                                sx={{  width: '25%'}}
                             />
-
+                        ) : (
                             <TextField
-                                label="Description"
-                                value={description}
-                                onChange={(e) => setDescription(e.target.value)}
+                                label="Link"
+                                value={link}
+                                onChange={(e) => setLink(e.target.value)}
                                 {...minimalTextField}
-                                sx={{ width: '75%'}}
+                                required
+                                sx={{ width: '100%'}}
                             />
+                        )}
                     </Box>
-                    
-
-                    {providerType === 'In Stock' ? (
-                        <TextField
-                            label="Units"
-                            value={units}
-                            onChange={(e) => setUnits(e.target.value)}
-                            {...minimalTextField}
-                            required
-                            sx={{ mt:3, width: '25%'}}
-                        />
-                    ) : (
-                        <TextField
-                            label="Link"
-                            value={link}
-                            onChange={(e) => setLink(e.target.value)}
-                            {...minimalTextField}
-                            required
-                            sx={{ mt:3, width: '100%'}}
-                        />
-                    )}
-                    
                 </DialogContent>
                 <DialogActions >
                     <Button
                         type="submit"
-                        sx={{ color: 'black', fontFamily: 'InterSemiBold', mx:1 }}
+                        sx={{ color: 'black', fontFamily: 'InterSemiBold',  p:'0.5rem' }}
                         disabled={!isFormValid()}
                     >
                         Save

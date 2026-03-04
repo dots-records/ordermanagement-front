@@ -8,7 +8,7 @@ const ReleaseInfo = ({ release, loading }) => {
 
     if (loading) {
         return (
-            <Box className="box-container" sx={{ width: "250px" }}>
+            <Box className="box-container" sx={{ width: '25%', height: '85vh',  }}>
                 <Box 
                     sx={{ 
                         display: 'flex', 
@@ -18,7 +18,7 @@ const ReleaseInfo = ({ release, loading }) => {
                         alignItems: 'center',  
                     }}
                 >
-                    <CircularProgress size={24} />
+                    <CircularProgress size={'1.5rem'} />
                 </Box>
             </Box>
         );
@@ -35,46 +35,49 @@ const ReleaseInfo = ({ release, loading }) => {
     };
 
     return (
-        <Box className="box-container" sx={{width: "250px"}}>
-            <Typography 
-                sx={{ 
-                    textAlign: "left", 
-                    fontFamily: "InterBold", 
-                    fontSize: 18 
-                }}
-            >
-                {release?.title}
-            </Typography>
+        <Box className="box-container" sx={{width: '25%', height: '85vh', display: 'flex',
+        flexDirection: 'column', gap: '1rem', overflowX: "hidden", overflowY: 'auto'}}>
+            <Box >
+                <Typography 
+                    sx={{ 
+                        textAlign: "left", 
+                        fontFamily: "InterBold", 
+                        fontSize: "1.125rem",
+                    }}
+                >
+                    {release?.title}
+                </Typography>
 
-            <Typography 
-                sx={{ 
-                    textAlign: "left", 
-                    fontFamily: "InterSemiBold", 
-                    fontSize: 13, 
-                    color: "rgba(0,0,0,0.6)" 
-                }}
-            >
-                {release.artists.map((artist) => artist.name).join(", ")}
-            </Typography>
+                <Typography 
+                    sx={{ 
+                        textAlign: "left", 
+                        fontFamily: "InterSemiBold", 
+                        fontSize: '0.8125rem', 
+                        color: "rgba(0,0,0,0.6)" 
+                    }}
+                >
+                    {release.artists.map((artist) => artist.name).join(", ")}
+                </Typography>
+            </Box>
 
             {images.length > 0 && (
                 <Box 
                     sx={{ 
-                        mt: 2, 
                         display: "flex", 
                         flexDirection: "column", 
-                        alignItems: "center"
+                        alignItems: "center",
+                        gap: '0.5rem'
                     }}
                 >
                     <Box 
                         sx={{ 
                             width: "100%", 
-                            maxWidth: "220px", 
-                            height: "220px", 
+                            maxWidth: "13.75rem", 
+                            height: "13.75rem", 
                             display: "flex", 
                             justifyContent: "center", 
                             alignItems: "center", 
-                            borderRadius: 2, 
+                            borderRadius: '0.5rem', 
                             overflow: "hidden",
                             boxShadow: "0px 4px 8px rgba(0,0,0,0.1)"
                         }}
@@ -86,7 +89,6 @@ const ReleaseInfo = ({ release, loading }) => {
                                 width: "100%",
                                 height: "100%",
                                 objectFit: "cover",
-                                borderRadius: "3px",
                             }}
                         />
                     </Box>
@@ -96,14 +98,14 @@ const ReleaseInfo = ({ release, loading }) => {
                             display: "flex", 
                             justifyContent: "center", 
                             alignItems: "center", 
-                            gap: 1, 
-                            mt: 1 
+                            gap: '0.5rem'
                         }}
                     >
                         <IconButton 
                             onClick={prevImage} 
                             disabled={images.length <= 1}
-                            sx={{ p: 0.5 }}
+                            sx={{ p:0}}
+                          
                         >
                             <ArrowBackIcon fontSize="small" />
                         </IconButton>
@@ -121,20 +123,20 @@ const ReleaseInfo = ({ release, loading }) => {
                         <IconButton 
                             onClick={nextImage} 
                             disabled={images.length <= 1}
-                            sx={{ p: 0.5 }}
+                            sx={{ p:0}}
                         >
                             <ArrowForwardIcon fontSize="small" />
                         </IconButton>
                     </Box>
                 </Box>
             )}
-            <Divider sx={{ my: 2, backgroundColor: "rgba(0,0,0,0.2)" }} />
+            <Divider sx={{ backgroundColor: "rgba(0,0,0,0.2)" }} />
             <Box >
                 <Typography 
                     sx={{ 
                         textAlign: "left", 
                         fontFamily: "InterRegular", 
-                        fontSize: 14, 
+                        fontSize: '0.875rem', 
                         color: "rgba(0,0,0,0.7)"  
                     }}
                 >
@@ -145,13 +147,15 @@ const ReleaseInfo = ({ release, loading }) => {
                     sx={{ 
                         textAlign: "left", 
                         fontFamily: "InterRegular", 
-                        fontSize: 12, 
+                        fontSize: '0.75rem', 
                         color: "rgba(0,0,0,0.5)" 
                     }}
                 >
                     {release.formats.map((format) => format.descriptions.join(", ")).join(" | ")}
-                </Typography>
+                   </Typography>
             </Box>
+
+            <Divider sx={{ backgroundColor: "rgba(0,0,0,0.2)" }} />
         </Box>
     );
 };

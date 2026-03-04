@@ -60,7 +60,7 @@ const Order = () => {
 
     return (
         <DashboardLayout>
-            <Box sx={{ display: 'flex', flexDirection: 'row', gap: 2 , alignItems: 'flex-start'}}>
+            <Box sx={{ display: 'flex', flexDirection: 'row', gap: '1rem' , alignItems: 'flex-start'}}>
                 <OrderInfo order={order} loading={loading} />
                 <OrderItems order={order} loading={loading} fetchOrder={fetchData} />
                 <OrderPayment order={order} loading={loading} fetchOrder={fetchData} />

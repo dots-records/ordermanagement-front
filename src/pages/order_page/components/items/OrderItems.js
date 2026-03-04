@@ -7,12 +7,12 @@ const OrderItems = ({ order, loading, fetchOrder }) => {
 
     if (loading) {
         return (
-            <Box className="box-container" sx={{ width: "400px" }}>
+            <Box className="box-container" sx={{ width: "40%" }}>
                 <Typography 
                     sx={{ 
                         textAlign: "left", 
                         fontFamily: "InterBold", 
-                        fontSize: 18 
+                        fontSize: "1.125rem"
                     }}
                 >
                     Items
@@ -26,18 +26,25 @@ const OrderItems = ({ order, loading, fetchOrder }) => {
                         alignItems: 'center',  
                     }}
                 >
-                    <CircularProgress size={33} />
+                    <CircularProgress size={'2rem'} />
                 </Box>
             </Box>
         );
     }
     return (
-        <Box className="box-container" sx={{ width: "400px" }}>
+        <Box className="box-container" 
+            sx={{ 
+                width: "40%",
+                maxHeight: "35vh",
+                overflowY: "auto",  
+                overflowX: "hidden"   
+            }}
+        >
             <Typography 
                 sx={{ 
                     textAlign: "left", 
                     fontFamily: "InterBold", 
-                    fontSize: 18 
+                    fontSize: "1.125rem"
                 }}
             >
                 Items

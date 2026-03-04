@@ -10,6 +10,7 @@ import DialogReleaseSwap from "./dialog_release_swap/DialogReleaseSwap";
 import Popover from '@mui/material/Popover';
 import SelectedProvider from "./item_information/SelectedProvider";
 import SelectedListing from "./item_information/SelectedListing";
+import AddIcon from '@mui/icons-material/Add';
 
 const TableItems = ({ order, fetchOrder }) => {
     const [dialogOpen, setDialogOpen] = useState(false);
@@ -61,27 +62,27 @@ const TableItems = ({ order, fetchOrder }) => {
                 {order?.items.map((item, index) => (
                     <ListItem
                         key={index}
-                        
                         sx={{ 
                             borderBottom: '1px solid #ddd',
-                            borderLeft: item.associated ? '2px solid rgba(126, 202, 63,0.4)' : "transparent",
+                            borderLeft: item.associated ? '0.125rem solid rgba(126, 202, 63,0.4)' : "transparent",
                             backgroundColor: item.associated ? "rgba(126, 202, 63,0.075)" : "transparent",
-                            gap: 2,
+                            gap: '1rem',
                             alignItems: 'center',
                         }}
                     >
                         <img 
                             src={item.release.thumb} 
-                            style={{ width: '35px', height: '35px', objectFit: 'cover', borderRadius: '3px'}}
+                            style={{ width: '2.5rem', height: '2.5rem', objectFit: 'cover', borderRadius: '0.25rem'}}
                         />
-                        <Box> 
-                            <Typography sx={{ fontFamily: 'InterBold', fontSize: 13 , color: 'rgba(0,0,0,0.70)', textShadow:  '0px 0px 4px rgba(0,0,0,0.10)'}}>
+                        <Box > 
+                            <Typography sx={{ fontFamily: 'InterBold', fontSize: '0.8125rem' , color: 'rgba(0,0,0,0.70)', 
+                                textShadow:  '0px 0px 4px rgba(0,0,0,0.10)'}}>
                                 {item.release.name}
                             </Typography>
-                            <Typography sx={{ fontFamily: 'InterSemiBold', fontSize: 10, color: 'rgba(0,0,0,0.5)',}}>
+                            <Typography sx={{ fontFamily: 'InterSemiBold', fontSize: '0.625rem', color: 'rgba(0,0,0,0.5)'}}>
                                 {item.release.artists.map(artist => artist.name).join(', ')}
                             </Typography>
-                            <Typography sx={{ fontFamily: 'InterRegular', fontSize: 9, color: 'rgba(0,0,0,0.5)',}}>
+                            <Typography sx={{ fontFamily: 'InterRegular', fontSize: '0.5625rem', color: 'rgba(0,0,0,0.5)'}}>
                                 {"Condition of Item: "}
                                 {item.discCondition}
                                 {" "}
@@ -91,17 +92,7 @@ const TableItems = ({ order, fetchOrder }) => {
                         <Box
                             sx={{
                                 ml: 'auto',
-                                gap: 1,
-                                display: 'flex',
-                                justifyContent: 'flex-end',
-                            }}
-                        >
-                            
-                        </Box>
-                        <Box
-                            sx={{
-                                ml: 'auto',
-                                gap: 1,
+                                gap: '0.5rem',
                                 display: 'flex',
                                 justifyContent: 'flex-end',
                             }}
@@ -117,16 +108,20 @@ const TableItems = ({ order, fetchOrder }) => {
                                         color: 'rgba(0,0,0,0.85)',
                                     },
                                     '&.Mui-disabled': {
-                                        color: 'rgba(0,0,0,0.2)', // opcional: estilo cuando está desactivado
+                                        color: 'rgba(0,0,0,0.2)', 
                                     }
                                 }}
                             >
-                                <SwapHorizIcon sx={{ fontSize: 17 }} />
+                                {item.release.id == null ? (
+                                    <AddIcon sx={{ fontSize: '1.0625rem' }} />
+                                ) : (
+                                    <SwapHorizIcon sx={{ fontSize: '1.0625rem' }} />
+                                )}
                             </IconButton>
 
                             <IconButton
                                 size="small"
-                                onClick={() => navigate(`/releases/${item.release.id}`)}
+                                onClick={() => window.open(`/releases/${item.release.id}`, "_blank")}
                                 sx={{
                                     color: 'rgba(0,0,0,0.45)',
                                     '&:hover': {
@@ -134,7 +129,7 @@ const TableItems = ({ order, fetchOrder }) => {
                                     },
                                 }}
                             >
-                                <OpenInNewIcon sx={{ fontSize: 17 }} />
+                                <OpenInNewIcon sx={{ fontSize: '1.0625rem' }} />
                             </IconButton>
                                                 
                             {!item.associated && (
@@ -150,7 +145,7 @@ const TableItems = ({ order, fetchOrder }) => {
                                     }}
                                 >
                                     
-                                    <AddLinkIcon sx={{ fontSize: 17 }} />
+                                    <AddLinkIcon sx={{ fontSize: '1.0625rem' }} />
                                 </IconButton>
                             )}
 
@@ -163,7 +158,7 @@ const TableItems = ({ order, fetchOrder }) => {
                                     }}
                                 >
                                     
-                                    <CheckIcon sx={{ fontSize: 15 }} />
+                                    <CheckIcon sx={{ fontSize: '1.0625rem' }} />
                                 </IconButton>
                             )}
                         </Box>
@@ -200,10 +195,10 @@ const TableItems = ({ order, fetchOrder }) => {
                 }}
                 PaperProps={{
                     sx: {
-                        p: 2,
-                        borderRadius: 2,
-                        minWidth: 250,
-                        boxShadow: '0 8px 20px rgba(0,0,0,0.15)'
+                        p:'0.5rem',
+                        borderRadius: '0.5rem',
+                        boxShadow: '0 8px 20px rgba(0,0,0,0.15)',
+                        justifyContent: "center",
                     }
                 }}
             >

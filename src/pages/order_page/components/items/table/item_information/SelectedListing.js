@@ -1,32 +1,30 @@
-import {
-  List,
+import {  
   ListItem,
   Typography,
   Box,
   IconButton,
-  Button,
-  Checkbox,
 } from '@mui/material';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-import { useState, useEffect } from 'react';
-import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
-import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
-import { CircularProgress } from '@mui/material';
 
 const SelectedListing = ({ listing }) => {
 
   if (!listing) {
           return (
-          <Typography
-              sx={{
-              fontSize: 12,
-              color: 'rgba(0,0,0,0.4)',
-              px: 1,
-              py: 1.4,
-              }}
-          >
-              Info. Not Available
-          </Typography>
+          <Box
+                sx={{
+                    textAlign: 'center',
+                    py: '0.5rem'
+                }}
+            >
+                <Typography
+                    sx={{
+                        fontSize: '0.75rem',
+                        color: 'rgba(0,0,0,0.5)',
+                    }}
+                >
+                    Listing Not Available
+                </Typography>
+            </Box>
           );
       }
 
@@ -34,39 +32,47 @@ const SelectedListing = ({ listing }) => {
             <ListItem
               key={listing.id}
               sx={{
-                px: 4,
                 display: 'flex',
                 alignItems: 'center',
-                borderBottom: '1px solid rgba(0,0,0,0.06)',
+                gap: '1rem',
+                borderBottom: '0.0625rem solid #ededed',
               }}
             >
                             
                 <Box
                   sx={{
                     fontFamily: 'InterSemiBold',
-                    fontSize: 8,
+                    fontSize: '0.6rem',
                     color: 'rgba(0, 0, 0, 0.6)' ,
                     backgroundColor: 'rgba(0,0,0,0.02)',
                     border:  '1px solid rgba(0,0,0,0.2)',
                     textShadow: '0px 0px 4px rgba(0,0,0,0.10)',
-                    borderRadius: 2,
+                    borderRadius: '0.5rem',
                     textAlign: 'center',
-                    py: 0.5,
-                    px: 1.2,
+                    px: '0.6rem',
+                    py: '0.2rem',
                     display: 'inline-flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                     boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
                     '&:hover': {
                       boxShadow: '0 2px 6px rgba(0,0,0,0.15)',
-                      transform: 'translateY(-1px)',
+                      transform: 'translateY(-0.0625rem)',
                     },
                   }}
                 >
                   {listing.platform}
                 </Box>
 
-              
+              <Typography
+                    sx={{
+                    fontSize: '0.65rem',
+                    fontFamily: 'InterSemiBold',
+                    color: 'rgba(0,0,0,0.85)',
+                    }}
+                >
+                    {listing.sellingPrice} €
+                </Typography>
 
               
               <Box
@@ -75,26 +81,14 @@ const SelectedListing = ({ listing }) => {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'flex-end',
-                  flexShrink: 0,
-                  gap: 2,
                 }}
               >
-                <Typography
-                    sx={{
-                    textAlign: 'right',
-                    fontSize: 10,
-                    fontFamily: 'InterSemiBold',
-                    color: 'rgba(0,0,0,0.85)',
-                    flexShrink: 0,
-                    }}
-                >
-                    {listing.sellingPrice} €
-                </Typography>
+                
                 {listing.link && (
                   <IconButton
                     size="small"
                     onClick={(e) => {
-                      e.stopPropagation(); // 🔹 evita que el ListItem reciba el click
+                      e.stopPropagation(); 
                       window.open(listing.link, '_blank');
                     }}
                     sx={{
@@ -104,7 +98,7 @@ const SelectedListing = ({ listing }) => {
                       },
                     }}
                   >
-                    <OpenInNewIcon sx={{ fontSize: 14 }} />
+                    <OpenInNewIcon sx={{ fontSize: '1rem' }} />
                   </IconButton>
                 )}
                 

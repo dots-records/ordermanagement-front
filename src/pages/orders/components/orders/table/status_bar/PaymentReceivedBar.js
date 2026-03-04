@@ -68,20 +68,20 @@ const PaymentReceivedBar = ({  orderId, setOrdersPage, tableSelected, numberPage
                 justifyContent: 'center',
                 width: '100%',
                 height: '100%',
-                backgroundColor: 'rgba(255, 255, 255, 0.7)',
+                backgroundColor: 'rgba(255, 255, 255, 0.53)',
                 zIndex: 1,
               }}
             >
-              <CircularProgress size={20} />
+              <CircularProgress size={'1.375rem'}/>
             </Box>
           )}
-          <MoneyIcon sx={{ fontSize: 22}} />
+          <MoneyIcon sx={{ fontSize: '1.375rem'}} />
           <Box
             sx={{
-              width: 22,
-              height: '2.5px',
+              width: '1.375rem',
+              height: '0.15625rem',
+              mx: '-0.125rem',
               background: getLinePaymentProgressColor(hoverProgress, hoverShipping),
-              mx: -0.28,
             }}
           />
           <Box
@@ -97,16 +97,16 @@ const PaymentReceivedBar = ({  orderId, setOrdersPage, tableSelected, numberPage
           >
             <AccessTimeIcon
               sx={{ color: getProgressIconColor(hoverProgress, hoverShipping)
-                ,fontSize: 22
+                ,fontSize: '1.375rem'
                }}
             />
           </Box>
           <Box
             sx={{
-              width: 22,
-              height: '2.5px',
+              width: '1.375rem',
+              height: '0.15625rem',
+              mx: '-0.125rem',
               backgroundColor: hoverShipping ? 'rgba(0, 0, 0, 1)' : 'rgba(0, 0, 0, 0.35)',
-              mx: -0.28,
             }}
           />
           <Box
@@ -123,8 +123,8 @@ const PaymentReceivedBar = ({  orderId, setOrdersPage, tableSelected, numberPage
               className="shipping-icon"
               sx={{
                 color: hoverShipping ? 'rgba(0, 0, 0, 1)' : 'rgba(0, 0, 0, 0.35)',
-                marginLeft: 0.088,
-                fontSize: 22
+                fontSize: '1.375rem',
+                ml: '0.07rem'
               }}
             />
             

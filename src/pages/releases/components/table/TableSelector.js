@@ -27,24 +27,29 @@ const TableSelector = ({ setLoading, setTableSelected, tableSelected, setRelease
           aria-controls={anchorSel ? 'table-selector-menu' : undefined}
           aria-haspopup="true"
           onClick={handleClickSel}
-          sx={{ textAlign: 'left', display: 'flex', ml: 0.3, width: 220, height: 33, cursor: 'pointer' }}
+          sx={{ 
+            textAlign: 'left', 
+            display: 'flex', 
+            cursor: 'pointer', 
+            alignItems: 'center',
+          }}
         >
-          <Typography sx={{ mb: 2, ml: 0, fontFamily: 'InterBold', fontSize: 22 }}>
+          <Typography sx={{  fontFamily: 'InterBold', fontSize: '1.375rem' }}>
             {tableSelected}
           </Typography>
-          <ArrowDropDown sx={{ mt: 0.55, ml: 0.2, fontFamily: 'InterBold', fontSize: 25 }} />
+          <ArrowDropDown sx={{fontFamily: 'InterBold', fontSize: '1.5625rem' }} />
         </Box>
   
         <Menu
           id="table-selector-menu"
-          anchorEl={anchorSel} // Ancla el menú al elemento que disparó el evento
+          anchorEl={anchorSel} 
           open={Boolean(anchorSel)}
           onClose={() => setAnchorSel(null)}
           PaperProps={{
             sx: {
-              width: 255,
+              width: '15.9375rem',
               '& .MuiMenuItem-root': {
-                fontSize: 12,
+                fontSize: '0.75rem',
                 fontFamily: 'InterSemiBold',
               },
             },

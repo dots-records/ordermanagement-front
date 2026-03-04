@@ -7,13 +7,13 @@ import {CircularProgress} from "@mui/material";
 const ReleaseProviders = ({ providers, loading, releaseId, setProviders, setLoading }) => {
     if (loading) {
         return (
-            <Box className="box-container" sx={{ width: "650px" }}>
-                <Box sx={{ display: 'flex', mb: 2}}>
+            <Box className="box-container" sx={{ width: '75%', height: '85vh', }}>
+                <Box sx={{ display: 'flex'}}>
                     <Typography
                         sx={{
                             textAlign: 'left',
                             fontFamily: 'InterBold',
-                            fontSize: 19,
+                            fontSize: '1.1875rem',
                         }}
                     >
                         Providers & Listings
@@ -28,20 +28,21 @@ const ReleaseProviders = ({ providers, loading, releaseId, setProviders, setLoad
                         alignItems: 'center',  
                     }}
                 >
-                    <CircularProgress size={24} />
+                    <CircularProgress size={'1.5rem'} />
                 </Box>
             </Box>
         );
     }
 
     return (
-        <Box className="box-container" sx={{ width: '650px' }}>
-            <Box sx={{ display: 'flex', mb: 2}}>
+        <Box className="box-container" sx={{width: '75%', height: '85vh', display: 'flex',
+                flexDirection: 'column', gap: '1rem', overflowX: "hidden", overflowY: 'auto'}}>
+            <Box sx={{ display: 'flex'}}>
                 <Typography
                     sx={{
                         textAlign: 'left',
                         fontFamily: 'InterBold',
-                        fontSize: 19,
+                        fontSize: '1.1875rem',
                     }}
                 >
                     Providers & Listings

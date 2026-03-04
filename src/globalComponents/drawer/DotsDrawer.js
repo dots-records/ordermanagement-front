@@ -24,6 +24,7 @@ const DotsDrawer = () => {
         borderRight: '0.08rem solid rgba(0,0,0,0.15)',
         backgroundColor: 'white',
         overflow: 'hidden',
+        flexShrink: 0
       }}
     >
       <List sx={{width: '100%', py: 0}}>

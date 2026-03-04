@@ -13,23 +13,23 @@ const ShippingBar = () => {
         justifyContent: 'center'
       }}
       >
-          <MoneyIcon sx={{  fontSize: 22 }}/>
+          <MoneyIcon sx={{  fontSize: '1.375rem' }}/>
           <Box sx={{
-            width: 22, // Ancho de la línea
-            height: '2.5px', // Grosor de la línea
-            backgroundColor: 'rgba(0, 0, 0, 1)', // Color de la línea
-            mx: -0.28
+            width: '1.375rem', 
+            height: '0.15625rem',
+            mx: '-0.125rem',
+            backgroundColor: 'rgba(0, 0, 0, 1)'
           }} 
           />
-          <AccessTimeIcon sx={{  fontSize: 22 }}/>
+          <AccessTimeIcon sx={{  fontSize: '1.375rem' }}/>
           <Box sx={{
-            width: 22, // Ancho de la línea
-            height: '2.5px', // Grosor de la línea
-            backgroundColor: 'rgba(0, 0, 0, 1)', // Color de la línea
-            mx: -0.28
+            width: '1.375rem', 
+            height: '0.15625rem',
+            mx: '-0.125rem',
+            backgroundColor: 'rgba(0, 0, 0, 1)', 
           }} 
           />
-          <LocalShippingIcon sx={{ marginLeft: 0.088, fontSize: 22 }} />
+          <LocalShippingIcon sx={{ ml: '0.07rem', fontSize: '1.375rem' }} />
       </Box>
     );
   }

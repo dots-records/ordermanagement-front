@@ -123,13 +123,14 @@ const ListingTable = ({ releaseId, provider }) => {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          px: 4,
+          px: '2rem',
           backgroundColor: 'rgba(0,0,0,0.01)'
         }}
       >
         
-        <Box sx={{ display: 'flex', alignItems: 'center', ml: 'auto', mr: "16px", 
-         }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', ml: 'auto', gap: '0.25rem'
+          }}
+        >
           <IconButton
             size="small"
             onClick={selectedListings.length > 0 ? handleDeleteSelected : undefined}
@@ -144,15 +145,14 @@ const ListingTable = ({ releaseId, provider }) => {
               },
             }}
           >
-            <DeleteIcon sx={{ fontSize: 17 }} />
+            <DeleteIcon sx={{ fontSize: '1rem' }} />
           </IconButton>
           
           <Box
               sx={{
-                width: '1px',
-                height: 16,
-                backgroundColor: 'rgba(0,0,0,0.15)',
-                mx: 0.5,
+                width: '0.0625rem',
+                height: '1rem',
+                backgroundColor: 'rgba(0,0,0,0.15)'
               }}
             />
           <IconButton
@@ -169,7 +169,7 @@ const ListingTable = ({ releaseId, provider }) => {
               },
             }}
           >
-            <EditIcon sx={{ fontSize: 17 }} />
+            <EditIcon sx={{ fontSize: '1rem' }} />
           </IconButton>
         </Box>
         <Box
@@ -199,14 +199,14 @@ const ListingTable = ({ releaseId, provider }) => {
               },
             }}
           />
-        </Box>
+      </Box>
 
-           <ListingEdit
+        <ListingEdit
           open={editOpen}
           onClose={async () => {
             setEditOpen(false);
-            setSelectedListings([]); // opcional, deselecciona todos
-            await fetchListings(); // 🔹 recargar listings
+            setSelectedListings([]); 
+            await fetchListings();
           }}
           selectedListings={listings.filter((l) =>
             selectedListings.includes(l.id)
@@ -218,7 +218,7 @@ const ListingTable = ({ releaseId, provider }) => {
       </Box>
       <Box
         sx={{
-          height: '1px',
+          height: '0.0625rem',
           backgroundColor: 'rgba(0,0,0,0.05)',
           
         }}
@@ -236,12 +236,12 @@ const ListingTable = ({ releaseId, provider }) => {
               key={listing.id}
               onClick={() => handleToggle(listing.id) }
               sx={{
-                px: 4,
+                px: '2rem',
                 py: 0,
                 display: 'flex',
                 alignItems: 'center',
-                gap: 2,
-                borderBottom: '1px solid rgba(0,0,0,0.06)',
+                gap: '1rem',
+                borderBottom: '0.0625rem solid rgba(0,0,0,0.06)',
                 cursor: 'pointer' ,
                 backgroundColor: isSelected ? 'rgba(0, 0, 0, 0.05)' :'white' ,
                 transition: 'background-color 0.2s ease-in-out',
@@ -251,19 +251,19 @@ const ListingTable = ({ releaseId, provider }) => {
               }}
             >
               
-              <Box sx ={{ width: "170px"}}>                
+              <Box sx ={{ width: "25%"}}>                
                 <Box
                   sx={{
                     fontFamily: 'InterSemiBold',
-                    fontSize: 11,
+                    fontSize: '0.625rem',
                     color: 'rgba(0,0,0, 0.6 )',
                     backgroundColor: 'rgba(0,0,0,0.02)',
                     border: '1px solid rgba(0,0,0,0.2)',
                     textShadow: '0px 0px 4px rgba(0,0,0,0.10)',
-                    borderRadius: 2,
+                    borderRadius: '0.5rem',
                     textAlign: 'center',
-                    py: 0.5,
-                    px: 1.2,
+                    py: '0.25rem',
+                    px: '0.6rem',
                     display: 'inline-flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -282,8 +282,8 @@ const ListingTable = ({ releaseId, provider }) => {
               <Typography
                 sx={{
                   textAlign: 'right',
-                  fontSize: 13,
-                  width: 80,
+                  fontSize: '0.75rem',
+                  width: '15%',
                   fontFamily: 'InterSemiBold',
                   color: 'rgba(0,0,0,0.85)',
                   flexShrink: 0,
@@ -295,8 +295,8 @@ const ListingTable = ({ releaseId, provider }) => {
               <Typography
                 sx={{
                   textAlign: 'left',
-                  fontSize: 13,
-                  width: 80,
+                  fontSize: '0.75rem',
+                  width: '20%',
                   fontFamily: 'InterSemiBold',
                   color:'rgba(0,0,0,0.5)',
                   flexShrink: 0,
@@ -307,13 +307,13 @@ const ListingTable = ({ releaseId, provider }) => {
               </Typography>
               <Box
                 sx={{
-                  width: 80,
+                  width: '20%',
                   textAlign: 'center',
                 }}
               >
                 <Typography
                   sx={{
-                    fontSize: 11,
+                    fontSize: '0.625rem',
                     color: 'rgba(0,0,0,0.4)',
                     fontFamily: 'InterRegular',
                     
@@ -332,7 +332,6 @@ const ListingTable = ({ releaseId, provider }) => {
               <Box
                 sx={{
                   ml: 'auto',
-                  width: 30,
                   display: 'flex',
                   justifyContent: 'flex-end',
                   flexShrink: 0,
@@ -352,7 +351,7 @@ const ListingTable = ({ releaseId, provider }) => {
                       },
                     }}
                   >
-                    <OpenInNewIcon sx={{ fontSize: 17 }} />
+                    <OpenInNewIcon sx={{ fontSize: '1rem' }} />
                   </IconButton>
                 )}
               </Box>

@@ -6,7 +6,7 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 const Pagination = ({ tableSelected, ordersPage, loading, setLoading, setOrdersPage, searchTerm }) => {
 
-    // Función para actualizar la página y obtener los pedidos
+
     const handlePageChange = async (newPage) => {
         setLoading(true);
         console.log(newPage);
@@ -16,25 +16,24 @@ const Pagination = ({ tableSelected, ordersPage, loading, setLoading, setOrdersP
     };
 
     if (loading || ordersPage == null) return null;
-
-    // Calcular los valores para la paginación
     const currentPage = ordersPage?.totalPages === 0 ? 0 : ordersPage?.number + 1;
     const totalPages = ordersPage?.totalPages || 0;
 
     return (
-        <Box className="pagination" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', p: "3px" }}>
+        <Box className="pagination" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', 
+         gap: '0.625rem'}}>
             <IconButton
                 onClick={() => handlePageChange(ordersPage?.number - 1)}
                 disabled={ordersPage?.number === 0 || ordersPage?.totalPages === 0}
                 aria-label="Anterior"
             >
-                <ArrowBackIcon sx={{ fontSize: 18 }}/>
+                <ArrowBackIcon sx={{ fontSize: '1.125rem' }}/>
             </IconButton>
 
             <Typography
                 sx={{
                     fontFamily: 'InterRegular',
-                    fontSize: 14,
+                    fontSize: '0.875rem',
                     color: 'rgba(0, 0, 0, 0.8)'
                 }}
             >
@@ -46,7 +45,7 @@ const Pagination = ({ tableSelected, ordersPage, loading, setLoading, setOrdersP
                 disabled={ordersPage?.number === ordersPage?.totalPages - 1 || ordersPage?.totalPages === 0}
                 aria-label="Siguiente"
             >
-                <ArrowForwardIcon sx={{ fontSize: 18 }} />
+                <ArrowForwardIcon sx={{ fontSize: '1.125rem' }} />
             </IconButton>
         </Box>
     );

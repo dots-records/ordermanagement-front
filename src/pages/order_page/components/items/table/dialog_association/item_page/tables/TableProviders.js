@@ -53,25 +53,27 @@ const TableProviders = ({ releaseId, order, setListingAssociated, listingAssocia
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            py: 3,
+            py: '1.5rem',
           }}
         >
-          <CircularProgress size={24} sx={{ color: 'rgba(0,0,0,0.4)' }} />
+          <CircularProgress size={'1.5rem'} sx={{color: 'rgba(0,0,0,0.4)'}} />
         </Box>
       );
 
     if (!providers || providers.length === 0) {
           return (
-            <Typography
-              sx={{
-                fontSize: 12,
-                color: 'rgba(0,0,0,0.4)',
-                px: 1,
-                py: 1.4,
-              }}
-            >
-              No Providers yet
-            </Typography>
+            <Box sx={{width: '100%', justifyItems: 'center'}}>
+                <Typography
+                sx={{
+                    fontSize: '0.75rem',
+                    color: 'rgba(0,0,0,0.4)',
+                    py: '0.5rem'
+
+                }}
+                >
+                No Providers yet
+                </Typography>
+            </Box>
           );
         }
     return (
@@ -85,96 +87,99 @@ const TableProviders = ({ releaseId, order, setListingAssociated, listingAssocia
                     onClick={() => handleRowToggle(provider)}
                     sx={{
                     borderBottom: '1px solid #ededed',
-                    gap: 2,
+                    gap: '1rem',
                     alignItems: 'center',
                     cursor: 'pointer',
                     '&:hover': { backgroundColor: 'rgba(0,0,0,0.03)' }
                     }}
                 >
                     <Box
-                    sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: 1.2,
-                        fontFamily: 'InterSemiBold',
-                        fontSize: 12.5,
-                        color: 'rgba(0,0,0,0.8)',
-                        backgroundColor:
-                        provider.type === 'In Stock'
-                            ? 'rgba(255, 207, 63, 0.12)'
-                            : 'rgba(126, 202, 63, 0.12)',
-                        border:
-                        provider.type === 'In Stock'
-                            ? '1px solid rgba(255, 207, 63, 0.45)'
-                            : '1px solid rgba(126, 202, 63, 0.45)',
-                        borderRadius: 8,
-                        boxShadow: '0 1px 2px rgba(0,0,0,0.08)',
-                        px: 1.4,
-                        py: 0.6,
-                    }}
+                        sx={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '0.6rem',
+                            fontFamily: 'InterSemiBold',
+                            fontSize: '0.78125rem',
+                            color: 'rgba(0,0,0,0.8)',
+                            backgroundColor:
+                            provider.type === 'In Stock'
+                                ? 'rgba(255, 207, 63, 0.12)'
+                                : 'rgba(126, 202, 63, 0.12)',
+                            border:
+                            provider.type === 'In Stock'
+                                ? '0.0625rem solid rgba(255, 207, 63, 0.45)'
+                                : '0.0625rem solid rgba(126, 202, 63, 0.45)',
+                            borderRadius: '4rem',
+                            boxShadow: '0 1px 2px rgba(0,0,0,0.08)',
+                            px: '0.7rem',
+                            py: '0.15rem',
+                        }}
                     >
-                    <Box sx={{ lineHeight: 1 }}>
+                    <Box >
                         {provider.discCondition}
                     </Box>
-                    <Box sx={{ lineHeight: 1, opacity: 0.75 }}>
+                    <Box sx={{ opacity: 0.75 }}>
                         {provider.sleeveCondition}
                     </Box>
                     </Box>
-                    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                    <Typography
-                        sx={{
-                        fontFamily: 'InterSemiBold',
-                        fontSize: 13,
-                        color: 'rgba(0,0,0,0.85)',
-                        mt: -0.2
-                        }}
-                    >
-                        {provider.price} €
-                    </Typography>
-                    <Typography
-                        sx={{
-                        fontFamily: 'InterRegular',
-                        fontSize: 10.5,
-                        color: 'rgba(0,0,0,0.5)',
-                        mt: -0.3
-                        }}
-                    >
-                        {provider.type}
-                        {provider.description && ` · ${provider.description}`}
-                    </Typography>
+                    <Box sx={{ display: 'flex', flexDirection: 'column',  overflow: 'hidden'}}>
+                        <Typography
+                            sx={{
+                            fontFamily: 'InterSemiBold',
+                            fontSize: '0.8125rem',
+                            color: 'rgba(0,0,0,0.85)',
+                            }}
+                        >
+                            {provider.price} €
+                        </Typography>
+                        <Typography
+                            sx={{
+                                fontFamily: 'InterRegular',
+                                fontSize: '0.65625rem',
+                                color: 'rgba(0,0,0,0.5)',
+                                whiteSpace: 'normal',    
+                                wordBreak: 'break-word',  
+                                overflowWrap: 'anywhere',
+                            
+                            }}
+                        >
+                            {provider.type}
+                            {provider.description && ` · ${provider.description}`}
+                        </Typography>
                     </Box>
-                    <Box sx={{ ml: 'auto', display: 'flex', gap: 1, alignItems: 'center' }}>
+                    <Box sx={{ ml: 'auto', display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
                     {provider.type === 'In Stock' ? (
                         <Chip
-                        label={`${provider.units} units`}
-                        sx={{
-                            fontFamily: 'InterSemiBold',
-                            fontSize: 12,
-                            borderRadius: '6px',
-                            bgcolor: 'rgba(25, 118, 210, 0.08)',
-                            color: '#1976d2',
-                            height: 22,
-                        }}
+                            label={`${provider.units} units`}
+                            sx={{
+                                fontFamily: 'InterSemiBold',
+                                fontSize: '0.75rem',
+                                borderRadius: '0.375rem',
+                                bgcolor: 'rgba(25, 118, 210, 0.08)',
+                                color: '#1976d2',
+                                height: '1.375rem',
+                            }}
                         />
                     ) : (
                         <Button
-                        variant="outlined"
-                        size="small"
-                        endIcon={<OpenInNewIcon sx={{ fontSize: 15 }} />}
-                        sx={{
-                            fontFamily: 'InterSemiBold',
-                            fontSize: 12,
-                            textTransform: 'none',
-                            borderRadius: '6px',
-                            px: 1.5,
-                            py: 0.3
-                        }}
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            window.open(provider.link, '_blank');
-                        }}
+                            variant="outlined"
+                            size="small"
+                            sx={{
+                                fontFamily: 'InterSemiBold',
+                                fontSize: '0.75rem',
+                                textTransform: 'none',
+                                borderRadius: '0.375rem',
+                                gap: '0.5rem',
+                                height: '1.375rem',
+                                color: '#1976d2',
+                            }}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                window.open(provider.link, '_blank');
+                            }}
                         >
                         Open
+                        <OpenInNewIcon sx={{fontSize: '0.75rem',color: '#1976d2',}} />
                         </Button>
                     )}
                     
@@ -182,7 +187,7 @@ const TableProviders = ({ releaseId, order, setListingAssociated, listingAssocia
 
                     <ExpandMoreIcon
                         sx={{
-                        fontSize: 21,
+                        fontSize: '1.3125rem',
                         color: 'rgba(0,0,0,0.4)',
                         transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
                         transition: '0.2s'

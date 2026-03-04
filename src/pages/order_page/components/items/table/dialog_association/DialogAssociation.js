@@ -27,26 +27,33 @@ const DialogAssociation = ({ open, handleClose, order, item }) => {
         handleClose();
       }}
       disableEscapeKeyDown={!closable}
-      maxWidth="sm"
       fullWidth
-      PaperProps={{ sx: { borderRadius: 2, p: 2 } }}
+      PaperProps={{ sx: {
+                        backgroundColor: 'white',
+                        color: 'black',
+                        borderRadius: '0.5rem',
+                        p: '1rem',
+                        minWidth: '30vw'
+                    } }}
     >
-      <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <Typography sx={{ fontFamily: 'InterSemiBold', fontSize: 24 }}>Associate Provider & Listing</Typography>
-        <IconButton
-          onClick={() => {
-            if (!closable) return;
-            handleClose();
-          }}
-          disabled={!closable}
-          sx={{ color: 'rgba(0,0,0,0.7)' }}
-        >
-          <CloseIcon />
-        </IconButton>
+      <DialogTitle sx={{ p:'0.5rem'}}>
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+          <Typography sx={{ fontFamily: 'InterSemiBold', fontSize: '1.5rem' }}>Associate Provider & Listing</Typography>
+          <IconButton
+            onClick={() => {
+              if (!closable) return;
+              handleClose();
+            }}
+            disabled={!closable}
+            sx={{ color: 'rgba(0,0,0,0.7)' }}
+          >
+            <CloseIcon sx={{ fontSize: '1.5rem'}} />
+          </IconButton>
+        </Box>
       </DialogTitle>
 
-      <DialogContent>
-        <Box>
+      <DialogContent sx={{p: 0}}>
+        <Box sx={{ p: '1rem' }}>
           <ItemPage item={item} order={order} setClosable={setClosable}/>
         </Box>
       </DialogContent>

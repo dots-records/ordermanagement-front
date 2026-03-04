@@ -49,13 +49,13 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                 sx={{ 
                     display: 'flex', 
                     width: '100%',
-                    height: '50vh',
+                    height: '65vh',
                     justifyContent: 'center',
                     alignItems: 'center',  
-                    color: 'black'
+                    color: 'black',
                 }}
             >
-                <CircularProgress size={33} />
+                <CircularProgress size={'2.0625rem'} />
             </Box>
         );
     }
@@ -65,7 +65,7 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
         
         <TableContainer
             sx={{ 
-                height: '50vh',
+                height: '65vh',
                 overflowY: 'auto',
                 '&::-webkit-scrollbar': {
                     width: '2px',
@@ -87,9 +87,16 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                         <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.65)', width: '15%' }}>
                             Status
                         </TableCell>
-                        <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.65)', width: '15%' }}>
+                        <TableCell
+                            sx={{
+                                fontFamily: 'InterSemiBold',
+                                color: 'rgba(0,0,0,0.65)',
+                                width: '15%',
+                                alignItems: 'center',
+                            }}
+                            >
                             Created
-                            <ArrowDropDown sx={{ fontSize: 18, ml: 0.3,  color: 'rgba(0,0,0,0.65)' }} />
+                            <ArrowDropDown sx={{ fontSize: '1.125rem', ml: '0.25rem' }} />
                         </TableCell>
                         <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.65)', width: '1%' }}>
                             Link
@@ -114,11 +121,11 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                     }}
                 >
                     {orders?.length === 0 ? (
-                        <TableRow sx={{ height: '100%' }}> {/* ocupa todo el alto de la tabla */}
-                            <TableCell colSpan={8} sx={{ p: 0}}> {/* quitar padding para que se expanda */}
+                        <TableRow sx={{ height: '100%' }}>
+                            <TableCell colSpan={8} sx={{ p: 0}}>
                                 <Box
                                     sx={{
-                                        height: '100%',   // se expande con TableCell
+                                        height: '100%',   
                                         display: 'flex',
                                         justifyContent: 'center',
                                         alignItems: 'center',
@@ -131,7 +138,7 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                                 </Typography>
                                 </Box>
                             </TableCell>
-                            </TableRow>
+                        </TableRow>
                     ) : (
                         orders?.map((order, index) => {
                             const isReadyToPack =
@@ -185,7 +192,7 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                                             className="number-box"
                                             sx={{
                                                 fontFamily: 'InterSemiBold',
-                                                fontSize: 12,
+                                                fontSize: '0.75rem',
                                                 color: order.justAdded
                                                     ? 'rgba(47, 101, 183, 1)'
                                                     : isReadyToPack
@@ -197,19 +204,19 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                                                     ? 'rgba(126, 202, 63,0.1)'
                                                     : `${getBoxColor(order.status, order.archived)}0.15)`,
                                                 border: order.justAdded
-                                                    ? '1px solid rgba(33,150,243,0.5)'
+                                                    ? '0.0625rem solid rgba(33,150,243,0.5)'
                                                     : isReadyToPack
-                                                    ? '1px solid rgba(111, 173, 60, 0.5)'
-                                                    : `1px solid ${getBoxColor(order.status, order.archived)}0.75)`,
+                                                    ? '0.0625rem  solid rgba(111, 173, 60, 0.5)'
+                                                    : `0.0625rem  solid ${getBoxColor(order.status, order.archived)}0.75)`,
                                                 textShadow: order.justAdded
                                                     ? '0px 0px 4px rgba(33,150,243,0.15)'
                                                     : isReadyToPack
                                                     ? '0px 0px 4px rgba(126, 202, 63,0.15)'
                                                     : '0px 0px 4px rgba(0,0,0,0.10)',
-                                                borderRadius: 2,
+                                                borderRadius: '0.5rem',
                                                 textAlign: 'center',
-                                                py: 0.5,
-                                                px: 1.2,
+                                                py: '0.25rem',
+                                                px: '0.6rem',
                                                 display: 'inline-flex',
                                                 alignItems: 'center',
                                                 justifyContent: 'center',
@@ -231,17 +238,17 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                                         </Box>
                                 </TableCell>
 
-                                <TableCell sx={{ maxWidth: '200px', position: 'relative'}}>
-                                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                <TableCell>
+                                    <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                                         {(order.justAdded || isReadyToPack) && (
                                             <Box
                                                 sx={{
-                                                    width: 8,
-                                                    height: 8,
+                                                    width: '0.5rem',
+                                                    height: '0.5rem',
+                                                    flexShrink: 0,
                                                     borderRadius: '50%',
-                                                    mt: 0.07,
                                                     background: order.justAdded
-                                                        ? 'linear-gradient(135deg, #42a5f5, #1e88e5)' // azul
+                                                        ? 'linear-gradient(135deg, #42a5f5, #1e88e5)'
                                                         : 'linear-gradient(135deg, #66bb6a, #388e3c)', 
                                                     boxShadow: order.justAdded
                                                         ? '0 0 6px rgba(33,150,243,0.6)'
@@ -259,7 +266,7 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                                         <Typography
                                             sx={{
                                                 fontFamily: 'InterBold',
-                                                fontSize: 14.5,
+                                                fontSize: '0.90625rem',
                                                 color: order.justAdded
                                                     ? 'rgba(47, 101, 183, 1)'
                                                     : isReadyToPack
@@ -271,7 +278,6 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                                                     : isReadyToPack
                                                     ? '0px 0px 4px rgba(85, 143, 38,0.15)'
                                                     : '0px 0px 4px rgba(0,0,0,0.10)',
-                                                borderRadius: 1,
                                                 transition: 'all 0.25s ease-in-out',
                                                 overflow: 'hidden',
                                                 textOverflow: 'ellipsis',
@@ -286,7 +292,7 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                                     <Typography
                                         sx={{
                                             fontFamily: 'InterSemiBold',
-                                            fontSize: 12,
+                                            fontSize: '0.75rem',
                                             color: order.justAdded
                                                     ? 'rgba(47, 101, 183, 0.7)'
                                                     : isReadyToPack
@@ -297,7 +303,6 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                                             textOverflow: 'ellipsis',
                                             whiteSpace: 'normal',
                                             wordBreak: 'break-word',
-                                            mt: 0.2
                                         }}
                                     >
                                         {order.items.map(item => item.release.artists.map(artist => artist.name)).join(', ')}
@@ -308,11 +313,11 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
 
                                
 
-                                <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.75)' }}>
+                                <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.75)', }}>
                                         {getBar(order.status, order.id, tableSelected, setOrdersPage, numberPage, searchTerm)}
                                 </TableCell>
 
-                                <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.75)', fontSize: 13}}>
+                                <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.75)', fontSize: '0.8125rem'}}>
                                     
                                     <Box sx ={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                                         {order.created}
@@ -330,31 +335,28 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                                                 window.open(order.uri, '_blank');
                                             }}
                                             sx={{
-                                                width: 32,
-                                                height: 32,
-                                                minWidth: 32,
-                                                borderRadius: 1.5,          // esquinas suaves
-                                                padding: 0,                  // icono centrado
+                                                width: '2rem',
+                                                height: '2rem',
+                                                minWidth: '2rem',
+                                                borderRadius: '0.375rem',
                                                 display: 'flex',
                                                 alignItems: 'center',
                                                 justifyContent: 'center',
-                                                borderColor: 'rgba(0,0,0,0.2)', // borde gris suave
-                                                color: 'rgba(0,0,0,0.65)',      // color del icono gris oscuro
+                                                borderColor: 'rgba(0,0,0,0.2)',
+                                                color: 'rgba(0,0,0,0.65)',    
                                                 backgroundColor: 'white',
-                                                transition: 'all 0.2s ease-in-out',
-                                                
                                                 '&:hover': {
-                                                    backgroundColor: 'rgba(0,0,0,0.05)', // hover sutil
+                                                    backgroundColor: 'rgba(0,0,0,0.05)',
                                                     borderColor: 'rgba(0,0,0,0.3)',
                                                     color: 'rgba(0,0,0,0.85)',
                                                 },
                                             }}
                                         >
-                                            <OpenInNewIcon sx={{ fontSize: 18 }} />
+                                            <OpenInNewIcon sx={{ fontSize: '1.125rem' }} />
                                         </Button>
                                     ) : (
-                                        <Typography sx={{ fontSize: 12, color: 'rgba(0,0,0,0.5)' }}>
-                                           
+                                        <Typography sx={{ fontSize: '0.75rem', color: 'rgba(0,0,0,0.5)' }}>
+                                           Not Av.
                                         </Typography>
                                     )}
                                 </TableCell>
@@ -365,17 +367,15 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                                         size="small"
                                         onClick={(e) => handleAssocClick(e, order)}
                                         sx={{
-                                            width: 32,
-                                            height: 32,
-                                            minWidth: 32,
-                                            borderRadius: 1.5,
-                                            padding: 0,
+                                            width: '2rem',
+                                            height: '2rem',
+                                            minWidth: '2rem',
+                                            borderRadius: '0.375rem',
                                             display: 'flex',
                                             alignItems: 'center',
                                             justifyContent: 'center',
                                             borderColor: 'rgba(0,0,0,0.2)',
                                             backgroundColor: 'white',
-                                            transition: 'all 0.2s ease-in-out',
                                             '&:hover': {
                                                 backgroundColor: 'rgba(0,0,0,0.05)',
                                                 borderColor: 'rgba(0,0,0,0.3)',
@@ -383,9 +383,9 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                                         }}
                                     >
                                         {order.items?.every(item => item.associated === true) ? (
-                                            <CheckIcon sx={{ color: 'rgba(0,0,0,0.65)', fontSize: 22 }} />
+                                            <CheckIcon sx={{ color: 'rgba(0,0,0,0.65)', fontSize: '1.125rem' }} />
                                         ) : (
-                                            <PriorityHighRoundedIcon sx={{ color: 'rgba(0,0,0,0.65)', fontSize: 22 }} />
+                                            <PriorityHighRoundedIcon sx={{ color: 'rgba(0,0,0,0.65)', fontSize: '1.125rem' }} />
                                         )}
                                     </Button>
 
@@ -396,17 +396,15 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                                         variant="outlined"
                                         size="small"
                                         sx={{
-                                            width: 32,
-                                            height: 32,
-                                            minWidth: 32,
-                                            borderRadius: 1.5,
-                                            padding: 0,
+                                            width: '2rem',
+                                            height: '2rem',
+                                            minWidth: '2rem',
+                                            borderRadius: '0.375rem',
                                             display: 'flex',
                                             alignItems: 'center',
                                             justifyContent: 'center',
                                             borderColor: 'rgba(0,0,0,0.2)',
                                             backgroundColor: 'white',
-                                            transition: 'all 0.2s ease-in-out',
                                             '&:hover': {
                                                 backgroundColor: 'rgba(0,0,0,0.05)',
                                                 borderColor: 'rgba(0,0,0,0.3)',
@@ -414,9 +412,9 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                                         }}
                                     >
                                         {order.paymentId != null     ? (
-                                            <CheckIcon sx={{ color: 'rgba(0,0,0,0.65)', fontSize: 22 }} />
+                                            <CheckIcon sx={{ color: 'rgba(0,0,0,0.65)', fontSize: '1.125rem' }} />
                                         ) : (
-                                            <PriorityHighRoundedIcon sx={{ color: 'rgba(0,0,0,0.65)', fontSize: 22 }} />
+                                            <PriorityHighRoundedIcon sx={{ color: 'rgba(0,0,0,0.65)', fontSize: '1.125rem'}} />
                                         )}
                                     </Button>
 
@@ -427,17 +425,15 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                                         variant="outlined"
                                         size="small"
                                         sx={{
-                                            width: 32,
-                                            height: 32,
-                                            minWidth: 32,
-                                            borderRadius: 1.5,
-                                            padding: 0,
+                                            width: '2rem',
+                                            height: '2rem',
+                                            minWidth: '2rem',
+                                            borderRadius: '0.375rem',
                                             display: 'flex',
                                             alignItems: 'center',
                                             justifyContent: 'center',
                                             borderColor: 'rgba(0,0,0,0.2)',
                                             backgroundColor: 'white',
-                                            transition: 'all 0.2s ease-in-out',
                                             '&:hover': {
                                                 backgroundColor: 'rgba(0,0,0,0.05)',
                                                 borderColor: 'rgba(0,0,0,0.3)',
@@ -445,18 +441,13 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                                         }}
                                     >
                                         {(order.warning != null && order.warning.trim() !== "")? (
-                                            <PriorityHighRoundedIcon sx={{ color: 'rgba(0,0,0,0.65)', fontSize: 22 }} />
+                                            <PriorityHighRoundedIcon sx={{ color: 'rgba(0,0,0,0.65)', fontSize: '1.125rem' }} />
                                         ) : (
-                                            <CheckIcon sx={{ color: 'rgba(0,0,0,0.65)', fontSize: 22 }} />
+                                            <CheckIcon sx={{ color: 'rgba(0,0,0,0.65)', fontSize: '1.125rem' }} />
                                         )}
                                     </Button>
 
                                 </TableCell>
-
-                                        
-
-                                
-
                             </TableRow>
                         );
                         })
@@ -478,9 +469,8 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
             }}
             PaperProps={{
                 sx: {
-                    p: 2,
-                    borderRadius: 2,
-                    minWidth: 250,
+                    p:'0.5rem',
+                    borderRadius: '0.5rem',
                     boxShadow: '0 8px 20px rgba(0,0,0,0.15)'
                 }
             }}
@@ -492,40 +482,41 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                             borderBottom: '1px solid #ddd',
                             borderLeft: item.associated ? '2px solid rgba(126, 202, 63,0.4)' : "transparent",
                             backgroundColor: item.associated ? "rgba(126, 202, 63,0.075)" : "transparent",
-                            gap: 2,
+                            gap: '1rem',
                             alignItems: 'center',
                         }}
                     >
-                    <img 
+                        <img 
                             src={item.release.thumb} 
-                            style={{ width: '35px', height: '35px', objectFit: 'cover', borderRadius: '3px'}}
+                            style={{ 
+                                width: '2.5rem', height: '2.5rem', objectFit: 'cover', borderRadius: '0.25rem'}}
                         />
-                    <Box> 
-                            <Typography sx={{ fontFamily: 'InterBold', fontSize: 13 , color: 'rgba(0,0,0,0.70)', textShadow:  '0px 0px 4px rgba(0,0,0,0.10)'}}>
+                        <Box > 
+                            <Typography sx={{ fontFamily: 'InterBold', fontSize: '0.8125rem' , color: 'rgba(0,0,0,0.70)', textShadow:  '0px 0px 4px rgba(0,0,0,0.10)'}}>
                                 {item.release.name}
                             </Typography>
-                            <Typography sx={{ fontFamily: 'InterSemiBold', fontSize: 10, color: 'rgba(0,0,0,0.5)',}}>
+                            <Typography sx={{ fontFamily: 'InterSemiBold', fontSize: '0.625rem', color: 'rgba(0,0,0,0.5)',}}>
                                 {item.release.artists.map(artist => artist.name).join(', ')}
                             </Typography>
 
-                            <Typography sx={{ fontFamily: 'InterRegular', fontSize: 9, color: 'rgba(0,0,0,0.5)',}}>
+                            <Typography sx={{ fontFamily: 'InterRegular', fontSize: '0.5625rem', color: 'rgba(0,0,0,0.5)',}}>
                                 {"Condition of Item: "}
                                 {item.discCondition}
                                 {" "}
                                 {item.sleeveCondition}
                             </Typography>
                             
-                    </Box>
+                        </Box>
 
                     {item.associated && (
                         <Box sx={{ ml: 'auto', display: 'flex', alignItems: 'center' }}>
                             <CheckIcon 
                                 sx={{ 
-                                    fontSize: 18,
+                                    fontSize: '1.125rem',
                                     color: '#2e7d32',
                                     backgroundColor: 'rgba(46,125,50,0.1)',
                                     borderRadius: '50%',
-                                    p: 0.3
+                                    p: '0.15rem'
                                 }} 
                             />
                         </Box>

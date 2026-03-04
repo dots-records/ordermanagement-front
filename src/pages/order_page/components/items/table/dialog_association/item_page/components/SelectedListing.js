@@ -87,10 +87,8 @@ const SelectedListing = ({ orderId, releaseId, itemId, listing, provider, setIte
         return (
         <Typography
             sx={{
-            fontSize: 12,
+            fontSize: '0.75rem',
             color: 'rgba(0,0,0,0.4)',
-            px: 1,
-            py: 1.4,
             }}
         >
             Info. Not Available
@@ -104,36 +102,37 @@ const SelectedListing = ({ orderId, releaseId, itemId, listing, provider, setIte
             sx={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: 2,
-                borderRadius: 2,
+                gap: '1rem',
+                px: '2rem',
+                borderRadius: '1rem',
                 cursor: "cursor" ,
                 backgroundColor: 'white',
                 border: '1px solid rgba(0,0,0,0.06)'
             }}
         >
                 
-        <Box sx ={{ width: "170px"}}>                
+        <Box sx ={{ width: "25%"}}>                
                     <Box
-                    sx={{
-                        fontFamily: 'InterSemiBold',
-                        fontSize: 10,
-                        color: 'rgba(0, 0, 0, 0.6)' ,
-                        backgroundColor: 'rgba(0,0,0,0.02)',
-                        border: '1px solid rgba(0,0,0,0.2)' ,
-                        textShadow:'0px 0px 4px rgba(0,0,0,0.10)',
-                        borderRadius: 2,
-                        textAlign: 'center',
-                        py: 0.5,
-                        px: 1.2,
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        boxShadow:  '0 1px 3px rgba(0,0,0,0.1)' ,
-                        '&:hover': {
-                        boxShadow: '0 2px 6px rgba(0,0,0,0.15)' ,
-                        transform:'translateY(-1px)',
-                        },
-                    }}
+                        sx={{
+                            fontFamily: 'InterSemiBold',
+                            fontSize: '0.625rem',
+                            color: 'rgba(0, 0, 0, 0.6)' ,
+                            backgroundColor: 'rgba(0,0,0,0.02)',
+                            border: '0.0625rem solid rgba(0,0,0,0.2)'  ,
+                            textShadow:'0px 0px 4px rgba(0,0,0,0.10)',
+                            borderRadius: '0.5rem',
+                            textAlign: 'center',
+                            py: '0.25rem',
+                            px: '0.6rem',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            boxShadow:  '0 1px 3px rgba(0,0,0,0.1)' ,
+                            '&:hover': {
+                                boxShadow: '0 2px 6px rgba(0,0,0,0.15)' ,
+                                transform:'translateY(-1px)',
+                            },
+                        }}
                     >
                     {listing.platform}
                     </Box>
@@ -147,8 +146,8 @@ const SelectedListing = ({ orderId, releaseId, itemId, listing, provider, setIte
                         autoFocus
                         style={{
                             textAlign: 'right',
-                            fontSize: 12,
-                            width: 80,
+                            fontSize: '0.75rem',
+                            width: '15%',
                             fontFamily: 'InterSemiBold',
                             color: 'rgba(0,0,0,0.85)',
                             border: 'none',
@@ -161,8 +160,8 @@ const SelectedListing = ({ orderId, releaseId, itemId, listing, provider, setIte
                         onClick={() => setIsEditing(true)}
                         sx={{
                             textAlign: 'right',
-                            fontSize: 12,
-                            width: 80,
+                            fontSize: '0.75rem',
+                            width: '15%',
                             fontFamily: 'InterSemiBold',
                             color: 'rgba(0,0,0,0.85)',
                             flexShrink: 0,
@@ -174,17 +173,18 @@ const SelectedListing = ({ orderId, releaseId, itemId, listing, provider, setIte
                 )}
                 <Box
                     sx={{
-                    width: 80,
-                    textAlign: 'center',
+                        width: '20%',
+                        textAlign: 'center',
+                        ml: 'auto',
                     }}
                 >
                     <Typography
-                    sx={{
-                        fontSize: 10,
-                        color:'rgba(0,0,0,0.4)' ,
-                        fontFamily: 'InterRegular',
-                        
-                    }}
+                        sx={{
+                            fontSize: '0.625rem',
+                            color:'rgba(0,0,0,0.4)' ,
+                            fontFamily: 'InterRegular',
+                            
+                        }}
                     >
                     {daysAgo === null
                         ? ''
@@ -198,11 +198,10 @@ const SelectedListing = ({ orderId, releaseId, itemId, listing, provider, setIte
 
                 <Box
                     sx={{
-                    ml: 'auto',
-                    width: 30,
-                    display: 'flex',
-                    justifyContent: 'flex-end',
-                    flexShrink: 0,
+                        ml: 'auto',
+                        display: 'flex',
+                        justifyContent: 'flex-end',
+                        flexShrink: 0,
                     }}
                 >
                     {listing.link && (
@@ -213,10 +212,10 @@ const SelectedListing = ({ orderId, releaseId, itemId, listing, provider, setIte
                         window.open(listing.link, '_blank');
                         }}
                         sx={{
-                        color: 'rgba(0,0,0,0.45)' ,
-                        '&:hover': {
-                            color: 'rgba(0,0,0,0.85)',
-                        },
+                            color: 'rgba(0,0,0,0.45)' ,
+                            '&:hover': {
+                                color: 'rgba(0,0,0,0.85)',
+                            },
                         }}
                     >
                         <OpenInNewIcon sx={{ fontSize: 16 }} />
@@ -224,29 +223,30 @@ const SelectedListing = ({ orderId, releaseId, itemId, listing, provider, setIte
                     )}
                     
                 </Box>
-                
-                <IconButton
-                    onClick={handleSave}
-                    size="small"
-                    disabled={loading}
-                    sx={{
-                            color: 'rgba(0,0,0,0.45)' ,
-                            '&:hover': {
-                                color: 'rgba(0,0,0,0.85)',
-                            },
-                            }}
-                >
-                    {loading ? (
-                        <CircularProgress
-                            size={16}  // 🔹 ajusta el tamaño al botón
-                            sx={{
-                                color: 'rgba(0,0,0,0.85)', 
-                            }}
-                        />
-                    ) : (
-                        <SaveIcon sx={{ fontSize: 16 }} />
-                    )}
-                </IconButton>
+                <Box sx={{ ml: 'auto', display: 'flex', alignItems: 'center' }}>
+                    <IconButton
+                        onClick={handleSave}
+                        size="small"
+                        disabled={loading}
+                        sx={{
+                                color: 'rgba(0,0,0,0.45)' ,
+                                '&:hover': {
+                                    color: 'rgba(0,0,0,0.85)',
+                                },
+                        }}
+                    >
+                        {loading ? (
+                            <CircularProgress
+                                size={'1rem'}  // 🔹 ajusta el tamaño al botón
+                                sx={{
+                                    color: 'rgba(0,0,0,0.85)', 
+                                }}
+                            />
+                        ) : (
+                            <SaveIcon sx={{  fontSize: '1rem'}} />
+                        )}
+                    </IconButton>
+                </Box>
                 
 
                 

@@ -34,11 +34,11 @@
     const minimalTextField = {
         variant: 'standard',
         InputProps: {
-        style: { color: 'black', fontFamily: 'InterRegular', fontSize: 16 },
+        style: { color: 'black', fontFamily: 'InterRegular', fontSize: '1rem' },
         },
         InputLabelProps: {
         shrink: true,
-        style: { color: 'rgba(0,0,0,0.5)', fontFamily: 'InterRegular', fontSize: 16 },
+        style: { color: 'rgba(0,0,0,0.5)', fontFamily: 'InterRegular', fontSize: '1rem' },
         },
         sx: {
         '& .MuiOutlinedInput-root': {
@@ -67,7 +67,6 @@
             setLoading(true);
 
             if (selectedListings.length === 1) {
-            // Usamos singleListing.id y enviamos directamente sellingPrice
             await patchSellingPriceListing(
                 releaseId,
                 providerId,
@@ -84,7 +83,6 @@
                 );
             }
             } else {
-            // Actualizamos todos los listings seleccionados
             await Promise.all(
                 selectedListings.map((l) =>
                 patchSellingPriceListing(releaseId, providerId, l.id, sellingPrice)
@@ -112,51 +110,58 @@
             e.preventDefault();
             if (isFormValid()) handleSave();
             },
-            sx: { backgroundColor: 'white', color: 'black', borderRadius: 2, p: 2, minWidth:400 }
+            sx: {
+                backgroundColor: 'white',
+                color: 'black',
+                borderRadius: '0.5rem',
+                p: '1rem',
+                minWidth: '40vw'
+            }
         }}
         >
-        <DialogTitle>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <Typography sx={{ fontFamily: 'InterSemiBold', fontSize: 24 }}>
+        <DialogTitle sx={{ p:'0.5rem'}}>
+            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+            <Typography sx={{ fontFamily: 'InterSemiBold', fontSize: '1.5rem' }}>
                 Edit Listing
             </Typography>
             <IconButton onClick={onClose} sx={{ color: 'rgba(0,0,0,1)' }}>
-                <CloseIcon sx={{ fontSize: 24 }} />
+                <CloseIcon sx={{ fontSize: '1.5rem' }} />
             </IconButton>
             </Box>
         </DialogTitle>
 
-        <DialogContent sx={{ my: 2 }}>
-            {selectedListings.length === 1 && (
-            <TextField
-                label="Link"
-                value={link}
-                onChange={(e) => setLink(e.target.value)}
-                {...minimalTextField}
-                required
-                fullWidth
-                sx={{ mb: 3 }}
-                disabled={singleListing?.platform === 'Discogs'}
-            />
-            )}
+        <DialogContent sx={{p: 0}}>
 
-            <TextField
-            label="Selling Price"
-            value={sellingPrice}
-            onChange={(e) => setSellingPrice(e.target.value)}
-            {...minimalTextField}
-            required
-            sx={{ width: '25%' }}
-            />
+            <Box sx={{ py: '1rem', px: '2rem',  gap: '1.5rem',display: 'flex', flexDirection: 'column' }}>
+                {selectedListings.length === 1 && (
+                    <TextField
+                        label="Link"
+                        value={link}
+                        onChange={(e) => setLink(e.target.value)}
+                        {...minimalTextField}
+                        required
+                        disabled={singleListing?.platform === 'Discogs'}
+                    />
+                )}
+
+                <TextField
+                    label="Selling Price"
+                    value={sellingPrice}
+                    onChange={(e) => setSellingPrice(e.target.value)}
+                    {...minimalTextField}
+                    required
+                    sx={{ width: '50%' }}
+                />
+            </Box>
         </DialogContent>
 
         <DialogActions>
             <Button
             type="submit"
-            sx={{ color: 'black', fontFamily: 'InterSemiBold', mx: 1 }}
+            sx={{ color: 'black', fontFamily: 'InterSemiBold',p:'0.5rem' }}
             disabled={!isFormValid() || loading}
             >
-            {loading ? <CircularProgress size={20} color="inherit" /> : "Save"}
+            {loading ? <CircularProgress size={'1.25rem'} color="inherit" /> : "Save"}
             </Button>
         </DialogActions>
 
@@ -168,7 +173,7 @@
                 width: '100%', height: '100%',
                 backgroundColor: 'rgba(255,255,255,0.7)',
                 display: 'flex', justifyContent: 'center', alignItems: 'center',
-                zIndex: 10, borderRadius: 2
+                zIndex: 10, 
             }}
             >
             <CircularProgress />

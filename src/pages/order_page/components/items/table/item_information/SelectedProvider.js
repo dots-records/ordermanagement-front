@@ -13,24 +13,30 @@ import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 const SelectedProvider = ({ provider }) => {
     if (!provider) {
         return (
-        <Typography
-            sx={{
-            fontSize: 12,
-            color: 'rgba(0,0,0,0.4)',
-            px: 1,
-            py: 1.4,
-            }}
-        >
-            Info. Not Available
-        </Typography>
+            <Box
+                sx={{
+                    textAlign: 'center',
+                    py: '0.5rem'
+                }}
+            >
+                <Typography
+                    sx={{
+                        fontSize: '0.75rem',
+                        color: 'rgba(0,0,0,0.5)',
+                    }}
+                >
+                    Provider Not Available
+                </Typography>
+            </Box>
         );
+        
     }
 
     return (
         <ListItem
             sx={{
-                borderBottom: '1px solid #ededed',
-                gap: 2,
+                borderBottom: '0.0625rem solid #ededed',
+                gap: '1rem',
                 alignItems: 'center',
             }}
         >
@@ -38,9 +44,9 @@ const SelectedProvider = ({ provider }) => {
                 sx={{
                     display: 'flex',
                     alignItems: 'center',
-                    gap: 1.2,
+                    gap:  '0.5rem',
                     fontFamily: 'InterSemiBold',
-                    fontSize: 12.5,
+                    fontSize: '0.7rem',
                     color: 'rgba(0,0,0,0.8)',
                     backgroundColor:
                     provider.type === 'In Stock'
@@ -50,16 +56,16 @@ const SelectedProvider = ({ provider }) => {
                     provider.type === 'In Stock'
                         ? '1px solid rgba(255, 207, 63, 0.45)'
                         : '1px solid rgba(126, 202, 63, 0.45)',
-                    borderRadius: 8,
+                    borderRadius: '4rem',
                     boxShadow: '0 1px 2px rgba(0,0,0,0.08)',
-                    px: 1.4,
-                    py: 0.6,
+                    px: '0.7rem',
+                    py: '0.15rem',
                 }}
             >
-                <Box sx={{ lineHeight: 1 }}>
+                <Box>
                     {provider.discCondition}
                 </Box>
-                <Box sx={{ lineHeight: 1, opacity: 0.75 }}>
+                <Box sx={{ opacity: 0.75 }}>
                     {provider.sleeveCondition}
                 </Box>
             </Box>
@@ -67,9 +73,8 @@ const SelectedProvider = ({ provider }) => {
                 <Typography
                     sx={{
                         fontFamily: 'InterSemiBold',
-                        fontSize: 13,
+                        fontSize: '0.75rem',
                         color: 'rgba(0,0,0,0.85)',
-                        mt: -0.2
                     }}
                 >
                     {provider.price} €
@@ -77,36 +82,29 @@ const SelectedProvider = ({ provider }) => {
                 <Typography
                     sx={{
                         fontFamily: 'InterRegular',
-                        fontSize: 10.5,
+                        fontSize: '0.6rem',
                         color: 'rgba(0,0,0,0.5)',
-                        mt: -0.3
                     }}
                 >
                     {provider.type}
                     {provider.description && ` · ${provider.description}`}
                 </Typography>
             </Box>
-            <Box sx={{ ml: 'auto', display: 'flex', gap: 1, alignItems: 'center' }}>
+            <Box sx={{ ml: 'auto', display: 'flex'}}>
                 {provider.type === 'Online' && (
-                    <Button
-                        variant="outlined"
+                    
+                    <IconButton
                         size="small"
-                        endIcon={<OpenInNewIcon sx={{ fontSize: 15 }} />}
+                        onClick={() => window.open(provider.link, "_blank")}
                         sx={{
-                            fontFamily: 'InterSemiBold',
-                            fontSize: 12,
-                            textTransform: 'none',
-                            borderRadius: '6px',
-                            px: 1.5,
-                            py: 0.3
-                        }}
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            window.open(provider.link, '_blank');
+                            color: 'rgba(0,0,0,0.45)',
+                            '&:hover': {
+                                color: 'rgba(0,0,0,0.85)',
+                            },
                         }}
                     >
-                        Open
-                    </Button>
+                        <OpenInNewIcon sx={{ fontSize: '1rem' }} />
+                    </IconButton>
                 )}
             </Box>        
         </ListItem>

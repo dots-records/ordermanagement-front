@@ -60,15 +60,15 @@ const DialogReleaseSwap = ({ open, handleClose, order, item }) => {
     const minimalTextField = {
         variant: 'standard', 
         InputProps: {
-            style: { color: 'black', fontFamily: 'InterRegular', fontSize: 16, },
+            style: { color: 'black', fontFamily: 'InterRegular', fontSize: '1rem', },
         },
         InputLabelProps: {
             shrink: true,
-            style: { color: 'rgba(0,0,0,0.5)', fontFamily: 'InterRegular',fontSize: 16, },
+            style: { color: 'rgba(0,0,0,0.5)', fontFamily: 'InterRegular',fontSize: '1rem', },
         },
         sx: {
             '& .MuiOutlinedInput-root': {
-                borderRadius: 0, // bordes cuadrados
+                borderRadius: 0, 
                 '& fieldset': {
                     borderColor: 'rgba(0,0,0,0.6)',
                 },
@@ -88,8 +88,6 @@ const DialogReleaseSwap = ({ open, handleClose, order, item }) => {
             <Dialog
                 open={open}
                 onClose={handleClose}
-                maxWidth="sm"
-                fullWidth
                 PaperProps={{
                     component: 'form',
                     onSubmit: (e) => {
@@ -102,39 +100,40 @@ const DialogReleaseSwap = ({ open, handleClose, order, item }) => {
                     sx: {
                         backgroundColor: 'white',
                         color: 'black',
-                        borderRadius: 2,
-                        p: 2,
-                        minWidth:400
+                        borderRadius: '0.5rem',
+                        p: '1rem',
+                        minWidth: '30vw'
                     }
                 }}
             >
-                <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <Typography sx={{ fontFamily: 'InterSemiBold', fontSize: 24 }}>Swap Release</Typography>
-                    <IconButton
-                    onClick={
-                        handleClose}
-                    sx={{ color: 'rgba(0,0,0,0.7)' }}
-                    >
-                    <CloseIcon />
-                    </IconButton>
+                <DialogTitle sx={{ p:'0.5rem'}}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+                        <Typography sx={{ fontFamily: 'InterSemiBold', fontSize: '1.5rem' }}>Associate Release</Typography>
+                        <IconButton
+                        onClick={
+                            handleClose}
+                        sx={{ color: 'rgba(0,0,0,0.7)' }}
+                        >
+                            <CloseIcon sx={{ fontSize: '1.5rem'}} />
+                        </IconButton>
+                    </Box>
                 </DialogTitle>
 
-                <DialogContent>
-                    <Box>
+                <DialogContent sx={{p: 0}}>
+                    <Box sx={{ p: '1rem' }}>
                         <TextField
                             label="Release Id"
                             value={releaseId}
                             onChange={(e) => setReleaseId(e.target.value)}
                             {...minimalTextField}
                             required
-                            sx={{ width: '50%'}}
                         />
                     </Box>
                 </DialogContent>
-                <DialogActions >
+                <DialogActions  >
                     <Button
                         type="submit"
-                        sx={{ color: 'black', fontFamily: 'InterSemiBold', mx:1 }}
+                        sx={{ color: 'black', fontFamily: 'InterSemiBold', p:'0.5rem'}}
                         disabled={!isFormValid() || loading}
                     >
                         {loading ? <CircularProgress size={20} color="inherit" /> : "Save"}
@@ -154,7 +153,6 @@ const DialogReleaseSwap = ({ open, handleClose, order, item }) => {
                             justifyContent: 'center',
                             alignItems: 'center',
                             zIndex: 10,
-                            borderRadius: 2
                         }}
                     >
                         <CircularProgress />
@@ -173,8 +171,8 @@ const DialogReleaseSwap = ({ open, handleClose, order, item }) => {
                     variant="filled"
                     sx={{
                         fontFamily: 'InterRegular',
-                        fontSize: 13,
-                        borderRadius: 1
+                        fontSize: '0.8125rem',
+                        borderRadius: '0.25rem'
                     }}
                 >
                     {errorMessage}

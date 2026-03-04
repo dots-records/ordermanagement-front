@@ -23,7 +23,7 @@ const TableAdd = ({ setOrdersPage, setLoading, tableSelected} ) => {
     const  handleSave = async () => {
         setOpen(false);
         setLoading(true)
-        // Create order
+        // TODO:Create order
         const response = await getSelectedTableOrders(tableSelected, 0, "");
         setOrdersPage(response)
         setLoading(false)

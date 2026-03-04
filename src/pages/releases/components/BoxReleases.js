@@ -13,53 +13,70 @@ const BoxReleases = ({ loading, setLoading, releasesPage, setReleasesPage }) => 
     const [releasesSelected, setReleasesSelected] = useState([]);
     return (
         <Box
+            className="box-container"
             sx={{
-                border: '0.08rem solid rgba(0,0,0,0.15)',
-                backgroundColor: 'white',
-                borderRadius: 2,
-                p: 2,
-                pb: 0,
-                position: "relative"
+                display: 'flex',
+                position: 'relative', 
+                flexDirection: 'column',
+                height: '100%',
+                alignItems: 'flex-start',
+                gap: '0.5rem',
+                p: '1rem 1rem 0.5rem 1rem'
             }}
         >
-            <TableSelector setLoading={setLoading} setTableSelected={setTableSelected} 
-            setReleasesPage={setReleasesPage} tableSelected={tableSelected} searchTerm={searchTerm} setSearchTerm={setSearchTerm}
-            setReleasesSelected ={setReleasesSelected}/>
- 
-            <TableSearcher setReleasesPage={setReleasesPage} setLoading = {setLoading} 
-                  setSearchTerm={setSearchTerm} tableSelected={tableSelected} />
+            <Box sx={{
+                display: 'flex',
+                width:'100%',
+                flexDirection: 'row',
+                alignItems: 'flex-start',
+            }}>
+                <TableSelector setLoading={setLoading} setTableSelected={setTableSelected} 
+                setReleasesPage={setReleasesPage} tableSelected={tableSelected} searchTerm={searchTerm} setSearchTerm={setSearchTerm}
+                setReleasesSelected ={setReleasesSelected}/>
+                <Box sx={{ display: 'flex', justifyContent: 'flex-end', flex: 1, gap: '0.5rem' }}>
+                    <TableReleaseSelection 
+                        releasesSelected={releasesSelected} 
+                        setReleasesSelected={setReleasesSelected} 
+                        setReleasesPage={setReleasesPage}
+                        tableSelected={tableSelected}
+                        setLoading={setLoading}
+                    />
+                    <TableAdd 
+                        setLoading={setLoading} 
+                        setReleasesPage={setReleasesPage} 
+                        tableSelected={tableSelected}
+                    />
 
-            <TableReleases 
-                releases={releasesPage?.content} 
-                loading={loading}
-                releasesSelected ={releasesSelected}
-                setReleasesSelected ={setReleasesSelected}
-            />
-
-            <TableAdd 
-                setLoading={setLoading} 
-                setReleasesPage={setReleasesPage} 
-                tableSelected={tableSelected}
-                
-                
-            />
-
-            <TableReleaseSelection 
-                releasesSelected={releasesSelected} 
-                setReleasesSelected={setReleasesSelected} 
-                setReleasesPage={setReleasesPage}
-                tableSelected={tableSelected}
-                setLoading={setLoading}
-                
-            />
-
-            <Pagination 
-                setLoading={setLoading} 
-                releasesPage={releasesPage} 
-                searchTerm={searchTerm} 
-                setReleasesPage={setReleasesPage} 
-                tableSelected={tableSelected}
-            />
+                    <TableSearcher setReleasesPage={setReleasesPage} setLoading = {setLoading} 
+                    setSearchTerm={setSearchTerm} tableSelected={tableSelected} />
+                    
+                </Box>
+            </Box>
+            <Box sx={{
+                display: 'flex',
+                width:'100%',
+                borderBottom: '0.08rem solid rgba(0,0,0,0.15)',
+            }}>
+                <TableReleases 
+                    releases={releasesPage?.content} 
+                    loading={loading}
+                    releasesSelected ={releasesSelected}
+                    setReleasesSelected ={setReleasesSelected}
+                />
+            </Box>
+            <Box sx={{
+                display: 'flex',
+                width:'100%',
+                justifyContent: 'center'
+            }}>
+                <Pagination 
+                    setLoading={setLoading} 
+                    releasesPage={releasesPage} 
+                    searchTerm={searchTerm} 
+                    setReleasesPage={setReleasesPage} 
+                    tableSelected={tableSelected}
+                />
+            </Box>
         </Box>
     );
 };

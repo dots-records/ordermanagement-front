@@ -57,100 +57,101 @@ const ProviderTable = ({ providers, setProviders, setLoading, releaseId }) => {
                 <ListItem
                     onClick={() => handleRowToggle(provider)}
                     sx={{
-                    borderBottom: '1px solid #ddd',
-                    gap: 2,
-                    alignItems: 'center',
-                    cursor: 'pointer',
-                    '&:hover': { backgroundColor: 'rgba(0,0,0,0.03)' }
+                        borderBottom: '0.0625rem solid #ddd',
+                        gap: '1rem',
+                        alignItems: 'center',
+                        cursor: 'pointer',
+                        '&:hover': { backgroundColor: 'rgba(0,0,0,0.03)' }
                     }}
                 >
                     <Box
-                    sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: 1.2,
-                        fontFamily: 'InterSemiBold',
-                        fontSize: 13.5,
-                        color: 'rgba(0,0,0,0.8)',
-                        backgroundColor:
-                        provider.type === 'In Stock'
-                            ? 'rgba(255, 207, 63, 0.12)'
-                            : 'rgba(126, 202, 63, 0.12)',
-                        border:
-                        provider.type === 'In Stock'
-                            ? '1px solid rgba(255, 207, 63, 0.45)'
-                            : '1px solid rgba(126, 202, 63, 0.45)',
-                        borderRadius: 8,
-                        boxShadow: '0 1px 2px rgba(0,0,0,0.08)',
-                        px: 1.4,
-                        py: 0.6,
-                    }}
+                        sx={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '0.6rem',
+                            fontFamily: 'InterSemiBold',
+                            fontSize: '0.78125rem',
+                            color: 'rgba(0,0,0,0.8)',
+                            backgroundColor:
+                            provider.type === 'In Stock'
+                                ? 'rgba(255, 207, 63, 0.12)'
+                                : 'rgba(126, 202, 63, 0.12)',
+                            border:
+                            provider.type === 'In Stock'
+                                ? '0.0625rem solid rgba(255, 207, 63, 0.45)'
+                                : '0.0625rem solid rgba(126, 202, 63, 0.45)',
+                            borderRadius: '4rem',
+                            boxShadow: '0 1px 2px rgba(0,0,0,0.08)',
+                            px: '0.7rem',
+                            py: '0.15rem',
+                        }}
                     >
-                    <Box sx={{ lineHeight: 1 }}>
+                    <Box>
                         {provider.discCondition}
                     </Box>
-                    <Box sx={{ lineHeight: 1, opacity: 0.75 }}>
+                    <Box sx={{  opacity: 0.75 }}>
                         {provider.sleeveCondition}
                     </Box>
                     </Box>
                     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                    <Typography
-                        sx={{
-                        fontFamily: 'InterSemiBold',
-                        fontSize: 14,
-                        color: 'rgba(0,0,0,0.85)',
-                        mt: -0.2
-                        }}
-                    >
-                        {provider.price} €
-                    </Typography>
-                    <Typography
-                        sx={{
-                        fontFamily: 'InterRegular',
-                        fontSize: 11.5,
-                        color: 'rgba(0,0,0,0.5)',
-                        mt: -0.3
-                        }}
-                    >
-                        {provider.type}
-                        {provider.description && ` · ${provider.description}`}
-                    </Typography>
-                    </Box>
-                    <Box sx={{ ml: 'auto', display: 'flex', gap: 1, alignItems: 'center' }}>
-                    {provider.type === 'In Stock' ? (
-                        <Chip
-                        label={`${provider.units} units`}
-                        sx={{
-                            fontFamily: 'InterSemiBold',
-                            fontSize: 13,
-                            borderRadius: '6px',
-                            bgcolor: 'rgba(25, 118, 210, 0.08)',
-                            color: '#1976d2',
-                            height: 22,
-                        }}
-                        />
-                    ) : (
-                        <Button
-                        variant="outlined"
-                        size="small"
-                        endIcon={<OpenInNewIcon sx={{ fontSize: 16 }} />}
-                        sx={{
-                            fontFamily: 'InterSemiBold',
-                            fontSize: 13,
-                            textTransform: 'none',
-                            borderRadius: '6px',
-                            px: 1.5,
-                            py: 0.3
-                        }}
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            window.open(provider.link, '_blank');
-                        }}
+                        <Typography
+                            sx={{
+                                fontFamily: 'InterSemiBold',
+                                fontSize: '0.8125rem',
+                                color: 'rgba(0,0,0,0.85)'
+                            }}
                         >
-                        Open
-                        </Button>
-                    )}
-                    
+                            {provider.price} €
+                        </Typography>
+                        <Typography
+                            sx={{
+                                fontFamily: 'InterRegular',
+                                fontSize: '0.65625rem',
+                                color: 'rgba(0,0,0,0.5)',
+                                whiteSpace: 'normal',    
+                                wordBreak: 'break-word',  
+                                overflowWrap: 'anywhere',
+                            }}
+                        >
+                            {provider.type}
+                            {provider.description && ` · ${provider.description}`}
+                        </Typography>
+                    </Box>
+                    <Box sx={{ ml: 'auto', display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                        {provider.type === 'In Stock' ? (
+                            <Chip
+                                label={`${provider.units} units`}
+                                sx={{
+                                    fontFamily: 'InterSemiBold',
+                                    fontSize: '0.75rem',
+                                    borderRadius: '6px',
+                                    bgcolor: 'rgba(25, 118, 210, 0.08)',
+                                    color: '#1976d2',
+                                    height: '1.375rem',
+                                }}
+                            />
+                        ) : (
+                            <Button
+                                variant="outlined"
+                                size="small"
+                                sx={{
+                                    fontFamily: 'InterSemiBold',
+                                    fontSize: '0.75rem',
+                                    textTransform: 'none',
+                                    borderRadius: '0.375rem',
+                                    gap: '0.5rem',
+                                    height: '1.375rem',
+                                    color: '#1976d2',
+                                }}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    window.open(provider.link, '_blank');
+                                }}
+                            >
+                                Open
+                                <OpenInNewIcon sx={{fontSize: '0.75rem',color: '#1976d2',}} />
+                            </Button>
+                        )}
                         <IconButton
                             size="small"
                             sx={{
@@ -165,17 +166,16 @@ const ProviderTable = ({ providers, setProviders, setLoading, releaseId }) => {
                                 handleEditOpen(provider);
                             }}
                             >
-                            <EditIcon sx={{ fontSize: 18 }} />
+                            <EditIcon sx={{ fontSize: '1rem' }} />
                         </IconButton>
-
-                    <ExpandMoreIcon
-                        sx={{
-                        fontSize: 21,
-                        color: 'rgba(0,0,0,0.4)',
-                        transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
-                        transition: '0.2s'
-                        }}
-                    />
+                        <ExpandMoreIcon
+                            sx={{
+                            fontSize: '1.25rem',
+                            color: 'rgba(0,0,0,0.4)',
+                            transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+                            transition: '0.2s'
+                            }}
+                        />
                     </Box>
                 </ListItem>
                 <Collapse in={isOpen} timeout="auto" unmountOnExit>
@@ -192,24 +192,21 @@ const ProviderTable = ({ providers, setProviders, setLoading, releaseId }) => {
                                     setOpenAddListing(true);
                                 }}
                                 sx={{
-                                    px: 0.4,
-                                    py: 0.8,
-                                    fontSize: 12.5,
+                                    py: '0.4rem',
+                                    fontSize: '0.78125rem',
                                     color: 'rgba(0,0,0,0.6)',
-                                    backgroundColor: 'rgba(0,0,0,0.015)',
+                                    backgroundColor: 'rgba(0,0,0,0.02)',
                                     cursor: 'pointer',
                                     textAlign: 'center',
                                     '&:hover': {
-                                    backgroundColor: 'rgba(0,0,0,0.04)',
-                                    color: 'rgba(0,0,0,0.85)',
+                                        backgroundColor: 'rgba(0,0,0,0.04)',
+                                        color: 'rgba(0,0,0,0.85)',
                                     },
                                 }}
                             >
                                 +
                             </Box>
                         </>
-
-
                     )}
                 </Collapse>
 

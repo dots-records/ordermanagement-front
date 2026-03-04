@@ -38,35 +38,35 @@ const TableReleaseSelection = ({ releasesSelected, setReleasesSelected, tableSel
     };
 
     return (
-        <Box sx={{ position: 'absolute', top: 24, right: 407 }}>
-            <AnimatePresence>
+        <Box >
+            <AnimatePresence >
                 {releasesSelected.length > 0 && (
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        transition={{ duration: 0.2, ease: 'easeOut' }}
+                        s
                     >
                         <Box
                             sx={{
                                 display: 'flex',
                                 alignItems: 'center',
                                 backgroundColor: 'rgba(0, 0, 0, 0.03)',
-                                border: '1px solid rgba(0, 0, 0, 0.2)',
-                                borderRadius: '4px',
+                                border: '0.08rem solid rgba(0, 0, 0, 0.3)',
+                                borderRadius: '0.25rem',
                                 color: 'rgba(0,0,0,0.6)',
-                                padding: '4px 8px',
-                                gap: '4px',
+                                padding: '0.3rem 0.5rem',
+                                gap: '0.25rem',
                             }}
                         >
                             <Typography
                                 onClick={handleDeselectAll}
                                 sx={{
-                                    fontSize: '13px',
+                                    fontSize: '0.75rem',
                                     fontFamily: 'InterSemiBold',
                                     color: 'rgba(0,0,0,0.6)',
                                     cursor: 'pointer',
-                                    p: '0px 4px',
+                                    p: '0 0.25rem',
                                     '&:hover': {
                                         color: 'rgba(0,0,0,1)',
                                     },
@@ -75,19 +75,19 @@ const TableReleaseSelection = ({ releasesSelected, setReleasesSelected, tableSel
                                 {releasesSelected.length} selected
                             </Typography>
 
-                            <Box sx={{ width: '1px', height: '24.5px', backgroundColor: 'rgba(0, 0, 0, 0.2)', mx: '4px' }} />
-                            <Delete onClick={handleDelete} sx={{ fontSize: 20, color: 'rgba(0,0,0,0.6)', '&:hover': {
+                            <Box sx={{ width: '0.0625rem', height: '1.5rem', backgroundColor: 'rgba(0, 0, 0, 0.2)', mx: '0.25rem' }} />
+                            <Delete onClick={handleDelete} sx={{ fontSize: '1.25rem', color: 'rgba(0,0,0,0.6)', '&:hover': {
                                         color: 'rgba(0,0,0,1)',
                                     }, cursor: 'pointer' }} />
                             {tableSelected !== "All Releases" && (
                                 <>
-                                    <Box sx={{ width: '1px', height: '24.5px', backgroundColor: 'rgba(0, 0, 0, 0.2)', mx: '4px' }} />
+                                    <Box sx={{ width: '0.0625rem', height: '1.5rem', backgroundColor: 'rgba(0, 0, 0, 0.2)', mx: '0.25rem' }} />
                                     {tableSelected === "Active Releases" ? (
-                                        <Archive onClick={handleArchive} sx={{ fontSize: 20, color: 'rgba(0,0,0,0.6)', '&:hover': {
+                                        <Archive onClick={handleArchive} sx={{ fontSize: '1.25rem', color: 'rgba(0,0,0,0.6)', '&:hover': {
                                             color: 'rgba(0,0,0,1)',
                                         }, cursor: 'pointer' }} />
                                     ) : (
-                                        <Unarchive onClick={handleUnarchive} sx={{ fontSize: 20, color: 'rgba(0,0,0,0.6)', '&:hover': {
+                                        <Unarchive onClick={handleUnarchive} sx={{ fontSize: '1.25rem', color: 'rgba(0,0,0,0.6)', '&:hover': {
                                             color: 'rgba(0,0,0,1)',
                                         }, cursor: 'pointer' }} />
                                     )}

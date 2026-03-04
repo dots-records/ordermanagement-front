@@ -11,7 +11,6 @@ import { useState, useEffect } from 'react';
 import TableProviders from './tables/TableProviders';
 import SelectedListing from './components/SelectedListing'; 
 import SelectedProvider from './components/SelectedProvider';
-import TableListingsAfterAssociation from './tables/TableListingsAfterAssociation';
 import ListingAdd from './components/ListingAdd';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
@@ -27,6 +26,7 @@ const ItemPage = ({ order, item, setClosable}) => {
     const [itemAfterAssociation, setItemAfterAssociation] = useState(false);
     const [listingHandled, setListingHandled] = useState(false);
     const [listingsDeleted, setListingsDeleted] = useState(false);
+    const [providerDeleted, setProviderDeleted] = useState(false);
     const [showNotificationAssociation, setShowNotificationAssociation] = useState(false);
     const [showNotificationListingAdded, setShowNotificationListingAdded] = useState(false);
 
@@ -37,6 +37,7 @@ const ItemPage = ({ order, item, setClosable}) => {
         setShowNotificationAssociation(false);
         setShowNotificationListingAdded(false);
         setListingHandled(false);
+        setProviderDeleted(false);
     }, [item]);
 
     useEffect(() => {
@@ -65,13 +66,11 @@ const ItemPage = ({ order, item, setClosable}) => {
 
     const handleDeletion = async () => {
         await deleteProvider(item.release.id, providerAssociated.id);
-
         const providers = await getProviders(item.release.id);
-
         if (!providers || providers.length === 0) {
             //await archiveReleases(item.release.id);
         }
-
+        setProviderDeleted(true)
         setClosable(true);
     };
 
@@ -82,42 +81,37 @@ const ItemPage = ({ order, item, setClosable}) => {
                 
                 <ListItem
                     sx={{
-                        borderLeft: '4px solid transparent',
                         backgroundColor: 'white',
                         borderBottom: '1px solid #ddd',
-                        gap: 2,
                         alignItems: 'center',
                     }}
                 >
-                    <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
+                    <Box sx={{ display: 'flex',  gap: '1rem',alignItems: 'center' }}>
                         <img 
                             src={item.release.thumb} 
-                            style={{ width: '45px', height: '45px', objectFit: 'cover', borderRadius: '3px'}}
+                            style={{ width: '3rem', height: '3rem', objectFit: 'cover', borderRadius: '0.25rem'}}
                         />
                         <Box> 
-                            <Typography sx={{ fontFamily: 'InterBold', fontSize: 14 , color: 'rgba(0,0,0,0.70)', textShadow:  '0px 0px 4px rgba(0,0,0,0.10)'}}>
+                            <Typography sx={{ fontFamily: 'InterBold', fontSize: '0.875rem' , color: 'rgba(0,0,0,0.70)', textShadow:  '0px 0px 4px rgba(0,0,0,0.10)'}}>
                                 {item.release.name}
                             </Typography>
-                            <Typography sx={{ fontFamily: 'InterSemiBold', fontSize: 12, color: 'rgba(0,0,0,0.5)',}}>
+                            <Typography sx={{ fontFamily: 'InterSemiBold', fontSize: '0.75rem', color: 'rgba(0,0,0,0.5)'}}>
                                 {item.release.artists.map(artist => artist.name).join(', ')}
                             </Typography>
-                            <Typography sx={{ fontFamily: 'InterRegular', fontSize: 10, color: 'rgba(0,0,0,0.5)',}}>
+                            <Typography sx={{ fontFamily: 'InterRegular', fontSize: '0.625rem', color: 'rgba(0,0,0,0.5)',}}>
                                                             {"Condition of Item: "}
                                                             {item.discCondition}
                                                             {" "}
                                                             {item.sleeveCondition}
-                                                        </Typography>
+                            </Typography>
                         </Box>
                         
-                    </Box>
-                    <Box sx={{ ml: 'auto', display: 'flex', gap: 1, alignItems: 'center' }}>
-                    
                     </Box>
                 </ListItem>
                 {!itemAfterAssociation ? (
                     <>
                         <Collapse in={true}>
-                            <Box sx={{ px: 2, backgroundColor:"rgba(0,0,0,0.02)" }}>
+                            <Box sx={{ px: '1rem', backgroundColor:"rgba(0,0,0,0.02)" }}>
                                 <TableProviders
                                     setListingAssociated={setListingAssociated}
                                     providerAssociated={providerAssociated}
@@ -132,10 +126,10 @@ const ItemPage = ({ order, item, setClosable}) => {
 
                             <Box
                                 sx={{
-                                    px: 6,
-                                    py: 1,
-                                    mt: 2,
-                                    borderTop: '1px solid #ddd',
+                                    px: '1rem',
+                                    py: '1rem',
+                                    mt: '1rem',
+                                    borderTop: '0.0625rem solid #ddd',
                                     backgroundColor: 'rgba(0,0,0,0.02)',
                                 }}
                             >
@@ -151,98 +145,123 @@ const ItemPage = ({ order, item, setClosable}) => {
                         )}
                     </>
                 ) : (
-                    // Hay un problema porque aqui el provider no esta actualizado
                     <>
                     {((providerAssociated.type === 'Online') ||
                             (providerAssociated.type === 'In Stock' && providerAssociated.units > 0)) ? (
                                 <Box>
                                     {!listingHandled ? (
                                         <>
-
-                                            <Box sx={{ px: 2, backgroundColor:"rgba(0,0,0,0.02)" }}>
+                                            <Box sx={{ borderBottom: '1px solid #ddd', py: '1rem',px: '1rem', textAlign: 'center'}}>
+                                                <Box sx={{ fontFamily: "InterRegular", 
+                                                            fontSize: "0.7rem",
+                                                            color: 'rgba(0,0,0,0.5)',
+                                                            backgroundColor: 'rgba(0,0,0,0.02)',
+                                                            borderRadius: '0.125rem',
+                                                            border: '1px solid rgba(0,0,0,0.15)',
+                                                            marginLeft: "auto",
+                                                            px: '0.5rem',
+                                                            py: '0.5rem',
+                                                        }}
+                                                    >
+                                                        Provider still has stock. Replace {listingAssociated.platform} Listing.
+                                                    
+                                                </Box>
+                                            </Box>
+                                            <Box sx={{ px: '1rem', backgroundColor:"rgba(0,0,0,0.02)" }}>
                                                 <SelectedProvider provider={providerAssociated}/>
                                             </Box>
-                                            <Box sx={{ borderBottom: '1px solid #ddd', py: 1}}>
-                                                <Typography
-                                                    sx={{
-                                                        fontFamily: 'InterRegular',
-                                                        fontSize: 11,
-                                                        color: 'rgba(0,0,0,0.5)',
-                                                        textAlign: 'center'
-                                                    }}
-                                                >
-                                                    Provider still has stock. Replace {listingAssociated.platform} Listing.
-                                                </Typography>
-                                            </Box>
+                                            
 
                                             
                                             <ListingAdd releaseId={item.release.id} providerId={providerAssociated.id}
                                             listing={listingAssociated} setListingHandled={setListingHandled}/>
                                         </>
                                     ) : (
-                                        <Box sx={{ px: 2, backgroundColor:"rgba(0,0,0,0.02)" }}>
-                                            <SelectedProvider provider={providerAssociated}/>
-                                            <TableListingsAfterAssociation releaseId={item.release.id} provider={providerAssociated}/>
-                                        </Box>
+                                        <Box sx={{ borderBottom: '1px solid #ddd', py: '1rem',px: '1rem', textAlign: 'center'}}>
+                                                <Box sx={{ fontFamily: "InterRegular", 
+                                                            fontSize: "0.7rem",
+                                                            color: 'rgba(0,0,0,0.5)',
+                                                            backgroundColor: 'rgba(0,0,0,0.02)',
+                                                            borderRadius: '0.125rem',
+                                                            border: '1px solid rgba(0,0,0,0.15)',
+                                                            marginLeft: "auto",
+                                                            px: '0.5rem',
+                                                            py: '0.5rem',
+                                                        }}
+                                                    >
+                                                        Listing Added
+                                                    
+                                                </Box>
+                                            </Box>
                                     )}
                                 </Box>
                             ) : (providerAssociated.type === 'In Stock' && providerAssociated.units === 0) ? (
                                     listingsDeleted == false ? (
                                         <Box>
-                                        <Box sx={{ px: 2, backgroundColor:"rgba(0,0,0,0.02)" }}>
-                                            <SelectedProvider provider={providerAssociated}/>
-                                        </Box>
-                                        <Box sx={{ borderBottom: '1px solid #ddd', py: 1}}>
-                                            <Typography
-                                                sx={{
-                                                    fontFamily: 'InterRegular',
-                                                    fontSize: 11,
-                                                    color: 'rgba(0,0,0,0.5)',
-                                                    textAlign: 'center'
-                                                }}
-                                            >
-                                                Provider is out of stock. Delete all listings.
-                                            </Typography>
                                             
-                                        </Box>
-                                        <Box sx={{ px: 2, backgroundColor:"rgba(0,0,0,0.02)" }}>
-                                            <TableListingsForDeletion releaseId={item.release.id} 
-                                            setListingsDeleted={setListingsDeleted}
-                                            provider={providerAssociated}/>
-                                        </Box>
+                                            <Box sx={{ borderBottom: '1px solid #ddd', py: '1rem',px: '1rem', textAlign: 'center'}}>
+                                                <Box sx={{ fontFamily: "InterRegular", 
+                                                            fontSize: "0.7rem",
+                                                            color: 'rgba(0,0,0,0.5)',
+                                                            backgroundColor: 'rgba(0,0,0,0.02)',
+                                                            borderRadius: '0.125rem',
+                                                            border: '1px solid rgba(0,0,0,0.15)',
+                                                            marginLeft: "auto",
+                                                            px: '0.5rem',
+                                                            py: '0.5rem',
+                                                        }}
+                                                    >
+                                                        Provider is Out of Stock. Delete All Listings
+                                                    
+                                                </Box>
+                                            </Box>
+                                            <Box sx={{ px: '1rem', backgroundColor:"rgba(0,0,0,0.02)" }}>
+                                                <SelectedProvider provider={providerAssociated}/>
+                                            </Box>
+                                            <Box sx={{ px: '1rem', backgroundColor:"rgba(0,0,0,0.02)" }}>
+                                                <TableListingsForDeletion releaseId={item.release.id} 
+                                                setListingsDeleted={setListingsDeleted}
+                                                provider={providerAssociated}/>
+                                            </Box>
                                     </Box>
                                 ):(
                                     <> 
-                                        <Box sx={{ borderBottom: '1px solid #ddd', py: 1}}>
-                                            <Typography
-                                                sx={{
-                                                    fontFamily: 'InterRegular',
-                                                    fontSize: 11,
-                                                    color: 'rgba(0,0,0,0.5)',
-                                                    textAlign: 'center'
-                                                }}
-                                            >
-                                                Delete Provider and archive Release if no more providers are available
-                                            </Typography>
-                                        </Box>
-                                            <Box sx={{ display: "flex", justifyContent: "center", py: 2 }}>
+                                        <Box sx={{ borderBottom: '1px solid #ddd', py: '1rem',px: '1rem', textAlign: 'center'}}>
+                                                <Box sx={{ fontFamily: "InterRegular", 
+                                                            fontSize: "0.7rem",
+                                                            color: 'rgba(0,0,0,0.5)',
+                                                            backgroundColor: 'rgba(0,0,0,0.02)',
+                                                            borderRadius: '0.125rem',
+                                                            border: '1px solid rgba(0,0,0,0.15)',
+                                                            marginLeft: "auto",
+                                                            px: '0.5rem',
+                                                            py: '0.5rem',
+                                                        }}
+                                                    >
+                                                        Delete Provider and Archive Release (If there are no more providers left)
+                                                    
+                                                </Box>
+                                            </Box>
+                                            <Box sx={{ display: "flex", justifyContent: "center", py: '1rem' }}>
                                                 <Button
                                                     variant="contained"
                                                     size="small"
                                                     onClick={handleDeletion}
+                                                    disabled={providerDeleted}
                                                     sx={{
-                                                        fontFamily: 'InterSemiBold',
-                                                        fontSize: 11,
-                                                        backgroundColor: 'rgba(0,0,0,0.75)',
+                                                        fontFamily: 'InterRegular',
+                                                        fontSize: '0.75rem',
+                                                        px:'1rem',
+                                                        py: '0.5rem',
+                                                        backgroundColor: providerDeleted ? 'rgba(126, 202, 63,0.075)':'rgba(0,0,0,0.75)',
                                                         textTransform: 'none',
                                                         boxShadow: 'none',
                                                         '&:hover': {
-                                                            backgroundColor: 'rgba(0,0,0,0.9)',
-                                                            boxShadow: 'none'
+                                                            backgroundColor: providerDeleted ? 'none' : 'rgba(0,0,0,0.9)',
                                                         }
                                                     }}
                                                 >
-                                                    Handle
+                                                    {providerDeleted ? 'Handled' : 'Handle Provider and Release'}
                                                 </Button>
                                             </Box>
                                         </>
@@ -265,8 +284,8 @@ const ItemPage = ({ order, item, setClosable}) => {
                         sx={{
                             backgroundColor: "rgba(126, 202, 63,0.8)",
                             fontFamily: 'InterRegular',
-                            fontSize: 13,
-                            borderRadius: 1
+                            fontSize: '0.8125rem',
+                            borderRadius: '0.25rem'
                         }}
                     >
                         Listing y Provider associated correctly
@@ -285,8 +304,8 @@ const ItemPage = ({ order, item, setClosable}) => {
                         sx={{
                             backgroundColor: "rgba(126, 202, 63,0.8)",
                             fontFamily: 'InterRegular',
-                            fontSize: 13,
-                            borderRadius: 1
+                            fontSize: '0.8125rem',
+                            borderRadius: '0.25rem'
                         }}
                     >
                         Listing created correctly

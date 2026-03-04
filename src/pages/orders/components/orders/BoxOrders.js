@@ -22,6 +22,7 @@ const BoxOrders = ({ loading, setLoading, ordersPage, setOrdersPage, timeAgo}) =
                 height: '100%',
                 alignItems: 'flex-start',
                 gap: '0.5rem',
+                p: '1rem 1rem 0.5rem 1rem'
             }}
         >
             <Box sx={{
@@ -33,17 +34,16 @@ const BoxOrders = ({ loading, setLoading, ordersPage, setOrdersPage, timeAgo}) =
                 <Box>
                     <TableSelector setLoading={setLoading} setTableSelected={setTableSelected} 
                     setOrdersPage={setOrdersPage} tableSelected={tableSelected} searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>
-                    {!loading && timeAgo && (
-                        <Box
-                            sx={{
-                                fontFamily: 'InterRegular',
-                                fontSize: '0.75rem',
-                                color: 'rgba(0,0,0,0.6)', 
-                            }}
-                        >
-                            Discogs Update: {timeAgo}
-                        </Box>
-                    )}
+                    <Box
+                        sx={{
+                        textAlign: 'left',
+                        fontFamily: 'InterRegular',
+                        fontSize: '0.75rem',
+                        color: 'rgba(0,0,0,0.6)',
+                        }}
+                    >
+                        Discogs Update: {!loading && timeAgo ? timeAgo : ''}
+                    </Box>
                 </Box>
                 <Box sx={{ display: 'flex', justifyContent: 'flex-end', flex: 1, gap: '0.5rem' }}>
                     <TableAdd
@@ -64,7 +64,7 @@ const BoxOrders = ({ loading, setLoading, ordersPage, setOrdersPage, timeAgo}) =
             <Box sx={{
                 display: 'flex',
                 width:'100%',
-                border: '1px solid black',
+                borderBottom: '0.08rem solid rgba(0,0,0,0.15)',
             }}>
                 <TableOrders
                     setOrdersPage={setOrdersPage}
@@ -80,7 +80,7 @@ const BoxOrders = ({ loading, setLoading, ordersPage, setOrdersPage, timeAgo}) =
             <Box sx={{
                 display: 'flex',
                 width:'100%',
-                border: '1px solid black',
+                justifyContent: 'center'
             }}>
                 <Pagination tableSelected={tableSelected} setLoading = {setLoading} ordersPage={ordersPage} 
                         searchTerm={searchTerm} setOrdersPage={setOrdersPage} />

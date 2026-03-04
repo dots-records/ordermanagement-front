@@ -60,11 +60,11 @@ const ListingAdd = ({ open, onClose, providerId, releaseId }) => {
     const minimalTextField = {
         variant: 'standard', 
         InputProps: {
-            style: { color: 'black', fontFamily: 'InterRegular', fontSize: 16, },
+            style: { color: 'black', fontFamily: 'InterRegular', fontSize: '1rem', },
         },
         InputLabelProps: {
             shrink: true,
-            style: { color: 'rgba(0,0,0,0.5)', fontFamily: 'InterRegular',fontSize: 16, },
+            style: { color: 'rgba(0,0,0,0.5)', fontFamily: 'InterRegular',fontSize: '1rem', },
         },
         sx: {
         '& .MuiOutlinedInput-root': {
@@ -101,108 +101,111 @@ const ListingAdd = ({ open, onClose, providerId, releaseId }) => {
                     sx: {
                         backgroundColor: 'white',
                         color: 'black',
-                        borderRadius: 2,
-                        p: 2,
-                        minWidth:400
+                        borderRadius: '0.5rem',
+                        p: '1rem',
+                        minWidth: '40vw'
                     }
                 }}
             >
 
-                <DialogTitle>
+                <DialogTitle sx={{ p:'0.5rem'}}>
                     <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
-                        <Typography sx={{ fontFamily: "InterSemiBold", fontSize: 24 }}>
+                        <Typography sx={{ fontFamily: "InterSemiBold", fontSize: '1.5rem' }}>
                             Add Listing
                         </Typography>
                         <IconButton
                             onClick={onClose}
                             sx={{ color: 'rgba(0,0,0,1)'  }}
                         >
-                            <CloseIcon sx={{ fontSize: 24}} />
+                            <CloseIcon sx={{ fontSize: '1.5rem'}} />
                         </IconButton>
                     </Box>
                 </DialogTitle>
                 
-                <DialogContent sx={{my:2}}>
-                    <Typography
-                        sx={{
-                            fontFamily: 'InterRegular',
-                            fontSize: 12.5,
-                            color: 'rgba(0,0,0,0.5)',
-                            mb: 0.5
-                        }}
-                    >
-                        Platform *
-                    </Typography>
-  
-
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                        {platform === 'Vinted' ? (
-                            <Box
-                                component="img"
-                                src={vinted_icon}
-                                alt="vinted"
+                <DialogContent sx={{p: 0}}>
+                    <Box sx={{ py: '1rem', px: '2rem',  gap: '1.5rem',display: 'flex', flexDirection: 'column' }}>
+                        <Box >
+                            <Typography
                                 sx={{
-                                height: 22,
-                                width: 'auto',
-                                objectFit: 'contain',
-                                }}
-                            />
-                        ) : platform === 'Wallapop' ? (
-                            <Box
-                                component="img"
-                                src={wallapop_icon}
-                                alt="wallapop"
-                                sx={{
-                                height: 22,
-                                width: 'auto',
-                                objectFit: 'contain',
-                                }}
-                            />
-                        ) : platform === 'Discogs' ? (
-                            <Box
-                                component="img"
-                                src={discogs_icon}
-                                alt="discogs"
-                                sx={{
-                                height: 22,
-                                width: 'auto',
-                                objectFit: 'contain',
-                                }}
-                            />
-                        ) : null
-                        }
-
-                        
-                        
-                        <TextField
-                            select
-                            value={platform}
-                            onChange={(e) => setPlatform(e.target.value)}
-                            variant="standard"
-                            InputProps={{
-                                disableUnderline: true,
-                                style: {
-                                    color: 'black',
                                     fontFamily: 'InterRegular',
-                                    fontSize: 16,
-                                    backgroundColor: 'transparent', // quita fondo gris
-                                },
-                            }}
-                            sx={{
-                                '& .MuiSelect-select': {
-                                    backgroundColor: 'transparent', // quita fondo gris al abrir
-                                    '&:focus': {
-                                     backgroundColor: 'transparent', // quita fondo gris al enfocar
-                                    },
-                                },
-                            }}
-                            required
-                        >
-                            <MenuItem value="Vinted">Vinted</MenuItem>
-                            <MenuItem value="Wallapop">Wallapop</MenuItem>
-                            <MenuItem value="Discogs">Discogs</MenuItem>
-                            <MenuItem value="Other">Other</MenuItem>
-                        </TextField>
+                                    fontSize: '0.78125rem',
+                                    color: 'rgba(0,0,0,0.5)',
+                                    mb: '0.25rem'
+                                }}
+                            >
+                                Platform *
+                            </Typography>
+        
+
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                {platform === 'Vinted' ? (
+                                    <Box
+                                        component="img"
+                                        src={vinted_icon}
+                                        alt="vinted"
+                                        sx={{
+                                            height: '1.375rem',
+                                            width: 'auto',
+                                            objectFit: 'contain',
+                                        }}
+                                    />
+                                ) : platform === 'Wallapop' ? (
+                                    <Box
+                                        component="img"
+                                        src={wallapop_icon}
+                                        alt="wallapop"
+                                        sx={{
+                                            height: '1.375rem',
+                                            width: 'auto',
+                                            objectFit: 'contain',
+                                        }}
+                                    />
+                                ) : platform === 'Discogs' ? (
+                                    <Box
+                                        component="img"
+                                        src={discogs_icon}
+                                        alt="discogs"
+                                        sx={{
+                                            height: '1.375rem',
+                                            width: 'auto',
+                                            objectFit: 'contain',
+                                        }}
+                                    />
+                                ) : null
+                                }
+
+                                
+                                
+                                <TextField
+                                    select
+                                    value={platform}
+                                    onChange={(e) => setPlatform(e.target.value)}
+                                    variant="standard"
+                                    InputProps={{
+                                        disableUnderline: true,
+                                        style: {
+                                            color: 'black',
+                                            fontFamily: 'InterRegular',
+                                            fontSize: '1rem',
+                                            backgroundColor: 'transparent', // quita fondo gris
+                                        },
+                                    }}
+                                    sx={{
+                                        '& .MuiSelect-select': {
+                                            backgroundColor: 'transparent', // quita fondo gris al abrir
+                                            '&:focus': {
+                                            backgroundColor: 'transparent', // quita fondo gris al enfocar
+                                            },
+                                        },
+                                    }}
+                                    required
+                                >
+                                    <MenuItem value="Vinted">Vinted</MenuItem>
+                                    <MenuItem value="Wallapop">Wallapop</MenuItem>
+                                    <MenuItem value="Discogs">Discogs</MenuItem>
+                                    <MenuItem value="Other">Other</MenuItem>
+                                </TextField>
+                            </Box>
                     </Box>
                     {(platform === 'Vinted' || platform === 'Wallapop'|| platform === 'Other') && (
                         <TextField
@@ -211,7 +214,7 @@ const ListingAdd = ({ open, onClose, providerId, releaseId }) => {
                             onChange={(e) => setLink(e.target.value)}
                             {...minimalTextField}
                             required
-                            sx={{ mt:3, width: '100%'}}
+                            sx={{width: '100%'}}
                         />
                     )}
 
@@ -222,8 +225,9 @@ const ListingAdd = ({ open, onClose, providerId, releaseId }) => {
                         onChange={(e) => setSellingPrice(e.target.value)}
                         {...minimalTextField}
                         required
-                        sx={{ mt:3, width: '25%'}}
+                        sx={{ width: '50%'}}
                     />
+                    </Box>
 
 
                     
@@ -232,7 +236,7 @@ const ListingAdd = ({ open, onClose, providerId, releaseId }) => {
 
                     {(platform === 'Vinted' || platform === 'Wallapop') && (
                         <Button
-                            sx={{ color: 'black', fontFamily: 'InterSemiBold', mx: 1 }}
+                            sx={{ color: 'black', fontFamily: 'InterSemiBold', p:'0.5rem' }}
                             onClick={() => {
                                 if (platform === 'Vinted') {
                                     window.open("https://www.vinted.es/items/new", '_blank');
@@ -246,10 +250,10 @@ const ListingAdd = ({ open, onClose, providerId, releaseId }) => {
                     )}
                     <Button
                         type="submit"
-                        sx={{ color: 'black', fontFamily: 'InterSemiBold', mx:1 }}
+                        sx={{ color: 'black', fontFamily: 'InterSemiBold', p:'0.5rem' }}
                         disabled={!isFormValid() || loadingListingsAdd}
                     >
-                        {loadingListingsAdd ? <CircularProgress size={20} color="inherit" /> : "Save"}
+                        {loadingListingsAdd ? <CircularProgress size={'1.25rem'} color="inherit" /> : "Save"}
                     </Button>
                 </DialogActions>
 
@@ -266,7 +270,6 @@ const ListingAdd = ({ open, onClose, providerId, releaseId }) => {
                             justifyContent: 'center',
                             alignItems: 'center',
                             zIndex: 10,
-                            borderRadius: 2
                         }}
                     >
                         <CircularProgress />

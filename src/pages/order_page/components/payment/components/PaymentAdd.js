@@ -20,7 +20,6 @@ const PaymentAdd = ({ order, fetchOrder, isOrderFullyAssociated }) => {
     const isFormValid = () => true;
 
     const handleSave = async () => {
-        // Calculamos totales
         const totals = Object.values(prices).reduce(
             (acc, item) => {
                 acc.provider += Number(item.providerPrice || 0);
@@ -79,9 +78,9 @@ const PaymentAdd = ({ order, fetchOrder, isOrderFullyAssociated }) => {
     };
 
     const inputStyleStrong = {
-        width: 60,
         textAlign: 'right',
-        fontSize: 12,
+        fontSize: '0.75rem',
+        width: '3.75rem',
         fontFamily: 'InterSemiBold',
         color: 'rgba(0,0,0,0.85)',
         border: 'none',
@@ -96,8 +95,7 @@ const PaymentAdd = ({ order, fetchOrder, isOrderFullyAssociated }) => {
 
     const sellingStyle = {
         textAlign: 'right',
-        width: 60,
-        fontSize: 12,
+        fontSize: '0.75rem',
         fontFamily: 'InterSemiBold',
         color: 'rgba(0,0,0,0.85)',
         flexShrink: 0,
@@ -120,35 +118,35 @@ const PaymentAdd = ({ order, fetchOrder, isOrderFullyAssociated }) => {
             <ListItem
                 key={item.id}
                 sx={{ 
-                    borderBottom: '1px solid #ddd',
-                    gap: 2,
-                    alignItems: 'center',
+                    borderBottom: '0.0625rem solid #ddd',
+                    gap: '1rem',
+                    alignItems: 'center'
                 }}
             >
                 {!isExtra && (
                     <img 
                         src={item.release.thumb} 
                         style={{ 
-                            width: '35px',
-                            height: '35px',
+                            width: '2.5rem',
+                            height: '2.5rem',
                             objectFit: 'cover',
-                            borderRadius: '3px'
+                            borderRadius: '0.25rem'
                         }}
                     />
                 )}
 
-                <Box> 
-                    <Typography sx={{ fontFamily: 'InterBold', fontSize: 13 , color: 'rgba(0,0,0,0.70)', textShadow: '0px 0px 4px rgba(0,0,0,0.10)' }}>
+                <Box > 
+                    <Typography sx={{ fontFamily: 'InterBold', fontSize: '0.8125rem' , color: 'rgba(0,0,0,0.70)', textShadow: '0px 0px 4px rgba(0,0,0,0.10)' }}>
                         {item.release.name}
                     </Typography>
 
                     {!isExtra && (
                         <>
-                            <Typography sx={{ fontFamily: 'InterSemiBold', fontSize: 10, color: 'rgba(0,0,0,0.5)' }}>
+                            <Typography sx={{ fontFamily: 'InterSemiBold', fontSize: '0.625rem', color: 'rgba(0,0,0,0.5)' }}>
                                 {item.release.artists.map(a => a.name).join(', ')}
                             </Typography>
 
-                            <Typography sx={{ fontFamily: 'InterRegular', fontSize: 9, color: 'rgba(0,0,0,0.5)' }}>
+                            <Typography sx={{ fontFamily: 'InterRegular', fontSize: '0.5625rem', color: 'rgba(0,0,0,0.5)' }}>
                                 {"Condition of Item: "}
                                 {item.discCondition} {item.sleeveCondition}
                             </Typography>
@@ -156,7 +154,7 @@ const PaymentAdd = ({ order, fetchOrder, isOrderFullyAssociated }) => {
                     )}
                 </Box>
 
-                <Box sx={{ ml: 'auto', display: 'flex' }}>
+                <Box sx={{ ml: 'auto', display: 'flex', gap: '1rem' }}>
                     {editingSelling ? (
                         <input
                             type="number"
@@ -220,7 +218,7 @@ const PaymentAdd = ({ order, fetchOrder, isOrderFullyAssociated }) => {
                     }
                 }}
                 sx={{
-                    fontSize: 20,
+                    fontSize: '1.25rem',
                     color: isOrderFullyAssociated && (order.paymentId == null) ? 'rgba(0,0,0,0.6)' : 'rgba(0,0,0,0.25)',
                     cursor: isOrderFullyAssociated && (order.paymentId == null) ? 'pointer' : 'default',
                     '&:hover': {
@@ -242,112 +240,104 @@ const PaymentAdd = ({ order, fetchOrder, isOrderFullyAssociated }) => {
                     sx: {
                         backgroundColor: 'white',
                         color: 'black',
-                        borderRadius: 2,
-                        p: 2,
+                        borderRadius: '0.5rem',
+                        p: '1rem',
+                        minWidth: '40vw'
                     }
                 }}
             >
-                <DialogTitle>
+                <DialogTitle sx={{ p:'0.5rem'}}>
                     <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
-                        <Typography sx={{ fontFamily: "InterSemiBold", fontSize: 24 }}>
+                        <Typography sx={{ fontFamily: "InterSemiBold", fontSize: '1.5rem' }}>
                             Add Payment
                         </Typography>
 
                         <IconButton onClick={handleClose}>
-                            <CloseIcon sx={{ fontSize: 24 }} />
+                            <CloseIcon sx={{ fontSize: '1.5rem' }} />
                         </IconButton>
                     </Box>
                 </DialogTitle>
 
-                <DialogContent sx={{ my:2 }}>
-                    <List>
-                        {order?.items.map(item => renderRow(item))}
-                    </List>
+                <DialogContent sx={{p: 0}}>
+                    <Box
+                        sx={{
+                            p: '1rem',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: '1rem'
+                        }}
+                    >
+                        <List>
+                            {order?.items.map(item => renderRow(item))}
+                        </List>
 
-                    <List sx={{ mt: 2 }}>
-                        {extraItems.map(item => renderRow(item, true))}
-                    </List>
+                        <List >
+                            {extraItems.map(item => renderRow(item, true))}
+                        </List>
 
-                    <List sx={{ mt: 2 }}>
-                        <ListItem
-                            sx={{
-                                borderTop: '1px solid #ddd',
-                                borderBottom: '1px solid #ddd',
-                                gap: 2,
-                            }}
-                        >
-                            <Typography
+                        <List>
+                            <ListItem
                                 sx={{
-                                    fontFamily: 'InterBold',
-                                    fontSize: 13,
-                                    color: 'rgba(0,0,0,0.85)',
+                                    borderTop: '0.0625rem solid #ddd',
+                                    borderBottom: '0.0625rem solid #ddd',
+                                    gap: '1rem',
                                 }}
                             >
-                                Total
-                            </Typography>
-
-                            <Box sx={{ ml: 'auto', display: 'flex' }}>
                                 <Typography
                                     sx={{
-                                        textAlign: 'right',
-                                        width: 60,
-                                        fontSize: 12,
-                                        fontFamily: 'InterSemiBold',
+                                        fontFamily: 'InterBold',
+                                        fontSize: '0.8125rem',
                                         color: 'rgba(0,0,0,0.85)',
                                     }}
                                 >
-                                    {totals.selling.toFixed(2)} €
+                                    Total
                                 </Typography>
 
-                                <Typography
-                                    sx={{
-                                        textAlign: 'right',
-                                        width: 60,
-                                        fontSize: 12,
-                                        fontFamily: 'InterSemiBold',
-                                        color: 'rgba(0,0,0,0.5)',
-                                    }}
-                                >
-                                    {totals.provider.toFixed(2)} €
-                                </Typography>
-                            </Box>
-                        </ListItem>
-                        <ListItem
-                            sx={{
-                                borderBottom: '1px solid #ddd',
-                                gap: 2,
-                            }}
-                        >
-                            <Typography
+                                <Box sx={{ ml: 'auto', display: 'flex', gap: '1rem' }}>
+                                    <Typography
+                                        sx={sellingStyle}
+                                    >
+                                        {totals.selling.toFixed(2)} €
+                                    </Typography>
+
+                                    <Typography
+                                        sx={sellingStyle}
+                                    >
+                                        {totals.provider.toFixed(2)} €
+                                    </Typography>
+                                </Box>
+                            </ListItem>
+                            <ListItem
                                 sx={{
-                                    fontFamily: 'InterBold',
-                                    fontSize: 13,
-                                    color: 'rgba(0,0,0,0.85)',
+                                    borderBottom: '0.0625rem solid #ddd',
+                                    gap: '1rem',
                                 }}
                             >
-                                Benefits
-                            </Typography>
-
-                            <Box sx={{ ml: 'auto', display: 'flex' }}>
                                 <Typography
                                     sx={{
-                                        textAlign: 'right',
-                                        width: 60,
-                                        fontSize: 12,
-                                        fontFamily: 'InterSemiBold',
-                                        color: benefit < 0 ? 'red' : 'green',
+                                        fontFamily: 'InterBold',
+                                        fontSize: '0.8125rem',
+                                        color: 'rgba(0,0,0,0.85)',
                                     }}
                                 >
-                                    {benefit.toFixed(2)} €
+                                    Benefits
                                 </Typography>
-                            </Box>
-                        </ListItem>
-                    </List>
+
+                                <Box sx={{ ml: 'auto', display: 'flex' }}>
+                                    <Typography
+                                        sx={sellingStyle}
+                                    >
+                                        {benefit.toFixed(2)} €
+                                    </Typography>
+                                </Box>
+                            </ListItem>
+                        </List>
+                    </Box>
                 </DialogContent>
                 <DialogActions >
                     <Button
                         type="submit"
-                        sx={{ color: 'black', fontFamily: 'InterSemiBold', mx:1 }}
+                        sx={{ color: 'black', fontFamily: 'InterSemiBold', p:'0.5rem'}}
                     >
                         Save
                     </Button>

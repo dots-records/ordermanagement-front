@@ -6,21 +6,22 @@ import EditIcon from "@mui/icons-material/Edit";
 import SaveIcon from "@mui/icons-material/Save";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CloseIcon from "@mui/icons-material/Close";
+import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
 
 const OrderInfo = ({ order, loading }) => {
     
 
     if (loading) {
         return (
-            <Box className="box-container" sx={{ width: "250px" }}>
+            <Box className="box-container" sx={{ width: "30%", height: '85vh' }}>
                 <Typography 
                     sx={{ 
                         textAlign: "left", 
                         fontFamily: "InterBold", 
-                        fontSize: 18 
+                        fontSize: "1.125rem" 
                     }}
                 >
-                    Information
+                    Order:
                 </Typography>
                 <Box 
                     sx={{ 
@@ -31,7 +32,7 @@ const OrderInfo = ({ order, loading }) => {
                         alignItems: 'center',  
                     }}
                 >
-                    <CircularProgress size={33} />
+                    <CircularProgress size={'2rem'} />
                 </Box>
             </Box>
         );
@@ -96,55 +97,97 @@ const OrderInfo = ({ order, loading }) => {
     };
 
     return (
-        <Box className="box-container" sx={{width: "250px"}}>
-            <Typography 
+        <Box
+            className="box-container"
+            sx={{
+                width: "30%",
+                height: "85vh",
+                overflowY: "auto",  
+                overflowX: "hidden"  
+            }}
+        >
+            <Box
                 sx={{ 
                     textAlign: "left", 
-                    fontFamily: "InterBold", 
-                    fontSize: 18 
+                    display: "flex",        
+                    flexDirection: "row", 
+                    alignItems: 'center',
                 }}
             >
-                Information
-            </Typography>
+                <Box
+                    component="a"
+                    href={order.uri}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "0.25rem",
+                        textDecoration: "none",
+                        cursor: "pointer",
+                        color: "inherit",
+                        width: "fit-content",
 
-
-            <Divider sx={{ my: 2, backgroundColor: "rgba(0,0,0,0.2)" }} />
-            <Box sx={{ display: 'flex', gap: 1 }}>
-                <Typography 
-                    sx={{ 
-                    fontFamily: "InterBold", 
-                    fontSize: 12 
+                        "&:hover": {
+                            textDecoration: "underline",
+                        }
                     }}
                 >
-                    ID:
-                </Typography>
-
-                <Typography 
+                    <Typography 
+                        sx={{ 
+                            fontFamily: "InterBold", 
+                            fontSize: "1.125rem",
+                        }}
+                    >
+                        Order: {order.id}
+                    </Typography>
+                    <ArrowOutwardIcon sx={{ fontSize: "1.25rem" }} />
+                </Box>
+                <Box 
                     sx={{ 
-                    fontFamily: "InterRegular", 
-                    fontSize: 12 
+                        fontFamily: "InterBold", 
+                        fontSize: "1.125rem",
+                        marginLeft: "auto"
                     }}
                 >
-                    {order.id}
-                </Typography>
+                    <Box 
+                        sx={{ 
+                            fontFamily: "InterSemiBold", 
+                            fontSize: "0.6rem",
+                            color: 'rgba(0,0,0,0.5)',
+                            backgroundColor: 'rgba(0,0,0,0.03)',
+                            borderRadius: '0.25rem',
+                            marginLeft: "auto",
+                            px: '0.5rem',
+                            py: '0.25rem',
+                        }}
+                    >
+                        {order.archived ? "Archived" : "Not archived"}
+                    </Box>
+                </Box>
+
             </Box>
+           
 
-            <Box sx={{ display: 'flex', gap: 1, 
+
+            <Divider sx={{ my: '0.5rem', backgroundColor: "rgba(0,0,0,0.2)" }} />
+
+            <Box sx={{ display: 'flex', gap: '0.25rem', 
                     textAlign: "left", }}>
                 <Typography 
                     sx={{ 
                     fontFamily: "InterBold", 
                     textAlign: "left",
-                    fontSize: 12 
+                    fontSize: '0.75rem' 
                     }}
                 >
-                    Platform:
+                    Platform: 
                 </Typography>
 
                 <Typography 
                     sx={{ 
                     fontFamily: "InterRegular", 
-                    fontSize: 12 
+                    fontSize: '0.75rem' 
                     }}
                 >
                     {order.platform}
@@ -154,7 +197,7 @@ const OrderInfo = ({ order, loading }) => {
             <Box 
                 sx={{ 
                     display: 'flex', 
-                    gap: 1, 
+                    gap: '0.25rem', 
                     textAlign: "left",
                     width: '100%',  
                     overflow: 'hidden' 
@@ -163,7 +206,7 @@ const OrderInfo = ({ order, loading }) => {
                 <Typography 
                     sx={{ 
                         fontFamily: "InterBold",
-                        fontSize: 12 
+                        fontSize: '0.75rem'
                     }}
                 >
                     Status:
@@ -172,7 +215,7 @@ const OrderInfo = ({ order, loading }) => {
                 <Typography 
                     sx={{ 
                         fontFamily: "InterRegular", 
-                        fontSize: 12,
+                        fontSize: '0.75rem',
                         flex: 1,
                         overflow: 'hidden',
                         textOverflow: 'ellipsis',
@@ -183,12 +226,12 @@ const OrderInfo = ({ order, loading }) => {
                 </Typography>
             </Box>
 
-            <Box sx={{ display: 'flex', gap: 1,
+            <Box sx={{ display: 'flex', gap: '0.25rem',
                     textAlign: "left",  }}>
                 <Typography 
                     sx={{ 
                     fontFamily: "InterBold", 
-                    fontSize: 12 
+                    fontSize: '0.75rem'
                     }}
                 >
                     Created:
@@ -197,91 +240,24 @@ const OrderInfo = ({ order, loading }) => {
                 <Typography 
                     sx={{ 
                     fontFamily: "InterRegular",
-                    fontSize: 12 
+                    fontSize: '0.75rem'
                     }}
                 >
                     {order.created}
                 </Typography>
             </Box>
 
-            <Box 
-                sx={{ 
-                    display: 'flex', 
-                    gap: 1, 
-                    textAlign: "left",
-                    width: '100%',   
-                    overflow: 'hidden',
-                }}
-            >
-                <Typography 
-                    sx={{ 
-                        fontFamily: "InterBold",
-                        fontSize: 12 
-                    }}
-                >
-                    Link:
-                </Typography>
-
-                <Typography 
-                    sx={{ 
-                        fontFamily: "InterRegular", 
-                        fontSize: 12,
-                        flex: 1,
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
-                        whiteSpace: 'nowrap',
-                    }}
-                >
-                    <a 
-                        href={order.uri} 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        style={{ 
-                            textDecoration: 'none', 
-                            color: 'inherit' 
-                        }}
-                    >
-                        {order.uri}
-                    </a>
-                </Typography>
-            </Box>
-
-            <Box sx={{ display: 'flex', gap: 1,
-                    textAlign: "left",  }}>
-                <Typography 
-                    sx={{ 
-                    fontFamily: "InterBold", 
-                    fontSize: 12 
-                    }}
-                >
-                    Archived:
-                </Typography>
-
-                <Typography 
-                    sx={{ 
-                    fontFamily: "InterRegular",
-                    fontSize: 12 
-                    }}
-                >
-                    {order.archived ? "Yes" : "No"}
-                </Typography>
-            </Box>
-
-
-            
-
-            <Divider sx={{ my: 2, backgroundColor: "rgba(0,0,0,0.2)" }} />
+            <Divider sx={{ my: '0.5rem', backgroundColor: "rgba(0,0,0,0.2)" }} />
 
             <Box
                 sx={{
                     display: "flex",
                     flexDirection: "column",
-                    gap: 1,
-                    px: hasWarning ? 2 : 0,
-                    py: hasWarning ? 1 : 0,
-                    borderRadius: 1,
+                    gap: '0.25rem',
+                    px: hasWarning ? '1rem' : 0,
+                    py: hasWarning ? '0.5rem' : 0,
                     backgroundColor: hasWarning ? "rgba(255, 207, 63, 0.08)" : "transparent",
-                    borderLeft: hasWarning ? "3px solid rgba(255, 207, 63, 0.6)" : "3px solid transparent",
+                    borderLeft: hasWarning ? "0.125rem solid rgba(255, 207, 63, 0.6)" : "0.125rem solid transparent",
                     transition: "all 0.2s ease"
                 }}
             >
@@ -289,7 +265,7 @@ const OrderInfo = ({ order, loading }) => {
                     <Typography
                         sx={{
                             fontFamily: "InterBold",
-                            fontSize: 12
+                            fontSize: '0.75rem'
                         }}
                     >
                         Warning
@@ -297,21 +273,15 @@ const OrderInfo = ({ order, loading }) => {
 
                     {!editingWarning ? (
                         <IconButton size="small" onClick={() => setEditingWarning(true)}>
-                            <EditIcon sx={{fontSize: 15}} />
+                            <EditIcon sx={{fontSize: '0.9375rem'}} />
                         </IconButton>
                     ) : (
                         <Box>
                             <IconButton size="small" onClick={handleSaveWarning} disabled={savingWarning}>
-                                {savingWarning ? <CircularProgress size={16} /> : <SaveIcon  sx={{fontSize: 15}}/>}
-                            </IconButton>
-                            <IconButton size="small" onClick={() => {
-                                setEditingWarning(false);
-                                setWarningValue(order.warning || "");
-                            }}>
-                                <CloseIcon  sx={{fontSize: 15}} />
+                                {savingWarning ? <CircularProgress size={'0.9375rem'} /> : <SaveIcon  sx={{fontSize: '0.9375rem'}}/>}
                             </IconButton>
                             <IconButton size="small" onClick={handleDeleteWarning} disabled={savingWarning}>
-                                <DeleteIcon sx={{fontSize: 15}} />
+                                <DeleteIcon sx={{fontSize: '0.9375rem'}} />
                             </IconButton>
                         </Box>
                     )}
@@ -322,17 +292,17 @@ const OrderInfo = ({ order, loading }) => {
                         sx={{
                             display: "flex",
                             flexDirection: "column",
-                            gap: 1,
-                            px: hasWarning ? 1 : 0,
-                            py: hasWarning ? 1 : 0,
-                            borderRadius: 1,
-                            transition: "all 0.2s ease"
+                            gap: '0.25rem',
+                            px: hasWarning ?'0.5rem' : '0.5rem',
+                            py: hasWarning ? '0.5rem' : '0.5rem',
+                            transition: "all 0.2s ease",
+                            border: '1px'
                         }}
                     >
                         <Typography
                             sx={{
                                 fontFamily: "InterRegular",
-                                fontSize: 12,
+                                fontSize: '0.75rem',
                                 color: hasWarning ? "rgba(0,0,0,0.75)" : "rgba(0,0,0,0.4)"
                             }}
                         >
@@ -349,7 +319,7 @@ const OrderInfo = ({ order, loading }) => {
                         fullWidth
                         sx={{
                             "& .MuiInputBase-input": {
-                                fontSize: 12,
+                                fontSize: "0.75rem",
                                 fontFamily: "InterRegular",
                             }
                         }}
@@ -357,18 +327,17 @@ const OrderInfo = ({ order, loading }) => {
                 )}
             </Box>
 
-            <Divider sx={{ my: 2, backgroundColor: "rgba(0,0,0,0.2)" }} />
+            <Divider sx={{ my: '0.5rem', backgroundColor: "rgba(0,0,0,0.2)" }} />
 
             <Box
                 sx={{
                     display: "flex",
                     flexDirection: "column",
-                    gap: 1,
-                    px: hasInformation ? 2 : 0,
-                    py: hasInformation ? 1 : 0,
-                    borderRadius: 1,
+                    gap: '0.25rem',
+                    px: hasInformation ? '1rem' : 0,
+                    py: hasInformation ? '0.5rem' : 0,
                     backgroundColor: hasInformation ? "rgba(51, 173, 255, 0.06)" : "transparent",
-                    borderLeft: hasInformation ? "3px solid rgba(51, 173, 255, 0.5)" : "3px solid transparent",
+                    borderLeft: hasInformation ? "0.125rem solid rgba(51, 173, 255, 0.5)" : "0.125rem solid transparent",
                     transition: "all 0.2s ease"
                 }}
             >
@@ -376,7 +345,7 @@ const OrderInfo = ({ order, loading }) => {
                     <Typography
                         sx={{
                             fontFamily: "InterBold",
-                            fontSize: 12
+                            fontSize: '0.75rem'
                         }}
                     >
                         Relevant Info.
@@ -384,43 +353,46 @@ const OrderInfo = ({ order, loading }) => {
 
                     {!editingInformation ? (
                         <IconButton size="small" onClick={() => setEditingInformation(true)}>
-                            <EditIcon sx={{ fontSize: 15 }} />
+                            <EditIcon sx={{ fontSize: '0.9375rem'}} />
                         </IconButton>
                     ) : (
                         <Box>
                             <IconButton size="small" onClick={handleSaveInformation} disabled={savingInformation}>
                                 {savingInformation
-                                    ? <CircularProgress size={16} />
-                                    : <SaveIcon sx={{ fontSize: 15 }} />}
+                                    ? <CircularProgress size={'0.9375rem'} />
+                                    : <SaveIcon sx={{ fontSize: '0.9375rem' }} />}
                             </IconButton>
 
-                            <IconButton
-                                size="small"
-                                onClick={() => {
-                                    setEditingInformation(false);
-                                    setInformationValue(order.information || "");
-                                }}
-                            >
-                                <CloseIcon sx={{ fontSize: 15 }} />
-                            </IconButton>
 
                             <IconButton size="small" onClick={handleDeleteInformation} disabled={savingInformation}>
-                                <DeleteIcon sx={{ fontSize: 15 }} />
+                                <DeleteIcon sx={{ fontSize: '0.9375rem' }} />
                             </IconButton>
                         </Box>
                     )}
                 </Box>
 
                 {!editingInformation ? (
-                    <Typography
+                    <Box
                         sx={{
-                            fontFamily: "InterRegular",
-                            fontSize: 12,
-                            color: hasInformation ? "rgba(0,0,0,0.75)" : "rgba(0,0,0,0.4)"
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: '0.25rem',
+                            px: hasWarning ?'0.5rem' : '0.5rem',
+                            py: hasWarning ? '0.5rem' : '0.5rem',
+                            borderRadius: '0.25rem',
+                            transition: "all 0.2s ease"
                         }}
                     >
-                        {informationValue || "No information"}
-                    </Typography>
+                        <Typography
+                            sx={{
+                                fontFamily: "InterRegular",
+                                fontSize: '0.75rem',
+                                color: hasInformation ? "rgba(0,0,0,0.75)" : "rgba(0,0,0,0.4)"
+                            }}
+                        >
+                            {informationValue || "No information"}
+                        </Typography>
+                    </Box>
                 ) : (
                     <TextField
                         value={informationValue}
@@ -431,7 +403,7 @@ const OrderInfo = ({ order, loading }) => {
                         fullWidth
                         sx={{
                             "& .MuiInputBase-input": {
-                                fontSize: 12,
+                                fontSize: '0.75rem',
                                 fontFamily: "InterRegular",
                             }
                         }}
