@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { Typography, Box, Menu, MenuItem } from '@mui/material';
 import { ArrowDropDown } from '@mui/icons-material';
 import { getSelectedTableReleases } from '../../functions/Functions';
+import { getReleasesCount } from '../../../../services/releaseService';
 
-const TableSelector = ({ setLoading, setTableSelected, tableSelected, setReleasesPage, searchTerm, setSearchTerm, setReleasesSelected}) => {
+const TableSelector = ({ setLoading, setTableSelected, tableSelected, setReleasesPage, searchTerm, setSearchTerm, setReleasesSelected, setCount}) => {
     const [anchorSel, setAnchorSel] = useState(null);
   
     const handleClickSel = (event) => {
@@ -18,7 +19,15 @@ const TableSelector = ({ setLoading, setTableSelected, tableSelected, setRelease
       setLoading(true);
       const response = await getSelectedTableReleases(selection, 0, "");
       setReleasesPage(response)
+      setCount(null)
       setLoading(false);
+
+      let archivedParam = null;
+      if (selection === 'Active Releases') archivedParam = false;
+      else if (selection === 'Inactive Releases') archivedParam = true;
+      else archivedParam = null; // All Releases
+      const count = await getReleasesCount(archivedParam);
+      setCount(count);
     };
   
     return (

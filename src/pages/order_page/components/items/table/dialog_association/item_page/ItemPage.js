@@ -16,7 +16,7 @@ import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import { patchProviderUnits, deleteProvider, getProviders} from '../../../../../../../services/providerService';
 import TableListingsForDeletion from './tables/TableListingsForDeletion';
-import { archiveReleases } from '../../../../../../../services/releaseService';
+import { updateArchived } from '../../../../../../../services/releaseService';
 
 
 
@@ -68,7 +68,7 @@ const ItemPage = ({ order, item, setClosable}) => {
         await deleteProvider(item.release.id, providerAssociated.id);
         const providers = await getProviders(item.release.id);
         if (!providers || providers.length === 0) {
-            //await archiveReleases(item.release.id);
+            updateArchived([item.release.id], true);
         }
         setProviderDeleted(true)
         setClosable(true);

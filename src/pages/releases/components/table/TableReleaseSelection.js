@@ -3,9 +3,9 @@ import { Typography, Box } from '@mui/material';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Delete, Archive, Unarchive } from '@mui/icons-material';
 import { getSelectedTableReleases } from '../../functions/Functions';
-import { deleteReleases, archiveReleases, unarchiveReleases } from '../../../../services/releaseService';
+import { deleteReleases, updateArchived, getReleasesCount  } from '../../../../services/releaseService';
 
-const TableReleaseSelection = ({ releasesSelected, setReleasesSelected, tableSelected, setReleasesPage, setLoading }) => {
+const TableReleaseSelection = ({ releasesSelected, setReleasesSelected, tableSelected, setReleasesPage, setLoading, setCount}) => {
     const handleDeselectAll = () => {
         setReleasesSelected([]);
     };
@@ -16,25 +16,52 @@ const TableReleaseSelection = ({ releasesSelected, setReleasesSelected, tableSel
         await deleteReleases(releasesSelected);
         const response = await getSelectedTableReleases(tableSelected, 0, "");
         setReleasesPage(response);
+        setCount(null);
         setLoading(false);
+
+        let archivedParam = null;
+        if (tableSelected === 'Active Releases') archivedParam = false;
+        else if (tableSelected === 'Inactive Releases') archivedParam = true;
+        else archivedParam = null;
+
+        const count = await getReleasesCount(archivedParam);
+        setCount(count);
     };
 
     const handleArchive = async() => {
         setLoading(true);
+        await updateArchived(releasesSelected, true);
         setReleasesSelected([]);
-        await archiveReleases(releasesSelected);
         const response = await getSelectedTableReleases(tableSelected, 0, "");
         setReleasesPage(response);
+        setCount(null);
         setLoading(false);
+
+        let archivedParam = null;
+        if (tableSelected === 'Active Releases') archivedParam = false;
+        else if (tableSelected === 'Inactive Releases') archivedParam = true;
+        else archivedParam = null;
+
+        const count = await getReleasesCount(archivedParam);
+        setCount(count);
     };
 
     const handleUnarchive = async() => {
         setLoading(true);
+        await updateArchived(releasesSelected, false);
         setReleasesSelected([]);
-        await unarchiveReleases(releasesSelected);
         const response = await getSelectedTableReleases(tableSelected, 0, "");
         setReleasesPage(response);
+        setCount(null);
         setLoading(false);
+
+        let archivedParam = null;
+        if (tableSelected === 'Active Releases') archivedParam = false;
+        else if (tableSelected === 'Inactive Releases') archivedParam = true;
+        else archivedParam = null;
+
+        const count = await getReleasesCount(archivedParam);
+        setCount(count);
     };
 
     return (

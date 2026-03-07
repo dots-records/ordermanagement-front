@@ -2,91 +2,35 @@ import api from '../api/axiosConfig';
 
 export const getRelease = async (releaseId) => {
     try {
-        const response = await api.get(`dots/getRelease/${releaseId}`);
+        const response = await api.get(`dots/releases/${releaseId}`);
         return response.data;
     } catch (error) {
       console.error('Error:', error);
     } 
 };
 
-export const getAllReleases = async (page) => {
+export const getReleases = async (page = 1, size = 50, archived = null, search = null) => {
     try {
-        const response = await api.get(`dots/getAllReleases/page=${page}&size=50`);
-        return response.data;
+        let url = `dots/releases?page=${page}&size=${size}`;
+        if (archived !== null) {
+            url += `&archived=${archived}`;
+        }
+        if (search !== null) {
+            url += `&search=${search}`;
+        }
+        const response = await api.get(url);
+        return response.data; 
     } catch (err) {
-        console.error(err);
+        console.error('Error al obtener releases:', err.response?.data || err.message);
         throw err;
     }
 };
 
-export const getArchivedReleases = async (page) => {
+export const createRelease = async (discogsId) => {
     try {
-        const response = await api.get(`dots/getArchivedReleases/page=${page}&size=50`);
-        return response.data;
-    } catch (err) {
-        console.error(err);
-        throw err;
-    }
-};
-
-export const getUnarchivedReleases = async (page) => {
-    try {
-        const response = await api.get(`dots/getUnarchivedReleases/page=${page}&size=50`);
-        return response.data;
-    } catch (err) {
-        console.error(err);
-        throw err;
-    }
-};
-
-export const searchAllReleases = async ( page, search) => {
-    try {
-       const response = await api.post(`/dots/searchAllReleases/page=${page}&size=50`, { search: search }, {
-        headers: {
-            'Content-Type': 'application/json' // Asegúrate de enviar como JSON
-        }
-        
-    });
-    
-       return response.data;
-    } catch (error) {
-       console.error('Error:', error);
-    }
- };
-
- export const searchArchivedReleases = async ( page, search) => {
-    try {
-       const response = await api.post(`/dots/searchArchivedReleases/page=${page}&size=50`, { search: search }, {
-        headers: {
-            'Content-Type': 'application/json' // Asegúrate de enviar como JSON
-        }
-        
-    });
-    
-       return response.data;
-    } catch (error) {
-       console.error('Error:', error);
-    }
- };
-
- export const searchUnarchivedReleases = async ( page, search) => {
-    try {
-       const response = await api.post(`/dots/searchUnarchivedReleases/page=${page}&size=50`, { search: search }, {
-        headers: {
-            'Content-Type': 'application/json' // Asegúrate de enviar como JSON
-        }
-        
-    });
-    
-       return response.data;
-    } catch (error) {
-       console.error('Error:', error);
-    }
- };
-
- export const putReleaseFromDiscogs = async (id) => {
-    try {
-        await api.post(`dots/putReleaseFromDiscogs/${id}`);
+        await api.post(`dots/releases`, {
+            discogsId: discogsId
+        });
     } catch (err) {
         console.error(err);
         throw err;
@@ -95,8 +39,8 @@ export const searchAllReleases = async ( page, search) => {
 
 export const deleteReleases = async (releasesSelected) => {
     try {
-        await api.post(`dots/deleteReleases`, releasesSelected, {
-            headers: { 'Content-Type': 'application/json' }
+        await api.delete("dots/releases", {
+            data: releasesSelected
         });
     } catch (err) {
         console.error(err);
@@ -104,10 +48,11 @@ export const deleteReleases = async (releasesSelected) => {
     }
 };
 
-export const archiveReleases = async (releasesSelected) => {
+export const updateArchived = async (ids, archived) => {
     try {
-        await api.post(`dots/archiveReleases`, releasesSelected, {
-            headers: { 'Content-Type': 'application/json' }
+        await api.patch("dots/releases/archived", {
+            ids,
+            archived
         });
     } catch (err) {
         console.error(err);
@@ -115,14 +60,33 @@ export const archiveReleases = async (releasesSelected) => {
     }
 };
 
-export const unarchiveReleases = async (releasesSelected) => {
+export const getReleasesCount = async (archived = null) => {
     try {
-        await api.post(`dots/unarchiveReleases`, releasesSelected, {
-            headers: { 'Content-Type': 'application/json' }
-        });
+        let url = "dots/releases/count";
+
+        if (archived !== null) {
+            url += `?archived=${archived}`;
+        }
+
+        const response = await api.get(url);
+        return response.data;
     } catch (err) {
-        console.error(err);
+        console.error("Error al obtener el count de releases:", err.response?.data || err.message);
         throw err;
+    }
+};
+
+export const patchReleaseNote = async (releaseId, note) => {
+    try {
+        await api.patch(`dots/releases/${releaseId}/note`, { note: note }, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        console.log(`Release ${releaseId} updated to note: ${note}`);
+    } catch (error) {
+        console.error('Error updating release note:', error.response?.data || error.message);
+        throw error;
     }
 };
 

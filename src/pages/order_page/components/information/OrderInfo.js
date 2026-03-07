@@ -377,8 +377,8 @@ const OrderInfo = ({ order, loading }) => {
                             display: "flex",
                             flexDirection: "column",
                             gap: '0.25rem',
-                            px: hasWarning ?'0.5rem' : '0.5rem',
-                            py: hasWarning ? '0.5rem' : '0.5rem',
+                            px:'0.5rem' ,
+                            py: '0.5rem' ,
                             borderRadius: '0.25rem',
                             transition: "all 0.2s ease"
                         }}

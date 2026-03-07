@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { Typography, Box, Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField } from '@mui/material';
-import { putReleaseFromDiscogs } from '../../../../services/releaseService';
+import { createRelease, getReleasesCount } from '../../../../services/releaseService';
 import { getSelectedTableReleases } from '../../functions/Functions';
 import AddIcon from '@mui/icons-material/Add';
 import CloseIcon from '@mui/icons-material/Close';
 import { IconButton } from '@mui/material';
 
 
-const TableAdd = ({ setReleasesPage, setLoading, tableSelected} ) => {
+const TableAdd = ({ setReleasesPage, setLoading, tableSelected, setCount} ) => {
     const [open, setOpen] = useState(false);
     const [inputValue, setInputValue] = useState('');
 
@@ -22,11 +22,19 @@ const TableAdd = ({ setReleasesPage, setLoading, tableSelected} ) => {
     const  handleSave = async () => {
         setOpen(false);
         setLoading(true)
-        await putReleaseFromDiscogs(inputValue)
+        await createRelease(inputValue)
         const response = await getSelectedTableReleases(tableSelected, 0, "");
         setReleasesPage(response)
         setInputValue("")
-        setLoading(false)
+        setCount(null)
+        setLoading(false);
+        
+        let archivedParam = null;
+        if (tableSelected === 'Active Releases') archivedParam = false;
+        else if (tableSelected === 'Inactive Releases') archivedParam = true;
+        else archivedParam = null; // All Releases
+        const count = await getReleasesCount(archivedParam);
+        setCount(count);
         
     };
 

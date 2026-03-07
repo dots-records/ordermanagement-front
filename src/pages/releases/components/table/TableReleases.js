@@ -12,9 +12,21 @@ import {
     Typography,
     Checkbox
 } from '@mui/material';
+import { ArrowDropDown } from '@mui/icons-material';
 
 const TableReleases = ({ loading, releases, releasesSelected, setReleasesSelected }) => {
     
+    const getDaysAgo = (dateString) => {
+        if (!dateString) return null;
+
+        const lastEdit = new Date(dateString);
+        const now = new Date();
+
+        const diffMs = now - lastEdit;
+        const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+        return diffDays;
+    };
 
     const handleSelect = (event, id) => {
         event.stopPropagation();
@@ -55,14 +67,25 @@ const TableReleases = ({ loading, releases, releasesSelected, setReleasesSelecte
                     <TableRow>
                         <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.65)', width: '1%' }}>Photo</TableCell>
                         <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.65)' }}>Title & Artists</TableCell>
-                        <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.65)' }}>Description</TableCell>
+                        <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.65)', width: '40%' }}>Description</TableCell>
+                        <TableCell
+                            sx={{
+                                fontFamily: 'InterSemiBold',
+                                color: 'rgba(0,0,0,0.65)',
+                                width: '15%',
+                                alignItems: 'center',
+                            }}
+                        >
+                            Edited
+                            <ArrowDropDown sx={{ fontSize: '1.125rem', ml: '0.25rem' }} />
+                        </TableCell>
                         <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.65)', width: '1%' }}>Select</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {releases?.length === 0 ? (
                         <TableRow sx={{ height: '100%' }}>
-                            <TableCell colSpan={4} sx={{ p: 0}}>
+                            <TableCell colSpan={5} sx={{ p: 0}}>
                                 <Box
                                     sx={{
                                         height: '100%',   
@@ -81,6 +104,7 @@ const TableReleases = ({ loading, releases, releasesSelected, setReleasesSelecte
                         </TableRow>
                     ) : (
                         releases?.map((release, index) => {
+                            const daysAgo = getDaysAgo(release.dateLastEdition);
                             const isSelected = releasesSelected.includes(release.id);
                             return (
                                 <TableRow
@@ -109,12 +133,35 @@ const TableReleases = ({ loading, releases, releasesSelected, setReleasesSelecte
                                         <Typography sx={{ fontFamily: 'InterSemiBold', fontSize: '0.75rem', color: 'rgba(0,0,0,0.5)',
                                                  }}>
                                             {release.artists.map(artist => artist.name).join(', ')}
+                                            
                                         </Typography>
                                     </TableCell>
                                     <TableCell>
-                                        <Typography sx={{ fontFamily: 'InterBold', fontSize: '0.90625rem', color: 'rgba(0,0,0,0.70)',  textShadow:  '0px 0px 4px rgba(0,0,0,0.10)' }}>{release.formats.map(format => format.name).join(', ')}</Typography>
+                                        <Typography sx={{ fontFamily: 'InterBold', fontSize: '0.90625rem', color: 'rgba(0,0,0,0.70)',  textShadow:  '0px 0px 4px rgba(0,0,0,0.10)' }}>
+                                            {release.formats.map(format => format.name).join(', ')}
+                                            {", "}
+                                            { release.formats.map((format) => format.text).join(", ")}
+                                        </Typography>
                                         <Typography sx={{ fontFamily: 'InterSemiBold', fontSize: '0.75rem', color: 'rgba(0,0,0,0.5)' }}>
                                             {release.formats.map(format => format.descriptions.join(', ')).join(' | ')}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell>
+                                        <Typography
+                                            sx={{
+                                                fontSize: '0.75rem',
+                                                color: 'rgba(0,0,0,0.4)',
+                                                fontFamily: 'InterRegular',
+                                                
+                                            }}
+                                        >
+                                            {daysAgo === null
+                                                ? ''
+                                                : daysAgo === 0
+                                                ? 'Today'
+                                                : daysAgo === 1
+                                                ? '1 day'
+                                                : `${daysAgo} days`}
                                         </Typography>
                                     </TableCell>
                                     <TableCell>
