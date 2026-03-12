@@ -12,9 +12,12 @@ import ProviderListingAssociation from './provider_listing_association/ProviderL
 import { getItem } from '../../../../../../../services/itemService';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
-import { getExistsListing } from '../../../../../../../services/listingService';
+import { getExistsListing, getListings } from '../../../../../../../services/listingService';
 import DeleteListing from './delete_listing/DeleteListing';
 import ProviderStillStockOrOnline from './provider_still_stock_or_online/ProviderStillStockOrOnline';
+import TableListingsForDeletion from './table_listings_for_deletion/TableListingsForDeletion';
+import { getExistsProvider } from '../../../../../../../services/providerService';
+import DeleteProvider from './delete_provider/DeleteProvider';
 
 
 
@@ -25,6 +28,8 @@ const ItemPage = ({selectedItem, order, handleClose}) => {
     const [errorMessage, setErrorMessage] = useState('');
     const [openErrorPopup, setOpenErrorPopup] = useState(false);
     const [listingExists, setListingExists] = useState(null);
+    const [providerHasListings, setProviderHasListings] = useState(null);
+    const [providerExists, setProviderExists] = useState(null);
 
     useEffect(() => {
         setLoading(true)
@@ -36,8 +41,19 @@ const ItemPage = ({selectedItem, order, handleClose}) => {
                 if (data.listing && data.provider) {
                     const exists = 
                         await getExistsListing(data.release.id, data.provider.id, data.listing.id);
-                    console.log(exists)
                     setListingExists(exists)
+                    if(!exists) {
+                        if (data.provider.type === 'In Stock' && data.provider.units == 1) {
+                            const listings = await getListings(data.release.id, data.provider.id);
+                            if(listings && listings.length > 0) {
+                                setProviderHasListings(true)
+                            } else {
+                                setProviderHasListings(false)
+                                const existsProvider = await getExistsProvider(data.release.id, data.provider.id)
+                                setProviderExists(existsProvider)
+                            }   
+                        }
+                    }
                 }   
                 setLoading(false);
             } catch (error) {
@@ -102,10 +118,17 @@ const ItemPage = ({selectedItem, order, handleClose}) => {
                 content = (
                     <ProviderStillStockOrOnline order={order} item={item} handleClose={handleClose}/>
                 );   
-            } else if (item.provider.type === 'In Stock' && item.provider.units > 0) {
-                content = (
-                    <Box> pepe </Box>
-                );
+            } else if (item.provider.type === 'In Stock' && item.provider.units == 1) {
+                if(providerHasListings == true) {
+                    content = (
+                        <TableListingsForDeletion item={item} setChanged={setChanged} />
+                    );
+                } else if(providerHasListings == false){
+                    if(providerExists == true) {
+                     content =   <DeleteProvider item={item} order={order} handleClose={handleClose} />
+                    } 
+                }
+                
             }
         }
     }

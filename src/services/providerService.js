@@ -9,6 +9,23 @@ export const getProviders = async (releaseId) => {
     } 
 };
 
+export const getExistsProvider = async (releaseId, providerId) => {
+    try {
+        const response = await api.get(`dots/releases/${releaseId}/providers/${providerId}/exists`);
+        return response.data;
+    } catch (error) {
+        if (error.response) {
+            if(error.response.data.message) {
+                throw new Error(error.response.data.message)
+            } else {
+                throw new Error(error.response.data)
+            }
+        } else {
+           throw new Error(error.message);
+        }
+    }
+};
+
 
 export const createProviderInStock = async (releaseId, price, units, discCondition,
      sleeveCondition, description) => {

@@ -28,14 +28,22 @@ export const getListings = async (releaseId, providerId) => {
         const response = await api.get(`dots/releases/${releaseId}/providers/${providerId}/listings`);
         return response.data;
     } catch (error) {
-      console.error('Error:', error);
-    } 
+        if (error.response) {
+            if(error.response.data.message) {
+                throw new Error(error.response.data.message)
+            } else {
+                throw new Error(error.response.data)
+            }
+        } else {
+           throw new Error(error.message);
+        }
+    }
 };
 
 export const getExistsListing = async (releaseId, providerId, listingId) => {
     try {
         const response = 
-            await api.get(`dots/releases/${releaseId}/providers/${providerId}/listings/${listingId}`);
+            await api.get(`dots/releases/${releaseId}/providers/${providerId}/listings/${listingId}/exists`);
         return response.data;
     }catch (error) {
         if (error.response) {

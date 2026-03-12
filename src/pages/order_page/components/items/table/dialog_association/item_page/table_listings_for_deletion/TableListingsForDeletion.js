@@ -9,14 +9,18 @@ import {
 } from '@mui/material';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { getListings, deleteListing} from '../../../../../../../../services/listingService';
+import { getListings, deleteListing } from '../../../../../../../../services/listingService';
 import { useState, useEffect } from 'react';
 import { CircularProgress } from '@mui/material';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
-const TableListingsForDeletion = ({ releaseId, provider, setListingsDeleted}) => {
+const TableListingsForDeletion = ({ item, setChanged}) => {
   const [listings, setListings] = useState(null);
   const [loading, setLoading] = useState(false);
   const [selectedListings, setSelectedListings] = useState([]);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [openErrorPopup, setOpenErrorPopup] = useState(false);
 
   const getDaysAgo = (dateString) => {
     if (!dateString) return null;
@@ -33,20 +37,19 @@ const TableListingsForDeletion = ({ releaseId, provider, setListingsDeleted}) =>
   const fetchListings = async () => {
     setLoading(true);
     try {
-      const dataListings = await getListings(releaseId, provider.id);
+      const dataListings = await getListings(item.release.id, item.provider.id);
       setListings(dataListings);
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      setErrorMessage(error.message);
+      setOpenErrorPopup(true);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-        if (!provider?.id || !releaseId) return;
-
         fetchListings();
-   }, [provider?.id, releaseId]);
+   }, []);
 
    const handleToggle = (id) => {
     setSelectedListings((prev) =>
@@ -68,27 +71,25 @@ const TableListingsForDeletion = ({ releaseId, provider, setListingsDeleted}) =>
 
   const handleDeleteSelected = async () => {
       setLoading(true);
-      if (selectedListings.length === 1) {
-        await deleteListing(releaseId, provider.id, selectedListings[0]);
-      } else if (selectedListings.length > 1) {
-        await Promise.all(
-                selectedListings.map((lid) =>
-                deleteListing(releaseId, provider.id, lid)
-              ));
+      try {
+        if (selectedListings.length === 1) {
+          await deleteListing(item.release.id, item.provider.id, selectedListings[0]);
+        } else if (selectedListings.length > 1) {
+          await Promise.all(
+                  selectedListings.map((lid) =>
+                  deleteListing(item.release.id, item.provider.id, lid)
+                ));
+        }
+        setChanged(true);
+      }  catch (error) {
+        setErrorMessage(error.message);
+        setOpenErrorPopup(true);
+      } finally {
+        fetchListings();
+        setLoading(false);
       }
-      await fetchListings();
-      setLoading(false);
     };
 
-    useEffect(() => {
-        if (!listings) return;
-
-        if (listings.length === 0) {
-            setListingsDeleted(true);
-        } else {
-            setListingsDeleted(false);
-        }
-    }, [listings])
 
   if (loading) return (
     <Box
@@ -184,7 +185,7 @@ const TableListingsForDeletion = ({ releaseId, provider, setListingsDeleted}) =>
         </Box>
       <List disablePadding>
         {listings.map((listing) => {
-          const rawProfit = listing.sellingPrice - provider?.price;
+          const rawProfit = listing.sellingPrice - item.provider.price;
           const profit = rawProfit.toFixed(2);
           const isPositive = profit >= 0;
           const isSelected = selectedListings.includes(listing.id);
@@ -331,6 +332,20 @@ const TableListingsForDeletion = ({ releaseId, provider, setListingsDeleted}) =>
           );
         })}
       </List>
+      <Snackbar
+        open={openErrorPopup}
+        autoHideDuration={4000}
+        onClose={() => setOpenErrorPopup(false)}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
+        <Alert
+          severity="error"
+          onClose={() => setOpenErrorPopup(false)}
+          sx={{ width: '100%', fontFamily: 'InterRegular' }}
+        >
+          {errorMessage}
+        </Alert>
+      </Snackbar>
     </>
   );
 };
