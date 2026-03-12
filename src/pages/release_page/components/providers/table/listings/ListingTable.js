@@ -14,12 +14,15 @@ import ListingEdit from './ListingEdit';
 import { getListings, deleteListing } from '../../../../../../services/listingService';
 import { useState, useEffect } from 'react';
 import { CircularProgress } from '@mui/material';
+import { Snackbar, Alert } from '@mui/material';
 
 const ListingTable = ({ releaseId, provider }) => {
   const [listings, setListings] = useState(null);
   const [loading, setLoading] = useState(true);
   const [selectedListings, setSelectedListings] = useState([]);
   const [editOpen, setEditOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [openErrorPopup, setOpenErrorPopup] = useState(false);
 
   const getDaysAgo = (dateString) => {
     if (!dateString) return null;
@@ -75,16 +78,23 @@ const ListingTable = ({ releaseId, provider }) => {
 
   const handleDeleteSelected = async () => {
     setLoading(true);
-    if (selectedListings.length === 1) {
-      await deleteListing(releaseId, provider.id, selectedListings[0]);
-    } else if (selectedListings.length > 1) {
-      await Promise.all(
-              selectedListings.map((lid) =>
-              deleteListing(releaseId, provider.id, lid)
-            ));
+    try {
+      if (selectedListings.length === 1) {
+        await deleteListing(releaseId, provider.id, selectedListings[0]);
+      } else if (selectedListings.length > 1) {
+        await Promise.all(
+                selectedListings.map((lid) =>
+                deleteListing(releaseId, provider.id, lid)
+              ));
+      }
+    } catch (error) {
+        setErrorMessage(error.message);
+        setOpenErrorPopup(true);
+    } finally {
+        await fetchListings();
+        setLoading(false);
     }
-    await fetchListings();
-    setLoading(false);
+    
   };
 
   if (loading) return (
@@ -371,6 +381,20 @@ const ListingTable = ({ releaseId, provider }) => {
           );
         })}
       </List>
+      <Snackbar
+        open={openErrorPopup}
+        autoHideDuration={4000}
+        onClose={() => setOpenErrorPopup(false)}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
+        <Alert
+          severity="error"
+          onClose={() => setOpenErrorPopup(false)}
+          sx={{ width: '100%', fontFamily: 'InterRegular' }}
+        >
+          {errorMessage}
+        </Alert>
+      </Snackbar>
     </>
   );
 };

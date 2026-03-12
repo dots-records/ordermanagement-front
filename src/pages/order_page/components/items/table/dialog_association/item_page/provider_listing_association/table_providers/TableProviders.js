@@ -11,34 +11,32 @@ import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useState, useEffect } from 'react';
 import { CircularProgress } from '@mui/material';
-import { getProviders } from "../../../../../../../../services/providerService";
-import TableListings from './TableListings';
+import { getProviders } from '../../../../../../../../../services/providerService';
+import TableListings from './table_listings/TableListings';
 
 
-
-
-
-const TableProviders = ({ releaseId, order, setListingAssociated, listingAssociated,
-    providerAssociated, setProviderAssociated}) => {
+const TableProviders = ({ item, providerAssociated, setProviderAssociated, order
+    ,setListingAssociated, listingAssociated
+ }) => {
     const [providers, setProviders] = useState(null);
     const [loading, setLoading] = useState(true);
+    
     
     const fetchProviders = async () => {
         setLoading(true);
         try {
-        const response = await getProviders(releaseId);
-        setProviders(response);
+            const response = await getProviders(item.release.id);
+            setProviders(response);
         } catch (err) {
-        console.log(err);
+            console.log(err);
         } finally {
-        setLoading(false);
+            setLoading(false);
         }
     };
 
     useEffect(() => {
-        if (!releaseId) return;
-            fetchProviders();
-    }, [releaseId]);
+        fetchProviders();
+    }, []);
     
 
     const handleRowToggle = (provider) => {
@@ -197,11 +195,8 @@ const TableProviders = ({ releaseId, order, setListingAssociated, listingAssocia
                 </ListItem>
                 <Collapse in={isOpen} timeout="auto" unmountOnExit>
                     <Box>
-                        <TableListings releaseId={releaseId} 
-                        provider={providerAssociated}
-                        order={order}
-                        listingAssociated={listingAssociated}
-                        setListingAssociated={setListingAssociated}/>
+                        <TableListings item={item} provider={providerAssociated} order={order} 
+                        setListingAssociated={setListingAssociated} listingAssociated={listingAssociated}/>
                     </Box>
                         
                 </Collapse>

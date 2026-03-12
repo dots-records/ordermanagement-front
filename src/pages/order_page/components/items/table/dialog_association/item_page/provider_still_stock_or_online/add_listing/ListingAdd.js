@@ -1,45 +1,40 @@
 import React, { useState } from 'react'; 
 
 import { Typography, Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField, MenuItem, IconButton, Box } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
 import { CircularProgress } from '@mui/material';
 
-import vinted_icon from '../../../../../../../../files/vinted_icon.png';
-import wallapop_icon from '../../../../../../../../files/wallapop_icon.png';
-import discogs_icon from '../../../../../../../../files/discogs_icon.png';
-import {createListingVinted, createListingWallapop, 
-    createListingDiscogs, createListingOther } from "../../../../../../../../services/listingService"
+
+import vinted_icon from '../../../../../../../../../files/vinted_icon.png';
+import wallapop_icon from '../../../../../../../../../files/wallapop_icon.png';
+import discogs_icon from '../../../../../../../../../files/discogs_icon.png';
+import { createListing } from '../../../../../../../../../services/listingService';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 
-const ListingAdd = ({providerId, releaseId, listing, setListingHandled }) => {
+const ListingAdd = ({item, handleClose }) => {
     
-    const [platform, setPlatform] = useState(listing.platform);
+    const [platform, setPlatform] = useState(item.listing.platform);
     const [link, setLink] = useState('');
-    const [sellingPrice, setSellingPrice] = useState(listing.sellingPrice);
+    const [sellingPrice, setSellingPrice] = useState(item.listing.sellingPrice);
     const [loadingListingsAdd, setLoadingListingAdd] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+    const [openErrorPopup, setOpenErrorPopup] = useState(false);
 
     const handleSave = async () => {
         try {
             setLoadingListingAdd(true);
-
-            if (platform === "Vinted") {
-                await createListingVinted(releaseId, providerId, link, sellingPrice);
-            } else if (platform === "Wallapop"){
-                await createListingWallapop(releaseId, providerId, link, sellingPrice);
-            } else if (platform === "Discogs"){
-                await createListingDiscogs(releaseId, providerId, sellingPrice);
-            } else if (platform === "Other"){
-                await createListingOther(releaseId, providerId, link, sellingPrice);
-            }
-
-            setListingHandled(true);
+            await createListing(item.release.id, item.provider.id, link, sellingPrice, platform);
             setLink('');
             setSellingPrice('');
+            handleClose()
 
         } catch (error) {
-            console.error("Error creating listing:", error);
-        } finally {
-            setLoadingListingAdd(false);
+            setErrorMessage("Try again or create manually the new listing: " + item.listing.platform + ", " + 
+                    item.listing.sellingPrice + "Eur. Error: " + error.message);
+            setOpenErrorPopup(true);
+        } finally { 
+            setLoadingListingAdd(false)
         }
     };
 
@@ -49,8 +44,7 @@ const ListingAdd = ({providerId, releaseId, listing, setListingHandled }) => {
         if (!sellingPrice || !priceRegex.test(sellingPrice)) return false;
 
         if (platform === 'Vinted' || platform === 'Wallapop' || platform === 'Other') {
-            const urlRegex = /^(https?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w-./?%&=]*)?$/;
-            if (!link || !urlRegex.test(link)) return false;
+            if (!link ) return false;
         }
         
         return true;
@@ -205,7 +199,7 @@ const ListingAdd = ({providerId, releaseId, listing, setListingHandled }) => {
                             <Button
                                 sx={{ color: 'black', fontFamily: 'InterSemiBold' }}
                                 onClick={() => {
-                                        window.open(listing.link, '_blank');
+                                        window.open(item.listing.link, '_blank');
                                 }}
                             >
                                 Previous Link
@@ -254,6 +248,20 @@ const ListingAdd = ({providerId, releaseId, listing, setListingHandled }) => {
                         <CircularProgress />
                     </Box>
                 )}
+                <Snackbar
+                    open={openErrorPopup}
+                    autoHideDuration={30000}
+                    onClose={() => setOpenErrorPopup(false)}
+                    anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+                >
+                    <Alert
+                        severity="error"
+                        onClose={() => setOpenErrorPopup(false)}
+                        sx={{ width: '100%', fontFamily: 'InterRegular' }}
+                    >
+                        {errorMessage}
+                    </Alert>
+                </Snackbar>
         </>
     );
 };

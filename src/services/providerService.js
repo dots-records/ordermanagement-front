@@ -20,8 +20,16 @@ export const createProviderInStock = async (releaseId, price, units, discConditi
         }
       });
     } catch (error) {
-      console.error('Error:', error);
-    } 
+        if (error.response) {
+            if(error.response.data.message) {
+                throw new Error(error.response.data.message)
+            } else {
+                throw new Error(error.response.data)
+            }
+        } else {
+           throw new Error(error.message);
+        }
+    }
 };
 
 export const createProviderOnline = async (releaseId, price, link, discCondition,
@@ -34,8 +42,16 @@ export const createProviderOnline = async (releaseId, price, link, discCondition
         }
       });
     } catch (error) {
-      console.error('Error:', error);
-    } 
+        if (error.response) {
+            if(error.response.data.message) {
+                throw new Error(error.response.data.message)
+            } else {
+                throw new Error(error.response.data)
+            }
+        } else {
+           throw new Error(error.message);
+        }
+    }
 };
 
 export const updateProvider = async (releaseId, providerId, type, price, link, units, discCondition,
@@ -48,8 +64,16 @@ export const updateProvider = async (releaseId, providerId, type, price, link, u
         }
       });
     } catch (error) {
-      console.error('Error:', error);
-    } 
+        if (error.response) {
+            if(error.response.data.message) {
+                throw new Error(error.response.data.message)
+            } else {
+                throw new Error(error.response.data)
+            }
+        } else {
+           throw new Error(error.message);
+        }
+    }
 };
 
 export const deleteProvider = async (releaseId, providerId) => {
@@ -60,8 +84,16 @@ export const deleteProvider = async (releaseId, providerId) => {
         }
       });
     } catch (error) {
-      console.error('Error:', error);
-    } 
+        if (error.response) {
+            if(error.response.data.message) {
+                throw new Error(error.response.data.message)
+            } else {
+                throw new Error(error.response.data)
+            }
+        } else {
+           throw new Error(error.message);
+        }
+    }
 };
 
 export const patchProviderUnits = async (releaseId, providerId, units) => {
@@ -75,7 +107,14 @@ export const patchProviderUnits = async (releaseId, providerId, units) => {
         );
         
     } catch (error) {
-      console.error('Error updating provider units:', error.response?.data || error.message);
-    throw error;
-    } 
+        if (error.response) {
+            if(error.response.data.message) {
+                throw new Error(error.response.data.message)
+            } else {
+                throw new Error(error.response.data)
+            }
+        } else {
+           throw new Error(error.message);
+        }
+    }
 };

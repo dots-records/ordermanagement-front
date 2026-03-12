@@ -6,11 +6,14 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { patchOrderStatus } from '../../../../../../services/orderService';
 import { getSelectedTableOrders } from '../../../../functions/Functions';
+import { Snackbar, Alert } from '@mui/material';
 
 const PaymentReceivedBar = ({  orderId, setOrdersPage, tableSelected, numberPage, searchTerm}) => {
     const [hoverShipping, setHoverShipping] = useState(false);
     const [hoverProgress, setHoverProgress] = useState(false);
     const [loading, setLoading] = useState(false); 
+    const [errorMessage, setErrorMessage] = useState('');
+    const [openErrorPopup, setOpenErrorPopup] = useState(false);
 
     const getProgressIconColor = (hoverProgress, hoverShipping) => {
         return hoverProgress || hoverShipping ? 'rgba(0, 0, 0, 1)' : 'rgba(0, 0, 0, 0.35)';
@@ -29,11 +32,11 @@ const PaymentReceivedBar = ({  orderId, setOrdersPage, tableSelected, numberPage
             const response = await getSelectedTableOrders(tableSelected, numberPage, searchTerm);
             setOrdersPage(response);
         } catch (error) {
-        console.error('Error:', error);
+          setErrorMessage(error.message);
+          setOpenErrorPopup(true);
         } finally {
-        setLoading(false);
-        }
-        
+          setLoading(false);
+        }  
     };
 
     const inProgressClick = async () => {
@@ -43,7 +46,8 @@ const PaymentReceivedBar = ({  orderId, setOrdersPage, tableSelected, numberPage
             const response = await getSelectedTableOrders(tableSelected, numberPage, searchTerm);
         setOrdersPage(response);
         } catch (error) {
-        console.error('Error:', error);
+          setErrorMessage(error.message);
+          setOpenErrorPopup(true);
         } finally {
         setLoading(false);
         }
@@ -51,6 +55,7 @@ const PaymentReceivedBar = ({  orderId, setOrdersPage, tableSelected, numberPage
 
 
     return (
+      <>
         <Box
           sx={{
             display: 'flex',
@@ -130,6 +135,21 @@ const PaymentReceivedBar = ({  orderId, setOrdersPage, tableSelected, numberPage
             
           </Box>
         </Box>
+        <Snackbar
+              open={openErrorPopup}
+              autoHideDuration={4000}
+              onClose={() => setOpenErrorPopup(false)}
+              anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+        >
+          <Alert
+              severity="error"
+              onClose={() => setOpenErrorPopup(false)}
+              sx={{ width: '100%', fontFamily: 'InterRegular' }}
+          >
+            {errorMessage}
+          </Alert>
+        </Snackbar>
+        </>
       );
     };
 

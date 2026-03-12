@@ -5,11 +5,16 @@ import { getSelectedTableReleases } from '../../functions/Functions';
 import AddIcon from '@mui/icons-material/Add';
 import CloseIcon from '@mui/icons-material/Close';
 import { IconButton } from '@mui/material';
+import { Snackbar, Alert } from '@mui/material';
+import { CircularProgress } from '@mui/material';
 
 
 const TableAdd = ({ setReleasesPage, setLoading, tableSelected, setCount} ) => {
     const [open, setOpen] = useState(false);
     const [inputValue, setInputValue] = useState('');
+    const [loadingReleaseAdd, setLoadingReleaseAdd] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+    const [openErrorPopup, setOpenErrorPopup] = useState(false);
 
     const handleOpen = () => {
         setOpen(true);
@@ -20,21 +25,29 @@ const TableAdd = ({ setReleasesPage, setLoading, tableSelected, setCount} ) => {
     };
 
     const  handleSave = async () => {
-        setOpen(false);
-        setLoading(true)
-        await createRelease(inputValue)
-        const response = await getSelectedTableReleases(tableSelected, 0, "");
-        setReleasesPage(response)
-        setInputValue("")
-        setCount(null)
-        setLoading(false);
-        
-        let archivedParam = null;
-        if (tableSelected === 'Active Releases') archivedParam = false;
-        else if (tableSelected === 'Inactive Releases') archivedParam = true;
-        else archivedParam = null; // All Releases
-        const count = await getReleasesCount(archivedParam);
-        setCount(count);
+        try {
+            setLoadingReleaseAdd(true)
+            await createRelease(inputValue)
+            setOpen(false);
+            setLoading(true)
+            const response = await getSelectedTableReleases(tableSelected, 0, "");
+            setReleasesPage(response)
+            setInputValue("")
+            setCount(null)
+            setLoading(false);
+            
+            let archivedParam = null;
+            if (tableSelected === 'Active Releases') archivedParam = false;
+            else if (tableSelected === 'Inactive Releases') archivedParam = true;
+            else archivedParam = null; // All Releases
+            const count = await getReleasesCount(archivedParam);
+            setCount(count);
+        } catch (error) {
+            setErrorMessage(error.message);
+            setOpenErrorPopup(true);
+        } finally {
+            setLoadingReleaseAdd(false)
+        }
         
     };
 
@@ -138,12 +151,44 @@ const TableAdd = ({ setReleasesPage, setLoading, tableSelected, setCount} ) => {
                     <Button
                         type="submit"
                         sx={{ color: 'black', fontFamily: 'InterSemiBold', p:'0.5rem'}}
-                        disabled={!isFormValid()}
+                        disabled={!isFormValid() || loadingReleaseAdd}
                     >
-                        Save
+                        {loadingReleaseAdd ? <CircularProgress size={'1.25rem'} color="inherit" /> : "Save"}
                     </Button>
                 </DialogActions>
+                {loadingReleaseAdd && (
+                    <Box
+                        sx={{
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            width: '100%',
+                            height: '100%',
+                            backgroundColor: 'rgba(255,255,255,0.7)',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            zIndex: 10,
+                        }}
+                    >
+                        <CircularProgress />
+                    </Box>
+                )}
             </Dialog>
+            <Snackbar
+                open={openErrorPopup}
+                autoHideDuration={4000}
+                onClose={() => setOpenErrorPopup(false)}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+            >
+                <Alert
+                    severity="error"
+                    onClose={() => setOpenErrorPopup(false)}
+                    sx={{ width: '100%', fontFamily: 'InterRegular' }}
+                >
+                    {errorMessage}
+                </Alert>
+            </Snackbar>
         </>
     );
 };

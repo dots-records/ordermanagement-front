@@ -100,7 +100,7 @@ const TableItems = ({ order, fetchOrder }) => {
 
                             <IconButton
                                 size="small"
-                                disabled={item.associated}
+                                disabled={item.associated || (item.listing && item.provider)}
                                 onClick={() => handleOpenDialogSwap(item)}
                                 sx={{
                                     color: 'rgba(0,0,0,0.45)',

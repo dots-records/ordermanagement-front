@@ -34,10 +34,16 @@ export const patchOrderStatus = async (orderId, newStatus) => {
                 'Content-Type': 'application/json'
             }
         });
-        console.log(`Order ${orderId} updated to status: ${newStatus}`);
     } catch (error) {
-        console.error('Error updating order status:', error.response?.data || error.message);
-        throw error;
+        if (error.response) {
+            if(error.response.data.message) {
+                throw new Error(error.response.data.message)
+            } else {
+                throw new Error(error.response.data)
+            }
+        } else {
+           throw new Error(error.message);
+        }
     }
 };
 
@@ -48,10 +54,16 @@ export const patchOrderWarning = async (orderId, warning) => {
                 'Content-Type': 'application/json'
             }
         });
-        console.log(`Order ${orderId} updated to warning: ${warning}`);
     } catch (error) {
-        console.error('Error updating order warning:', error.response?.data || error.message);
-        throw error;
+        if (error.response) {
+            if(error.response.data.message) {
+                throw new Error(error.response.data.message)
+            } else {
+                throw new Error(error.response.data)
+            }
+        } else {
+           throw new Error(error.message);
+        }
     }
 };
 
@@ -62,10 +74,16 @@ export const patchOrderInformation = async (orderId, information) => {
                 'Content-Type': 'application/json'
             }
         });
-        console.log(`Order ${orderId} updated to information: ${information}`);
     } catch (error) {
-        console.error('Error updating order information:', error.response?.data || error.message);
-        throw error;
+        if (error.response) {
+            if(error.response.data.message) {
+                throw new Error(error.response.data.message)
+            } else {
+                throw new Error(error.response.data)
+            }
+        } else {
+           throw new Error(error.message);
+        }
     }
 };
 
@@ -90,10 +108,16 @@ export const patchOrderJustAdded = async (orderId, justAdded) => {
                 'Content-Type': 'application/json'
             }
         });
-        console.log(`Order ${orderId} updated to justAdded: ${justAdded}`);
     } catch (error) {
-        console.error('Error updating order justAdded:', error.response?.data || error.message);
-        throw error;
+        if (error.response) {
+            if(error.response.data.message) {
+                throw new Error(error.response.data.message)
+            } else {
+                throw new Error(error.response.data)
+            }
+        } else {
+           throw new Error(error.message);
+        }
     }
 };
 

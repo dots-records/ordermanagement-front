@@ -8,13 +8,13 @@ import {
   Checkbox,
 } from '@mui/material';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-import { getListings} from '../../../../../../../../services/listingService';
+import { getListings } from '../../../../../../../../../../services/listingService';
 import { useState, useEffect } from 'react';
 import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
 import { CircularProgress } from '@mui/material';
 
-const TableListings = ({ releaseId, provider, order, setListingAssociated, listingAssociated }) => {
+const TableListings = ({ item, provider, order, setListingAssociated, listingAssociated }) => {
   const [listings, setListings] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -33,7 +33,7 @@ const TableListings = ({ releaseId, provider, order, setListingAssociated, listi
   const fetchListings = async () => {
     setLoading(true);
     try {
-      const dataListings = await getListings(releaseId, provider.id);
+      const dataListings = await getListings(item.release.id, provider.id);
       setListings(dataListings);
     } catch (err) {
       console.log(err);
@@ -43,10 +43,9 @@ const TableListings = ({ releaseId, provider, order, setListingAssociated, listi
   };
 
   useEffect(() => {
-        if (!provider?.id || !releaseId) return;
-
+        if (!provider?.id || !item.release.id) return;
         fetchListings();
-   }, [provider?.id, releaseId]);
+   }, [provider?.id]);
 
   if (loading) return (
     <Box
@@ -218,9 +217,6 @@ const TableListings = ({ releaseId, provider, order, setListingAssociated, listi
                     onClick={() => {
                     if (!validListing) return; // seguridad extra
                     setListingAssociated(listing); // guardar el listing seleccionado en el padre
-                    }}
-                    sx={{ 
-                    
                     }}
                 >
                     {isSelected ? (

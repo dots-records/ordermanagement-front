@@ -5,6 +5,7 @@ import ProviderTable from './table/ProviderTable';
 import {CircularProgress} from "@mui/material";
 
 const ReleaseProviders = ({ providers, loading, releaseId, setProviders, setLoading }) => {
+    
     if (loading) {
         return (
             <Box className="box-container" sx={{ width: '75%', height: '85vh', }}>

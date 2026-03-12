@@ -15,18 +15,15 @@ import CloseIcon from '@mui/icons-material/Close';
 import ItemPage from './item_page/ItemPage';
 import { useState} from 'react';
 
-const DialogAssociation = ({ open, handleClose, order, item }) => {
-  const [closable, setClosable] = useState(true)
-  if(order == null) return
-
+const DialogAssociation = ({ open, handleClose, order, item}) => {
+  if(order == null || item == null) return
+  
   return (
     <Dialog
       open={open}
       onClose={(event, reason) => {
-        if (!closable) return; 
         handleClose();
       }}
-      disableEscapeKeyDown={!closable}
       fullWidth
       PaperProps={{ sx: {
                         backgroundColor: 'white',
@@ -41,10 +38,8 @@ const DialogAssociation = ({ open, handleClose, order, item }) => {
           <Typography sx={{ fontFamily: 'InterSemiBold', fontSize: '1.5rem' }}>Associate Provider & Listing</Typography>
           <IconButton
             onClick={() => {
-              if (!closable) return;
               handleClose();
             }}
-            disabled={!closable}
             sx={{ color: 'rgba(0,0,0,0.7)' }}
           >
             <CloseIcon sx={{ fontSize: '1.5rem'}} />
@@ -54,7 +49,7 @@ const DialogAssociation = ({ open, handleClose, order, item }) => {
 
       <DialogContent sx={{p: 0}}>
         <Box sx={{ p: '1rem' }}>
-          <ItemPage item={item} order={order} setClosable={setClosable}/>
+          <ItemPage selectedItem={item} order={order} handleClose={handleClose}/>
         </Box>
       </DialogContent>
 

@@ -31,9 +31,16 @@ export const createRelease = async (discogsId) => {
         await api.post(`dots/releases`, {
             discogsId: discogsId
         });
-    } catch (err) {
-        console.error(err);
-        throw err;
+    } catch (error) {
+        if (error.response) {
+            if(error.response.data.message) {
+                throw new Error(error.response.data.message)
+            } else {
+                throw new Error(error.response.data)
+            }
+        } else {
+           throw new Error(error.message);
+        }
     }
 };
 
@@ -42,9 +49,16 @@ export const deleteReleases = async (releasesSelected) => {
         await api.delete("dots/releases", {
             data: releasesSelected
         });
-    } catch (err) {
-        console.error(err);
-        throw err;
+    } catch (error) {
+        if (error.response) {
+            if(error.response.data.message) {
+                throw new Error(error.response.data.message)
+            } else {
+                throw new Error(error.response.data)
+            }
+        } else {
+           throw new Error(error.message);
+        }
     }
 };
 
@@ -54,9 +68,16 @@ export const updateArchived = async (ids, archived) => {
             ids,
             archived
         });
-    } catch (err) {
-        console.error(err);
-        throw err;
+    } catch (error) {
+        if (error.response) {
+            if(error.response.data.message) {
+                throw new Error(error.response.data.message)
+            } else {
+                throw new Error(error.response.data)
+            }
+        } else {
+           throw new Error(error.message);
+        }
     }
 };
 
@@ -85,8 +106,15 @@ export const patchReleaseNote = async (releaseId, note) => {
         });
         console.log(`Release ${releaseId} updated to note: ${note}`);
     } catch (error) {
-        console.error('Error updating release note:', error.response?.data || error.message);
-        throw error;
+        if (error.response) {
+            if(error.response.data.message) {
+                throw new Error(error.response.data.message)
+            } else {
+                throw new Error(error.response.data)
+            }
+        } else {
+           throw new Error(error.message);
+        }
     }
 };
 

@@ -1,63 +1,27 @@
 import api from '../api/axiosConfig';
 
-export const createListingVinted = async (releaseId, providerId, 
-    link, sellingPrice) => {
+export const createListing = async (releaseId, providerId, 
+    link, sellingPrice, platform) => {
     try {
         await api.post(`dots/releases/${releaseId}/providers/${providerId}/listings`, 
-            {platform: "Vinted", link: link, sellingPrice: sellingPrice }, {
+            {platform: platform, link: link, sellingPrice: sellingPrice }, {
         headers: {
             'Content-Type': 'application/json' 
         }
       });
     } catch (error) {
-      console.error('Error:', error);
-    } 
-};
-
-export const createListingWallapop = async (releaseId, providerId, 
-    link, sellingPrice) => {
-    try {
-        await api.post(`dots/releases/${releaseId}/providers/${providerId}/listings`, 
-            {platform: "Wallapop", link: link, sellingPrice: sellingPrice }, {
-        headers: {
-            'Content-Type': 'application/json' 
+        if (error.response) {
+            if(error.response.data.message) {
+                throw new Error(error.response.data.message)
+            } else {
+                throw new Error(error.response.data)
+            }
+        } else {
+           throw new Error(error.message);
         }
-      });
-    } catch (error) {
-      console.error('Error:', error);
-    } 
+    }
 };
 
-export const createListingDiscogs = async (releaseId, providerId, 
-    sellingPrice) => {
-    try {
-        await api.post(`dots/releases/${releaseId}/providers/${providerId}/listings`, 
-            {platform: "Discogs", sellingPrice: sellingPrice }, {
-        headers: {
-            'Content-Type': 'application/json' 
-        }
-      });
-    } catch (error) {
-      console.error('Error:', error);
-    } 
-};
-
-
-
-
-export const createListingOther = async (releaseId, providerId, 
-    link, sellingPrice) => {
-    try {
-        await api.post(`dots/releases/${releaseId}/providers/${providerId}/listings`, 
-            {platform: "Other", link: link, sellingPrice: sellingPrice }, {
-        headers: {
-            'Content-Type': 'application/json' 
-        }
-      });
-    } catch (error) {
-      console.error('Error:', error);
-    } 
-};
 
 export const getListings = async (releaseId, providerId) => {
     try {
@@ -66,6 +30,24 @@ export const getListings = async (releaseId, providerId) => {
     } catch (error) {
       console.error('Error:', error);
     } 
+};
+
+export const getExistsListing = async (releaseId, providerId, listingId) => {
+    try {
+        const response = 
+            await api.get(`dots/releases/${releaseId}/providers/${providerId}/listings/${listingId}`);
+        return response.data;
+    }catch (error) {
+        if (error.response) {
+            if(error.response.data.message) {
+                throw new Error(error.response.data.message)
+            } else {
+                throw new Error(error.response.data)
+            }
+        } else {
+           throw new Error(error.message);
+        }
+    }
 };
 
 export const patchSellingPriceListing = async (releaseId, providerId, listingId, newSellingPrice) => {
@@ -79,9 +61,16 @@ export const patchSellingPriceListing = async (releaseId, providerId, listingId,
         );
         
     } catch (error) {
-      console.error('Error updating listing selling price:', error.response?.data || error.message);
-    throw error;
-    } 
+        if (error.response) {
+            if(error.response.data.message) {
+                throw new Error(error.response.data.message)
+            } else {
+                throw new Error(error.response.data)
+            }
+        } else {
+           throw new Error(error.message);
+        }
+    }
 };
 
 
@@ -95,10 +84,17 @@ export const patchLinkListing = async (releaseId, providerId, listingId, newLink
             }
         );
         
-    } catch (error) {
-      console.error('Error updating listing link:', error.response?.data || error.message);
-    throw error;
-    } 
+    }  catch (error) {
+        if (error.response) {
+            if(error.response.data.message) {
+                throw new Error(error.response.data.message)
+            } else {
+                throw new Error(error.response.data)
+            }
+        } else {
+           throw new Error(error.message);
+        }
+    }
 };
 
 export const deleteListing = async (releaseId, providerId, listingId) => {
@@ -106,7 +102,14 @@ export const deleteListing = async (releaseId, providerId, listingId) => {
         await api.delete(`dots/releases/${releaseId}/providers/${providerId}/listings/${listingId}`);
         
     } catch (error) {
-      console.error('Error deleting listing', error.response?.data || error.message);
-    throw error;
-    } 
+        if (error.response) {
+            if(error.response.data.message) {
+                throw new Error(error.response.data.message)
+            } else {
+                throw new Error(error.response.data)
+            }
+        } else {
+           throw new Error(error.message);
+        }
+    }
 };

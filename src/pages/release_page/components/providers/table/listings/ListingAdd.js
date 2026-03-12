@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 
 import { Typography, Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField, MenuItem, IconButton, Box } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
+import { Snackbar, Alert } from '@mui/material';
 import { CircularProgress } from '@mui/material';
 
 import vinted_icon from '../../../../../../files/vinted_icon.png';
 import wallapop_icon from '../../../../../../files/wallapop_icon.png';
 import discogs_icon from '../../../../../../files/discogs_icon.png';
-import {createListingVinted, createListingWallapop, 
-    createListingDiscogs, createListingOther } from "../../../../../../services/listingService"
+import {createListing } from "../../../../../../services/listingService"
 
 
 const ListingAdd = ({ open, onClose, providerId, releaseId }) => {
@@ -17,28 +17,28 @@ const ListingAdd = ({ open, onClose, providerId, releaseId }) => {
     const [link, setLink] = useState('');
     const [sellingPrice, setSellingPrice] = useState('');
     const [loadingListingsAdd, setLoadingListingAdd] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+    const [openErrorPopup, setOpenErrorPopup] = useState(false);
 
     const handleSave = async () => {
         try {
             setLoadingListingAdd(true);
 
-            if (platform === "Vinted") {
-                await createListingVinted(releaseId, providerId, link, sellingPrice);
-            } else if (platform === "Wallapop"){
-                await createListingWallapop(releaseId, providerId, link, sellingPrice);
-            } else if (platform === "Discogs"){
-                await createListingDiscogs(releaseId, providerId, sellingPrice);
-            } else if (platform === "Other"){
-                await createListingOther(releaseId, providerId, link, sellingPrice);
-            }
-
-
+            await createListing(
+                releaseId,
+                providerId,
+                link,
+                sellingPrice,
+                platform
+            );
             onClose();
             setLink('');
             setSellingPrice('');
 
         } catch (error) {
-            console.error("Error creating listing:", error);
+            setErrorMessage(error.message);
+            setOpenErrorPopup(true);
+                
         } finally {
             setLoadingListingAdd(false);
         }
@@ -50,8 +50,7 @@ const ListingAdd = ({ open, onClose, providerId, releaseId }) => {
         if (!sellingPrice || !priceRegex.test(sellingPrice)) return false;
 
         if (platform === 'Vinted' || platform === 'Wallapop' || platform === 'Other') {
-            const urlRegex = /^(https?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w-./?%&=]*)?$/;
-            if (!link || !urlRegex.test(link)) return false;
+            if (!link) return false;
         }
         
         return true;
@@ -276,6 +275,20 @@ const ListingAdd = ({ open, onClose, providerId, releaseId }) => {
                     </Box>
                 )}
             </Dialog>
+            <Snackbar
+                open={openErrorPopup}
+                autoHideDuration={4000}
+                onClose={() => setOpenErrorPopup(false)}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+            >
+                <Alert
+                    severity="error"
+                    onClose={() => setOpenErrorPopup(false)}
+                    sx={{ width: '100%', fontFamily: 'InterRegular' }}
+                >
+                    {errorMessage}
+                </Alert>
+            </Snackbar>
         </>
     );
 };

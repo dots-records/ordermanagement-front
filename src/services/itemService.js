@@ -1,5 +1,23 @@
 import api from '../api/axiosConfig';
 
+export const getItem = async (orderId, itemId) => {
+    try {
+        const response = await api.get(`dots/orders/${orderId}/items/${itemId}`);
+        return response.data;
+      
+    } catch (error) {
+        if (error.response) {
+            if(error.response.data.message) {
+                throw new Error(error.response.data.message)
+            } else {
+                throw new Error(error.response.data)
+            }
+        } else {
+           throw new Error(error.message);
+        }
+    }
+};
+
 export const patchOrderItemListing = async (orderId, itemId, listingId, listingPlatform,
     listingLink, listingSellingPrice) => {
     try {
@@ -10,8 +28,16 @@ export const patchOrderItemListing = async (orderId, itemId, listingId, listingP
         }
       });
     } catch (error) {
-      console.error('Error:', error);
-    } 
+        if (error.response) {
+            if(error.response.data.message) {
+                throw new Error(error.response.data.message)
+            } else {
+                throw new Error(error.response.data)
+            }
+        } else {
+           throw new Error(error.message);
+        }
+    }
 };
 
 export const patchOrderItemProvider = async (orderId, itemId, providerId, providerType,
@@ -27,8 +53,16 @@ export const patchOrderItemProvider = async (orderId, itemId, providerId, provid
         }
       });
     } catch (error) {
-      console.error('Error:', error);
-    } 
+        if (error.response) {
+            if(error.response.data.message) {
+                throw new Error(error.response.data.message)
+            } else {
+                throw new Error(error.response.data)
+            }
+        } else {
+           throw new Error(error.message);
+        }
+    }
 };
 
 export const patchOrderItemRelease = async (orderId, itemId, releaseId, releaseName, releaseArtists,
@@ -47,8 +81,16 @@ export const patchOrderItemRelease = async (orderId, itemId, releaseId, releaseN
         }
       });
     } catch (error) {
-      console.error('Error:', error);
-    } 
+        if (error.response) {
+            if(error.response.data.message) {
+                throw new Error(error.response.data.message)
+            } else {
+                throw new Error(error.response.data)
+            }
+        } else {
+           throw new Error(error.message);
+        }
+    }
 };
 
 export const patchOrderItemAssociated = async (orderId, itemId, associated) => {
@@ -60,6 +102,14 @@ export const patchOrderItemAssociated = async (orderId, itemId, associated) => {
         }
       });
     } catch (error) {
-      console.error('Error:', error);
-    } 
+        if (error.response) {
+            if(error.response.data.message) {
+                throw new Error(error.response.data.message)
+            } else {
+                throw new Error(error.response.data)
+            }
+        } else {
+           throw new Error(error.message);
+        }
+    }
 };

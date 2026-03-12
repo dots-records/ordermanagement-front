@@ -10,7 +10,7 @@ const OrderPayment = ({ order, loading, fetchOrder }) => {
 
     if (loading) {
         return (
-            <Box className="box-container" sx={{ width: "30%" }}>
+            <Box className="box-container" sx={{ width: "35%" }}>
                 <Typography 
                     sx={{ 
                         textAlign: "left", 
@@ -41,7 +41,7 @@ const OrderPayment = ({ order, loading, fetchOrder }) => {
 
     return (
         
-        <Box className="box-container" sx={{ width: "30%", overflowY: "auto",  
+        <Box className="box-container" sx={{ width: "35%", overflowY: "auto",  
                 overflowX: "hidden"   }}>
             <Box sx={{ display: 'flex'}}>
                 <Typography 

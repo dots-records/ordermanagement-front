@@ -7,7 +7,8 @@ const OrderItems = ({ order, loading, fetchOrder }) => {
 
     if (loading) {
         return (
-            <Box className="box-container" sx={{ width: "40%" }}>
+            <Box className="box-container" sx={{ width: "35%" ,
+                height: "85vh"}}>
                 <Typography 
                     sx={{ 
                         textAlign: "left", 
@@ -34,8 +35,8 @@ const OrderItems = ({ order, loading, fetchOrder }) => {
     return (
         <Box className="box-container" 
             sx={{ 
-                width: "40%",
-                maxHeight: "35vh",
+                width: "35%",
+                height: "85vh",
                 overflowY: "auto",  
                 overflowX: "hidden"   
             }}

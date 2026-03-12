@@ -1,11 +1,13 @@
 import React, { useState } from 'react'; 
 import { useEffect } from 'react';
-import { Typography, Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField, MenuItem, IconButton, Box } from '@mui/material';
+import { Typography, Button, Dialog, DialogTitle, DialogContent, DialogActions, 
+    TextField, MenuItem, IconButton, Box, CircularProgress } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { updateProvider, getProviders, deleteProvider } from "../../../../../services/providerService.js"
 import { ToggleButton, ToggleButtonGroup } from '@mui/material';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import LanguageIcon from '@mui/icons-material/Language';
+import { Snackbar, Alert } from '@mui/material';
 
 
 const conditionOptions = [
@@ -27,6 +29,9 @@ const ProviderEdit = ({ releaseId, setProviders, setLoading, openEdit, setOpenEd
     const [description, setDescription] = useState('');
     const [discCondition, setDiscCondition] = useState('');
     const [sleeveCondition, setSleeveCondition] = useState('');
+    const [loadingProvider, setLoadingProvider] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+    const [openErrorPopup, setOpenErrorPopup] = useState(false);
 
     
 
@@ -48,29 +53,39 @@ const ProviderEdit = ({ releaseId, setProviders, setLoading, openEdit, setOpenEd
 
     const handleSave = async () => {
         try {
-            setLoading(true);
+            setLoadingProvider(true)
             await updateProvider(releaseId, provider.id, providerType, price,  link,  units,
                 discCondition, sleeveCondition, description);
+            setLoading(true);
             const dataProviders = await getProviders(releaseId);
             setProviders(dataProviders);
             handleClose();
         } catch (error) {
-            console.error("Error saving provider:", error);
+            setErrorMessage(error.message);
+            setOpenErrorPopup(true);
+                
+        } finally {
+            setLoadingProvider(false)
+            setLoading(false);
         }
-        setLoading(false);
     };
 
     const handleDelete = async () => {
         try {
-            setLoading(true);
+            setLoadingProvider(true)
             await deleteProvider(releaseId, provider.id);
+            setLoading(true);
             const dataProviders = await getProviders(releaseId);
             setProviders(dataProviders);
             handleClose();
         } catch (error) {
-            console.error("Error saving provider:", error);
+            setErrorMessage(error.message);
+            setOpenErrorPopup(true);
+                
+        } finally {
+            setLoadingProvider(false)
+            setLoading(false);
         }
-        setLoading(false);
     };
 
     const isFormValid = () => {
@@ -80,8 +95,7 @@ const ProviderEdit = ({ releaseId, setProviders, setLoading, openEdit, setOpenEd
         const unitsRegex = /^[1-9]\d*\s*$/;
         if (providerType === "In Stock" && (!units || !unitsRegex.test(units))) return false;
 
-        const urlRegex = /^(https?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w-./?%&=]*)?$/;
-        if (providerType === "Online" && (!link || !urlRegex.test(link))) return false;
+        if (providerType === "Online" && (!link)) return false;
 
         if (!discCondition || !sleeveCondition ) return false;
 
@@ -350,18 +364,52 @@ const ProviderEdit = ({ releaseId, setProviders, setLoading, openEdit, setOpenEd
                     <Button
                         onClick={handleDelete}
                         sx={{ color: 'rgba(231, 93, 93, 1)', fontFamily: 'InterSemiBold', p:'0.5rem' }}
+                        disabled={ loadingProvider}
                     >
-                        Delete
+                        {loadingProvider ? <CircularProgress size={'1.25rem'} color="inherit" /> : "Delete"}
                     </Button>
                     <Button
                         type="submit"
                         sx={{ color: 'black', fontFamily: 'InterSemiBold', p:'0.5rem' }}
-                        disabled={!isFormValid()}
+                        disabled={!isFormValid() || loadingProvider}
                     >
-                        Save
+                        {loadingProvider ? <CircularProgress size={'1.25rem'} color="inherit" /> : "Update"}
                     </Button>
                 </DialogActions>
+
+                {loadingProvider && (
+                    <Box
+                        sx={{
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            width: '100%',
+                            height: '100%',
+                            backgroundColor: 'rgba(255,255,255,0.7)',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            zIndex: 10,
+                        }}
+                    >
+                        <CircularProgress />
+                    </Box>
+                )}
             </Dialog>
+            <Snackbar
+                open={openErrorPopup}
+                autoHideDuration={4000}
+                onClose={() => setOpenErrorPopup(false)}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+            >
+                <Alert
+                    severity="error"
+                    onClose={() => setOpenErrorPopup(false)}
+                    sx={{ width: '100%', fontFamily: 'InterRegular' }}
+                >
+                    {errorMessage}
+                </Alert>
+            </Snackbar>
         </>
     );
 };

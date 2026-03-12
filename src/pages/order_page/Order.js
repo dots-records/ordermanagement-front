@@ -8,36 +8,37 @@ import OrderInfo from './components/information/OrderInfo';
 import OrderItems from './components/items/OrderItems';
 import OrderPayment from './components/payment/OrderPayment';
 import DashboardLayout from "../../globalComponents/dashboard_layout/DashboardLayout";
+import { Snackbar, Alert } from '@mui/material';
 
 const Order = () => {
     const { orderId } = useParams();
     const [order, setOrder] = useState();
     const [loading, setLoading] = useState(true);
-
+    const [errorMessage, setErrorMessage] = useState('');
+    const [openErrorPopup, setOpenErrorPopup] = useState(false);
     
     const fetchData = async () => {
-                    try {
-                        setLoading(true)
-                        const data = await getOrder(orderId);
-                        
-                        if (data.justAdded) {
-                            await patchOrderJustAdded(orderId, false)
-                        }    
-                        setOrder(data);
-                        setLoading(false)
-                        
-                      } catch(err) {
-                        console.log(err);
-                      }
-                };
+        try {
+            setLoading(true)
+            const data = await getOrder(orderId);            
+            if (data != null && data.justAdded) {
+                await patchOrderJustAdded(orderId, false)
+            }    
+            setOrder(data);           
+        } catch (error) {
+            setErrorMessage(error.message);
+            setOpenErrorPopup(true); 
+        } finally {
+            setLoading(false) 
+        }
+    };
 
-        useEffect(() => {
-                
-                fetchData();
-        }, []);
+    useEffect(() => {
+        fetchData();
+    }, []);
 
 
-        if (!loading && !order) {
+    if (!loading && !order) {
         return (
             <DashboardLayout>
                 <Box
@@ -54,6 +55,20 @@ const Order = () => {
                 >
                     Order not available
                 </Box>
+                <Snackbar
+                    open={openErrorPopup}
+                    autoHideDuration={4000}
+                    onClose={() => setOpenErrorPopup(false)}
+                    anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+                >
+                    <Alert
+                        severity="error"
+                        onClose={() => setOpenErrorPopup(false)}
+                        sx={{ width: '100%', fontFamily: 'InterRegular' }}
+                    >
+                        {errorMessage}
+                    </Alert>
+                </Snackbar>
             </DashboardLayout>
         );
     }
@@ -62,9 +77,10 @@ const Order = () => {
         <DashboardLayout>
             <Box sx={{ display: 'flex', flexDirection: 'row', gap: '1rem' , alignItems: 'flex-start'}}>
                 <OrderInfo order={order} loading={loading} />
-                <OrderItems order={order} loading={loading} fetchOrder={fetchData} />
+                <OrderItems order={order} loading={loading} fetchOrder={fetchData} setOrder={setOrder} />
                 <OrderPayment order={order} loading={loading} fetchOrder={fetchData} />
             </Box>
+            
         </DashboardLayout>
       
   );

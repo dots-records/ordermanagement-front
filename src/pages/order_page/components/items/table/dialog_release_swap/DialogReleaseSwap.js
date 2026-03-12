@@ -13,24 +13,40 @@ import {
   Chip
 } from '@mui/material';
 import { CircularProgress } from '@mui/material';
-import React, { useState } from 'react'; 
+import React, { useState, useEffect } from 'react'; 
 import CloseIcon from '@mui/icons-material/Close';
 import { getRelease } from '../../../../../../services/releaseService';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import { patchOrderItemRelease } from '../../../../../../services/itemService';
+import { getSelectedTableReleases } from '../../../../../releases/functions/Functions';
+import BoxReleases from './BoxReleases';
 
 
 
 const DialogReleaseSwap = ({ open, handleClose, order, item }) => {
     const [releaseId, setReleaseId] = useState('');
     const [loading, setLoading] = useState(false);
-    const [errorMessage, setErrorMessage] = useState(null);
+    const [errorMessage, setErrorMessage] = useState('');
+    const [openErrorPopup, setOpenErrorPopup] = useState(false);
+    const [loadingTable, setLoadingTable] = useState(true);
+    const [releasesPage, setReleasesPage] = useState(null);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoadingTable(true)
+            const response = await getSelectedTableReleases('Active Releases', 0, "")
+            setReleasesPage(response)
+            setLoadingTable(false)
+            
+        };
+        fetchData();
+    }, []);
 
     const handleSave = async () => {
         try {
+            
             setLoading(true);
-
             const release = await getRelease(releaseId)
 
             if (!release) {
@@ -41,12 +57,14 @@ const DialogReleaseSwap = ({ open, handleClose, order, item }) => {
             }
             
             await patchOrderItemRelease(order.id, item.id, release.id, release.title, release.artists, release.thumb);
-
+            
             handleClose();
             setReleaseId('');
 
         } catch (error) {
-            setErrorMessage(error.message || "Error inesperado");
+            setErrorMessage(error.message);
+            setOpenErrorPopup(true);
+                
         } finally {
             setLoading(false);
         }
@@ -102,7 +120,7 @@ const DialogReleaseSwap = ({ open, handleClose, order, item }) => {
                         color: 'black',
                         borderRadius: '0.5rem',
                         p: '1rem',
-                        minWidth: '30vw'
+                        minWidth: '60vw'
                     }
                 }}
             >
@@ -121,12 +139,13 @@ const DialogReleaseSwap = ({ open, handleClose, order, item }) => {
 
                 <DialogContent sx={{p: 0}}>
                     <Box sx={{ p: '1rem' }}>
-                        <TextField
-                            label="Release Id"
-                            value={releaseId}
-                            onChange={(e) => setReleaseId(e.target.value)}
-                            {...minimalTextField}
-                            required
+                        <BoxReleases  
+                            loading={loadingTable}
+                            setLoading={setLoadingTable}
+                            releasesPage = {releasesPage}
+                            setReleasesPage = {setReleasesPage}
+                            setReleaseId = {setReleaseId}
+                            releaseId={releaseId}
                         />
                     </Box>
                 </DialogContent>
@@ -161,19 +180,15 @@ const DialogReleaseSwap = ({ open, handleClose, order, item }) => {
 
             </Dialog>
             <Snackbar
-                open={!!errorMessage}
+                open={openErrorPopup}
                 autoHideDuration={4000}
-                onClose={() => setErrorMessage(null)}
-                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                onClose={() => setOpenErrorPopup(false)}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
             >
                 <Alert
                     severity="error"
-                    variant="filled"
-                    sx={{
-                        fontFamily: 'InterRegular',
-                        fontSize: '0.8125rem',
-                        borderRadius: '0.25rem'
-                    }}
+                    onClose={() => setOpenErrorPopup(false)}
+                    sx={{ width: '100%', fontFamily: 'InterRegular' }}
                 >
                     {errorMessage}
                 </Alert>

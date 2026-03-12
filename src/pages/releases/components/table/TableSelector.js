@@ -6,6 +6,7 @@ import { getReleasesCount } from '../../../../services/releaseService';
 
 const TableSelector = ({ setLoading, setTableSelected, tableSelected, setReleasesPage, searchTerm, setSearchTerm, setReleasesSelected, setCount}) => {
     const [anchorSel, setAnchorSel] = useState(null);
+    
   
     const handleClickSel = (event) => {
       setAnchorSel(event.currentTarget); // Establece el elemento que dispara el menú
