@@ -3,16 +3,18 @@ import { Box, Typography, List, ListItem, IconButton, Dialog, DialogTitle, Dialo
  } from "@mui/material"; 
 import React, { useState, useEffect } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
-import AddIcon from '@mui/icons-material/Add';
-import { createPayout } from '../../../../../services/paymentService'; // <- importamos tu servicio
-import { patchOrderPaymentId } from "../../../../../services/orderService";
+import EditIcon from '@mui/icons-material/Edit';
+import { createPaymentAssociatedToOrder } from "../../../../../services/paymentService";
+import { Snackbar, Alert, CircularProgress } from '@mui/material';
 
 const PaymentAdd = ({ order, fetchOrder, isOrderFullyAssociated }) => {
 
     const [open, setOpen] = useState(false);
     const [prices, setPrices] = useState({});
     const [editing, setEditing] = useState({});
-    
+    const [loadingPaymentAdd, setLoadingPaymentAdd] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+    const [openErrorPopup, setOpenErrorPopup] = useState(false);
 
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -20,6 +22,7 @@ const PaymentAdd = ({ order, fetchOrder, isOrderFullyAssociated }) => {
     const isFormValid = () => true;
 
     const handleSave = async () => {
+        setLoadingPaymentAdd(true)
         const totals = Object.values(prices).reduce(
             (acc, item) => {
                 acc.provider += Number(item.providerPrice || 0);
@@ -30,13 +33,15 @@ const PaymentAdd = ({ order, fetchOrder, isOrderFullyAssociated }) => {
         );
 
         try {
-            const response = await createPayout(order.id, totals.provider, totals.selling);
-            const paymentId = response.data;
-            await patchOrderPaymentId(order.id, paymentId);
+            await createPaymentAssociatedToOrder(order.id, totals.provider, totals.selling);
             fetchOrder();
             handleClose();
         } catch (error) {
-            console.error('Error creating payout:', error);
+            setErrorMessage(error.message);
+            setOpenErrorPopup(true);
+                
+        } finally {
+            setLoadingPaymentAdd(false);
         }
     };
 
@@ -211,18 +216,18 @@ const PaymentAdd = ({ order, fetchOrder, isOrderFullyAssociated }) => {
 
     return (
         <>
-            <AddIcon
+            <EditIcon
                 onClick={() => {
-                    if (isOrderFullyAssociated && order.paymentId == null) {
+                    if (isOrderFullyAssociated) {
                         handleOpen();
                     }
                 }}
                 sx={{
                     fontSize: '1.25rem',
-                    color: isOrderFullyAssociated && (order.paymentId == null) ? 'rgba(0,0,0,0.6)' : 'rgba(0,0,0,0.25)',
-                    cursor: isOrderFullyAssociated && (order.paymentId == null) ? 'pointer' : 'default',
+                    color: isOrderFullyAssociated ? 'rgba(0,0,0,0.6)' : 'rgba(0,0,0,0.25)',
+                    cursor: isOrderFullyAssociated  ? 'pointer' : 'default',
                     '&:hover': {
-                        color: isOrderFullyAssociated && (order.paymentId == null) ? 'rgba(0,0,0,1)' : 'rgba(0,0,0,0.25)',
+                        color: isOrderFullyAssociated  ? 'rgba(0,0,0,1)' : 'rgba(0,0,0,0.25)',
                     },
                 }}
             />
@@ -339,10 +344,42 @@ const PaymentAdd = ({ order, fetchOrder, isOrderFullyAssociated }) => {
                         type="submit"
                         sx={{ color: 'black', fontFamily: 'InterSemiBold', p:'0.5rem'}}
                     >
-                        Save
+                        {loadingPaymentAdd ? <CircularProgress size={'1.25rem'} color="inherit" /> : "Save"}
                     </Button>
                 </DialogActions>
+                {loadingPaymentAdd && (
+                    <Box
+                        sx={{
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            width: '100%',
+                            height: '100%',
+                            backgroundColor: 'rgba(255,255,255,0.7)',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            zIndex: 10,
+                        }}
+                    >
+                        <CircularProgress />
+                    </Box>
+                )}
             </Dialog>
+            <Snackbar
+                open={openErrorPopup}
+                autoHideDuration={4000}
+                onClose={() => setOpenErrorPopup(false)}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+            >
+                <Alert
+                    severity="error"
+                    onClose={() => setOpenErrorPopup(false)}
+                    sx={{ width: '100%', fontFamily: 'InterRegular' }}
+                >
+                    {errorMessage}
+                </Alert>
+            </Snackbar>
         </>
     );
 };

@@ -136,6 +136,14 @@ const TableItems = ({ order, fetchOrder }) => {
                                 <IconButton
                                     size="small"
                                     onClick={() => handleOpenDialog(item)}
+                                    disabled={order.status == "Payment Pending" || 
+                                            order.status == "Invoice Sent" ||
+                                            order.status == "Cancelled (Non-Paying Buyer)" ||
+                                            order.status == "Cancelled (Item Unavailable)" ||
+                                            order.status == "Cancelled (Per Buyer's Request)" ||
+                                            order.status == "Shipped" ||
+                                            order.status == "Other" 
+                                    }
                                     sx={{
                                         color: 'rgba(0,0,0,0.45)',
                                         

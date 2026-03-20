@@ -104,9 +104,7 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                         <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.65)', width: '1%' }}>
                             It.
                         </TableCell>
-                        <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.65)', width: '1%' }}>
-                            Pay.
-                        </TableCell>
+                        
 
                         <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.65)', width: '1%' }}>
                             Warn.
@@ -144,7 +142,6 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                             const isReadyToPack =
                                     order.status === "Payment Received" &&
                                     order.items?.every(item => item.associated === true) &&
-                                    order.paymentId != null &&
                                     (!order.warning || order.warning.trim() === "");
 
                             return (
@@ -391,34 +388,7 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
 
                                 </TableCell>
 
-                                <TableCell sx={{ textAlign: 'center' }}>
-                                    <Button
-                                        variant="outlined"
-                                        size="small"
-                                        sx={{
-                                            width: '2rem',
-                                            height: '2rem',
-                                            minWidth: '2rem',
-                                            borderRadius: '0.375rem',
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                            borderColor: 'rgba(0,0,0,0.2)',
-                                            backgroundColor: 'white',
-                                            '&:hover': {
-                                                backgroundColor: 'rgba(0,0,0,0.05)',
-                                                borderColor: 'rgba(0,0,0,0.3)',
-                                            },
-                                        }}
-                                    >
-                                        {order.paymentId != null     ? (
-                                            <CheckIcon sx={{ color: 'rgba(0,0,0,0.65)', fontSize: '1.125rem' }} />
-                                        ) : (
-                                            <PriorityHighRoundedIcon sx={{ color: 'rgba(0,0,0,0.65)', fontSize: '1.125rem'}} />
-                                        )}
-                                    </Button>
-
-                                </TableCell>
+                                
 
                                 <TableCell sx={{ textAlign: 'center' }}>
                                     <Button

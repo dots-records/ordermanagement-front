@@ -2,7 +2,7 @@ import { Box, Typography, List, ListItem, IconButton, Dialog, DialogTitle, Dialo
     DialogActions, Button, CircularProgress
  } from "@mui/material"; 
 import React, { useState, useEffect } from 'react';
-import { createPayout, getPayout } from '../../../../../services/paymentService'; 
+import {  getPayment } from '../../../../../services/paymentService'; 
 
 const PaymentInfo = ({ order, isOrderFullyAssociated }) => {
     
@@ -15,7 +15,7 @@ const PaymentInfo = ({ order, isOrderFullyAssociated }) => {
         const fetchPayment = async () => {
             setLoading(true);
             try {
-                const response = await getPayout(order.paymentId);
+                const response = await getPayment(order.id);
                 setPayment(response);
             } catch (e) {
                 console.error(e);
@@ -23,7 +23,7 @@ const PaymentInfo = ({ order, isOrderFullyAssociated }) => {
                 setLoading(false);
             }
         };
-        if (isOrderFullyAssociated && (order.paymentId != null)) {
+        if (isOrderFullyAssociated) {
             fetchPayment();
         } else {
             setLoading(false);
@@ -50,7 +50,7 @@ const PaymentInfo = ({ order, isOrderFullyAssociated }) => {
         );
     }
     
-    if (!isOrderFullyAssociated || (order.paymentId == null) || payment == null) {
+    if (!isOrderFullyAssociated || (order.id == null) || payment == null) {
         return
     }
     

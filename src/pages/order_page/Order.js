@@ -24,6 +24,12 @@ const Order = () => {
             if (data != null && data.justAdded) {
                 await patchOrderJustAdded(orderId, false)
             }    
+            const isOrderFullyAssociated = data.items?.every(
+                item => item.associated === true
+            );
+            if(isOrderFullyAssociated) {
+                //fetchpayment
+            }
             setOrder(data);           
         } catch (error) {
             setErrorMessage(error.message);
