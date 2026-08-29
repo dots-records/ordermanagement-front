@@ -92,13 +92,13 @@ const PaymentInfo = ({ order, isOrderFullyAssociated }) => {
                         <Typography
                             sx={sellingStyle}
                         >
-                            {payment.payout.toFixed(2)} €
+                            {payment?.payout?.toFixed(2)} €
                         </Typography>
                         
                         <Typography
                             sx={providerStyle}
                         >
-                            {payment.cost.toFixed(2)} €
+                            {payment?.cost?.toFixed(2)} €
                         </Typography>
                     </Box>
                 </ListItem>
@@ -118,9 +118,15 @@ const PaymentInfo = ({ order, isOrderFullyAssociated }) => {
                     </Typography>
                     <Box sx={{ ml: 'auto', display: 'flex' }}>
                         <Typography
-                            sx={sellingStyle}
+                            sx={{
+                                textAlign: 'right',
+                                fontSize: '0.75rem',
+                                fontFamily: 'InterSemiBold',
+                                color: 'rgba(9, 123, 39, 0.85)',
+                                flexShrink: 0,
+                            }}
                         >
-                            {benefit.toFixed(2)} €
+                            {benefit?.toFixed(2)} €
                         </Typography>
                     </Box>
                 </ListItem>

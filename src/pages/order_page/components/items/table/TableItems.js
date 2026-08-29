@@ -11,6 +11,7 @@ import Popover from '@mui/material/Popover';
 import SelectedProvider from "./item_information/SelectedProvider";
 import SelectedListing from "./item_information/SelectedListing";
 import AddIcon from '@mui/icons-material/Add';
+import Tooltip from "@mui/material/Tooltip"
 
 const TableItems = ({ order, fetchOrder }) => {
     const [dialogOpen, setDialogOpen] = useState(false);
@@ -83,7 +84,7 @@ const TableItems = ({ order, fetchOrder }) => {
                                 {item.release.artists.map(artist => artist.name).join(', ')}
                             </Typography>
                             <Typography sx={{ fontFamily: 'InterRegular', fontSize: '0.5625rem', color: 'rgba(0,0,0,0.5)'}}>
-                                {"Condition of Item: "}
+                                {"Condition of Item (From Order): "}
                                 {item.discCondition}
                                 {" "}
                                 {item.sleeveCondition}
@@ -133,28 +134,64 @@ const TableItems = ({ order, fetchOrder }) => {
                             </IconButton>
                                                 
                             {!item.associated && (
-                                <IconButton
-                                    size="small"
-                                    onClick={() => handleOpenDialog(item)}
-                                    disabled={order.status == "Payment Pending" || 
-                                            order.status == "Invoice Sent" ||
-                                            order.status == "Cancelled (Non-Paying Buyer)" ||
-                                            order.status == "Cancelled (Item Unavailable)" ||
-                                            order.status == "Cancelled (Per Buyer's Request)" ||
-                                            order.status == "Shipped" ||
-                                            order.status == "Other" 
+                                <Tooltip
+                                    title={
+                                        order.status === "Payment Pending"
+                                            ? "Stock associaton unavailable, order is pending payment."
+                                            : order.status === "Invoice Sent"
+                                            ? "Stock associaton unavailable, the invoice has been sent but not paid yet."
+                                            : order.status === "Cancelled (Non-Paying Buyer)"
+                                            ? "Stock associaton unavailable, order was cancelled."
+                                            : order.status === "Cancelled (Item Unavailable)"
+                                            ? "Stock associaton unavailable, order was cancelled."
+                                            : order.status === "Cancelled (Per Buyer's Request)"
+                                            ? "Stock associaton unavailable, order was cancelled."
+                                            : order.status === "Shipped"
+                                            ? "Stock associaton unavailable, order already shipped."
+                                            : order.status === "Other"
+                                            ? "Stock associaton unavailable, items cannot be associated for this order."
+                                            : ""
                                     }
-                                    sx={{
-                                        color: 'rgba(0,0,0,0.45)',
-                                        
-                                        '&:hover': {
-                                            color: 'rgba(0,0,0,0.85)',
+                                    placement="top"
+                                    arrow
+                                    slotProps={{
+                                        tooltip: {
+                                            sx: {
+                                                fontFamily: 'InterRegular',
+                                                fontSize: '0.6rem',
+                                            },
                                         },
                                     }}
                                 >
-                                    
-                                    <AddLinkIcon sx={{ fontSize: '1.0625rem' }} />
-                                </IconButton>
+                                    <span>
+                                        <IconButton
+                                            size="small"
+                                            onClick={() => handleOpenDialog(item)}
+                                            disabled={
+                                                order.status === "Payment Pending" ||
+                                                order.status === "Invoice Sent" ||
+                                                order.status === "Cancelled (Non-Paying Buyer)" ||
+                                                order.status === "Cancelled (Item Unavailable)" ||
+                                                order.status === "Cancelled (Per Buyer's Request)" ||
+                                                order.status === "Shipped" ||
+                                                order.status === "Other"
+                                            }
+                                            sx={{
+                                                color: 'rgba(0,0,0,0.45)',
+
+                                                '&:hover': {
+                                                    color: 'rgba(0,0,0,0.85)',
+                                                },
+
+                                                '&.Mui-disabled': {
+                                                    color: 'rgba(0,0,0,0.2)',
+                                                }
+                                            }}
+                                        >
+                                            <AddLinkIcon sx={{ fontSize: '1.0625rem' }} />
+                                        </IconButton>
+                                    </span>
+                                </Tooltip>
                             )}
 
                             {item.associated && (

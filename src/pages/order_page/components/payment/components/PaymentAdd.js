@@ -120,46 +120,61 @@ const PaymentAdd = ({ order, fetchOrder, isOrderFullyAssociated }) => {
         const editingSelling = editing[`${item.id}-selling`];
 
         return (
-            <ListItem
-                key={item.id}
-                sx={{ 
-                    borderBottom: '0.0625rem solid #ddd',
-                    gap: '1rem',
-                    alignItems: 'center'
-                }}
-            >
-                {!isExtra && (
-                    <img 
-                        src={item.release.thumb} 
-                        style={{ 
-                            width: '2.5rem',
-                            height: '2.5rem',
-                            objectFit: 'cover',
-                            borderRadius: '0.25rem'
-                        }}
-                    />
-                )}
+           <ListItem key={item.id} sx={{ display: 'grid', gridTemplateColumns: '3fr 1fr 1fr', width: '100%', padding: 0, borderBottom: '0.0625rem solid #ddd', alignItems: 'stretch',}} >
+                    <Box sx={{ width: '100%', display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.75rem', borderRight: '0.0625rem solid #ddd', boxSizing: 'border-box', }} >                        
+                        {!isExtra && (
+                            <img 
+                                src={item.release.thumb} 
+                                style={{ 
+                                    width: '2.5rem',
+                                    height: '2.5rem',
+                                    objectFit: 'cover',
+                                    borderRadius: '0.25rem'
+                                }}
+                            />
+                        )}
 
-                <Box > 
-                    <Typography sx={{ fontFamily: 'InterBold', fontSize: '0.8125rem' , color: 'rgba(0,0,0,0.70)', textShadow: '0px 0px 4px rgba(0,0,0,0.10)' }}>
-                        {item.release.name}
-                    </Typography>
-
-                    {!isExtra && (
-                        <>
-                            <Typography sx={{ fontFamily: 'InterSemiBold', fontSize: '0.625rem', color: 'rgba(0,0,0,0.5)' }}>
-                                {item.release.artists.map(a => a.name).join(', ')}
+                        <Box > 
+                            <Typography sx={{ fontFamily: 'InterBold', fontSize: '0.8125rem' , color: 'rgba(0,0,0,0.70)', textShadow: '0px 0px 4px rgba(0,0,0,0.10)' }}>
+                                {item.release.name}
                             </Typography>
 
-                            <Typography sx={{ fontFamily: 'InterRegular', fontSize: '0.5625rem', color: 'rgba(0,0,0,0.5)' }}>
-                                {"Condition of Item: "}
-                                {item.discCondition} {item.sleeveCondition}
-                            </Typography>
-                        </>
-                    )}
-                </Box>
+                            {!isExtra && (
+                                <>
+                                    <Typography sx={{ fontFamily: 'InterSemiBold', fontSize: '0.625rem', color: 'rgba(0,0,0,0.5)' }}>
+                                        {item.release.artists.map(a => a.name).join(', ')}
+                                    </Typography>
 
-                <Box sx={{ ml: 'auto', display: 'flex', gap: '1rem' }}>
+                                    <Typography sx={{ fontFamily: 'InterRegular', fontSize: '0.5625rem', color: 'rgba(0,0,0,0.5)' }}>
+                                        {"Condition of Item: "}
+                                        {item.discCondition} {item.sleeveCondition}
+                                    </Typography>
+                                </>
+                            )}
+                        </Box>
+                    </Box>
+
+                <Box
+                    onClick={() => {
+                        if (!editingSelling) {
+                            startEditing(item.id, 'selling');
+                        }
+                    }}
+                    sx={{
+                        width: '100%',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'flex-end',
+                        gap: '0.75rem',
+                        padding: '0.75rem',
+                        borderRight: '0.0625rem solid #ddd', 
+                        boxSizing: 'border-box',
+                        cursor: 'pointer',
+                        '&:hover': {
+                            backgroundColor: 'rgba(0, 0, 0, 0.03)',
+                        },
+                    }}
+                >
                     {editingSelling ? (
                         <input
                             type="number"
@@ -172,11 +187,32 @@ const PaymentAdd = ({ order, fetchOrder, isOrderFullyAssociated }) => {
                             style={inputStyleStrong}
                         />
                     ) : (
-                        <Typography onClick={() => startEditing(item.id, 'selling')} sx={sellingStyle}>
+                        <Typography sx={sellingStyle}>
                             {sellingPrice} €
                         </Typography>
                     )}
-
+                </Box>
+                
+                <Box
+                    onClick={() => {
+                        if (!editingProvider) {
+                            startEditing(item.id, 'provider');
+                        }
+                    }}
+                    sx={{
+                        width: '100%',
+                        alignItems: 'center',
+                        display: 'flex',
+                        justifyContent: 'flex-end',
+                        gap: '0.75rem',
+                        padding: '0.75rem',
+                        boxSizing: 'border-box',
+                        cursor: 'pointer',
+                        '&:hover': {
+                            backgroundColor: 'rgba(0, 0, 0, 0.03)',
+                        },
+                    }}
+                >
                     {editingProvider ? (
                         <input
                             type="number"
@@ -189,7 +225,7 @@ const PaymentAdd = ({ order, fetchOrder, isOrderFullyAssociated }) => {
                             style={inputStyleSoft}
                         />
                     ) : (
-                        <Typography onClick={() => startEditing(item.id, 'provider')} sx={providerStyle}>
+                        <Typography  sx={providerStyle}>
                             {providerPrice} €
                         </Typography>
                     )}
@@ -269,14 +305,25 @@ const PaymentAdd = ({ order, fetchOrder, isOrderFullyAssociated }) => {
                             p: '1rem',
                             display: 'flex',
                             flexDirection: 'column',
-                            gap: '1rem'
+                            gap: '1rem',
+                            border: "1px solid black"
                         }}
                     >
+                        
                         <List>
+                            <ListItem
+                                sx={{ 
+                                    borderBottom: '0.0625rem solid #ddd',
+                                    gap: '1rem',
+                                    alignItems: 'center',
+                                    border: "1px solid black"
+                                }}
+                            >
+                                <Typography sx={{ fontFamily: "InterSemiBold", fontSize: '0.75rem' }}>
+                                    Items
+                                </Typography>
+                            </ListItem>
                             {order?.items.map(item => renderRow(item))}
-                        </List>
-
-                        <List >
                             {extraItems.map(item => renderRow(item, true))}
                         </List>
 

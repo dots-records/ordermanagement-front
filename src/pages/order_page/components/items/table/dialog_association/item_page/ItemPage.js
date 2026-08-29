@@ -116,12 +116,52 @@ const ItemPage = ({selectedItem, order, handleClose}) => {
             if(item.provider.type === 'Online' 
                 || (item.provider.type === 'In Stock' && item.provider.units > 1)) {
                 content = (
-                    <ProviderStillStockOrOnline order={order} item={item} handleClose={handleClose}/>
+                    <Box  >
+                            <Box sx={{ backgroundColor: 'rgba(0,0,0,0.025)'}} >
+                                <Typography
+                                    sx={{
+                                        fontFamily: 'InterRegular',
+                                        fontSize: '0.75rem',
+                                         borderBottom: '1px solid #ddd',
+                                        textAlign: 'center',
+                                        py:  '0.5rem',
+                                        color: 'rgba(0,0,0,0.5)',
+                                    }}
+                                >
+                                    Create replacing listing
+                                </Typography>
+                            </Box>
+                            
+
+                            <ProviderStillStockOrOnline order={order} item={item} handleClose={handleClose}/>
+                        </Box>
+                    
                 );   
             } else if (item.provider.type === 'In Stock' && item.provider.units == 1) {
                 if(providerHasListings == true) {
                     content = (
-                        <TableListingsForDeletion item={item} setChanged={setChanged} />
+                        <Box  >
+                            <Box sx={{ backgroundColor: 'rgba(0,0,0,0.025)'}} >
+                                <Typography
+                                    sx={{
+                                        fontFamily: 'InterRegular',
+                                        fontSize: '0.75rem',
+                                         borderBottom: '1px solid #ddd',
+                                        textAlign: 'center',
+                                        py:  '0.5rem',
+                                        color: 'rgba(0,0,0,0.5)',
+                                    }}
+                                >
+                                    Delete all listings
+                                </Typography>
+                            </Box>
+                            
+
+                            <TableListingsForDeletion
+                                item={item}
+                                setChanged={setChanged}
+                            />
+                        </Box>
                     );
                 } else if(providerHasListings == false){
                     if(providerExists == true) {
