@@ -217,6 +217,9 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                                                     boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
                                                     transition: 'all 0.2s ease-in-out',
                                                     cursor: 'pointer',
+                                                    whiteSpace: 'nowrap',
+                                                    wordBreak: 'keep-all',
+                                                    flexShrink: 0,
                                                     '&:hover': {
                                                         backgroundColor: order.justAdded
                                                             ? 'rgba(33,150,243,0.10)'
@@ -303,7 +306,16 @@ const TableOrders = ({ tableSelected, loading, setOrdersPage, numberPage, orders
                                 <TableCell sx={{ fontFamily: 'InterSemiBold', color: 'rgba(0,0,0,0.75)', fontSize: '0.8125rem'}}>
                                     
                                     <Box sx ={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                                        {order.created}
+                                        <Typography
+                                            sx={{
+                                                fontSize: '0.75rem',
+                                                color: 'rgba(0,0,0,0.4)',
+                                                fontFamily: 'InterRegular',
+                                            }}
+                                        >
+                                            {order.created}
+                                        </Typography>
+                                        
                                     </Box>
                                 </TableCell>
 

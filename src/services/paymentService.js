@@ -33,3 +33,17 @@ export const getPayment = async (id) => {
         throw error;
     } 
 };
+
+
+export const getPayments = async (year, month) => {
+    try {
+        const response = await api.get(
+            `dots/payments/${year}/${month}`,  
+            { headers: { 'Content-Type': 'application/json' } }
+        );
+        return response.data; 
+    } catch (error) {
+        console.error('Error get payments by date:', error);
+        throw error;
+    } 
+};

@@ -3,7 +3,7 @@ import { Box, Typography, List, ListItem, IconButton, Dialog, DialogTitle, Dialo
  } from "@mui/material"; 
 import React, { useState, useEffect } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
-import EditIcon from '@mui/icons-material/Edit';
+import AddIcon from '@mui/icons-material/Add';
 import { createPaymentAssociatedToOrder } from "../../../../../services/paymentService";
 import { Snackbar, Alert, CircularProgress } from '@mui/material';
 
@@ -120,8 +120,8 @@ const PaymentAdd = ({ order, fetchOrder, isOrderFullyAssociated }) => {
         const editingSelling = editing[`${item.id}-selling`];
 
         return (
-           <ListItem key={item.id} sx={{ display: 'grid', gridTemplateColumns: '3fr 1fr 1fr', width: '100%', padding: 0, borderBottom: '0.0625rem solid #ddd', alignItems: 'stretch',}} >
-                    <Box sx={{ width: '100%', display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.75rem', borderRight: '0.0625rem solid #ddd', boxSizing: 'border-box', }} >                        
+           <ListItem key={item.id} sx={{ display: 'grid', gridTemplateColumns: '3fr 1fr 1fr', width: '100%', padding: 0, borderBottom: '0.0625rem solid #dbdbdb', alignItems: 'stretch',}} >
+                    <Box sx={{ width: '100%', display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.75rem', borderRight: '0.0625rem solid #f0f0f0', boxSizing: 'border-box', }} >                        
                         {!isExtra && (
                             <img 
                                 src={item.release.thumb} 
@@ -167,12 +167,14 @@ const PaymentAdd = ({ order, fetchOrder, isOrderFullyAssociated }) => {
                         justifyContent: 'flex-end',
                         gap: '0.75rem',
                         padding: '0.75rem',
-                        borderRight: '0.0625rem solid #ddd', 
+                        borderRight: '0.0625rem solid #f0f0f0', 
                         boxSizing: 'border-box',
                         cursor: 'pointer',
                         '&:hover': {
                             backgroundColor: 'rgba(0, 0, 0, 0.03)',
                         },
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
                     }}
                 >
                     {editingSelling ? (
@@ -211,6 +213,8 @@ const PaymentAdd = ({ order, fetchOrder, isOrderFullyAssociated }) => {
                         '&:hover': {
                             backgroundColor: 'rgba(0, 0, 0, 0.03)',
                         },
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
                     }}
                 >
                     {editingProvider ? (
@@ -252,7 +256,7 @@ const PaymentAdd = ({ order, fetchOrder, isOrderFullyAssociated }) => {
 
     return (
         <>
-            <EditIcon
+            <AddIcon
                 onClick={() => {
                     if (isOrderFullyAssociated) {
                         handleOpen();
@@ -288,10 +292,19 @@ const PaymentAdd = ({ order, fetchOrder, isOrderFullyAssociated }) => {
                 }}
             >
                 <DialogTitle sx={{ p:'0.5rem'}}>
-                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
-                        <Typography sx={{ fontFamily: "InterSemiBold", fontSize: '1.5rem' }}>
-                            Add Payment
-                        </Typography>
+                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', }}>
+                        <Box>
+                            <Typography sx={{ fontFamily: "InterSemiBold", fontSize: '1.5rem' }}>
+                                Add Payment
+                            </Typography>
+                            <Typography sx={{ textAlign: 'left',
+                                        fontFamily: 'InterRegular',
+                                        fontSize: '0.75rem',
+                                        color: 'rgba(0,0,0,0.6)',}}>
+                                If already added, the payment will be overwritten
+                            </Typography>
+                        </Box>
+                        
 
                         <IconButton onClick={handleClose}>
                             <CloseIcon sx={{ fontSize: '1.5rem' }} />
@@ -306,21 +319,19 @@ const PaymentAdd = ({ order, fetchOrder, isOrderFullyAssociated }) => {
                             display: 'flex',
                             flexDirection: 'column',
                             gap: '1rem',
-                            border: "1px solid black"
                         }}
                     >
                         
                         <List>
-                            <ListItem
-                                sx={{ 
-                                    borderBottom: '0.0625rem solid #ddd',
-                                    gap: '1rem',
-                                    alignItems: 'center',
-                                    border: "1px solid black"
-                                }}
-                            >
-                                <Typography sx={{ fontFamily: "InterSemiBold", fontSize: '0.75rem' }}>
+                            <ListItem sx={{ display: 'grid', gridTemplateColumns: '3fr 1fr 1fr', width: '100%', padding: 0, borderBottom: '0.0625rem solid #dbdbdb', alignItems: 'center', py: '0.5rem'}} >
+                                <Typography sx={{ pl: '0.15rem', fontFamily: "InterSemiBold", fontSize: '0.75rem', color: 'rgba(0,0,0,0.85)',  alignSelf: 'center' }}>
                                     Items
+                                </Typography>
+                                <Typography sx={{pl: '0.15rem', fontFamily: "InterSemiBold", fontSize: '0.75rem', color: 'rgba(0,0,0,0.85)',  alignSelf: 'center' }}>
+                                    Payment
+                                </Typography>
+                                <Typography sx={{pl: '0.15rem', fontFamily: "InterSemiBold", fontSize: '0.75rem', color: 'rgba(0,0,0,0.5)',  alignSelf: 'center' }}>
+                                    Costs
                                 </Typography>
                             </ListItem>
                             {order?.items.map(item => renderRow(item))}
@@ -328,62 +339,116 @@ const PaymentAdd = ({ order, fetchOrder, isOrderFullyAssociated }) => {
                         </List>
 
                         <List>
-                            <ListItem
-                                sx={{
-                                    borderTop: '0.0625rem solid #ddd',
-                                    borderBottom: '0.0625rem solid #ddd',
-                                    gap: '1rem',
-                                }}
-                            >
-                                <Typography
+                            <ListItem  sx={{ display: 'grid', gridTemplateColumns: '3fr 1fr 1fr', width: '100%', padding: 0, borderBottom: '0.0625rem solid #dbdbdb',  borderTop: '0.0625rem solid #dbdbdb', alignItems: 'stretch',}} >
+                                <Box sx={{ width: '100%', display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.75rem', borderRight: '0.0625rem solid #f0f0f0', boxSizing: 'border-box', }} > 
+                                    <Typography
+                                        sx={{
+                                            fontFamily: 'InterBold',
+                                            fontSize: '0.8125rem',
+                                            color: 'rgba(0,0,0,0.85)',
+                                            textShadow: '0px 0px 4px rgba(0,0,0,0.10)'
+                                        }}
+                                    >
+                                        Total
+                                    </Typography>
+                                </Box>
+                                
+                                <Box
                                     sx={{
-                                        fontFamily: 'InterBold',
-                                        fontSize: '0.8125rem',
-                                        color: 'rgba(0,0,0,0.85)',
+                                        width: '100%',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'flex-end',
+                                        gap: '0.75rem',
+                                        padding: '0.75rem',
+                                        borderRight: '0.0625rem solid #f0f0f0', 
+                                        boxSizing: 'border-box',
+                                        cursor: 'default', 
+                                        overflow: 'hidden',
+                                        textOverflow: 'ellipsis',
                                     }}
                                 >
-                                    Total
-                                </Typography>
-
-                                <Box sx={{ ml: 'auto', display: 'flex', gap: '1rem' }}>
                                     <Typography
-                                        sx={sellingStyle}
+                                        sx={{
+                                            ...sellingStyle,
+                                            cursor: 'default',
+                                        }}
+                                        
                                     >
                                         {totals.selling.toFixed(2)} €
                                     </Typography>
-
+                                </Box>
+                                    
+                                <Box
+                                    sx={{
+                                        width: '100%',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'flex-end',
+                                        gap: '0.75rem',
+                                        padding: '0.75rem',
+                                        boxSizing: 'border-box',
+                                        cursor: 'default', 
+                                        overflow: 'hidden',
+                                        textOverflow: 'ellipsis',
+                                    }}
+                                >
                                     <Typography
-                                        sx={sellingStyle}
+                                        sx={{
+                                            ...providerStyle,
+                                            cursor: 'default',
+                                        }}
+                                        
                                     >
                                         {totals.provider.toFixed(2)} €
                                     </Typography>
                                 </Box>
                             </ListItem>
-                            <ListItem
-                                sx={{
-                                    borderBottom: '0.0625rem solid #ddd',
-                                    gap: '1rem',
-                                }}
-                            >
-                                <Typography
+                            
+                        </List>
+                        <List>
+                            <ListItem  sx={{  width: '100%', padding: 0, borderBottom: '0.0625rem solid #dbdbdb',  borderTop: '0.0625rem solid #dbdbdb', alignItems: 'stretch',}} >
+                                <Box sx={{ width: '100%', alignItems: 'center', gap: '0.75rem', padding: '0.75rem',  boxSizing: 'border-box', }} > 
+                                    <Typography
+                                        sx={{
+                                            fontFamily: 'InterBold',
+                                            fontSize: '0.8125rem',
+                                            color: 'rgba(0,0,0,0.85)',
+                                            textShadow: '0px 0px 4px rgba(0,0,0,0.10)'
+                                        }}
+                                    >
+                                        Benefits
+                                    </Typography>
+                                </Box>
+
+                                <Box
                                     sx={{
-                                        fontFamily: 'InterBold',
-                                        fontSize: '0.8125rem',
-                                        color: 'rgba(0,0,0,0.85)',
+                                        width: '100%',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'flex-end',
+                                        gap: '0.75rem',
+                                        padding: '0.75rem',
+                                        boxSizing: 'border-box',
+                                        cursor: 'default', 
+                                        overflow: 'hidden',
+                                        textOverflow: 'ellipsis',
                                     }}
                                 >
-                                    Benefits
-                                </Typography>
-
-                                <Box sx={{ ml: 'auto', display: 'flex' }}>
                                     <Typography
-                                        sx={sellingStyle}
+                                        sx={{
+                                            ...sellingStyle,
+                                            cursor: 'default',
+                                            color: benefit >= 0 ? 'rgba(9, 123, 39, 0.85)' : '#d32f2f',
+                                        }}
+                                        
                                     >
                                         {benefit.toFixed(2)} €
                                     </Typography>
                                 </Box>
                             </ListItem>
-                        </List>
+                        </List>     
+                        
                     </Box>
                 </DialogContent>
                 <DialogActions >

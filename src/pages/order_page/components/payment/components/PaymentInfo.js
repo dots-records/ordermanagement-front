@@ -4,6 +4,7 @@ import { Box, Typography, List, ListItem, IconButton, Dialog, DialogTitle, Dialo
 import React, { useState, useEffect } from 'react';
 import {  getPayment } from '../../../../../services/paymentService'; 
 
+
 const PaymentInfo = ({ order, isOrderFullyAssociated }) => {
     
     
@@ -122,7 +123,7 @@ const PaymentInfo = ({ order, isOrderFullyAssociated }) => {
                                 textAlign: 'right',
                                 fontSize: '0.75rem',
                                 fontFamily: 'InterSemiBold',
-                                color: 'rgba(9, 123, 39, 0.85)',
+                                color: benefit >= 0 ? 'rgba(9, 123, 39, 0.85)' : '#d32f2f',
                                 flexShrink: 0,
                             }}
                         >
